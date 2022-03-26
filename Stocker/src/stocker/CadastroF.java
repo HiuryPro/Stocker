@@ -13,10 +13,10 @@ import javax.swing.ImageIcon;
  *
  * @author Hiury
  */
+
 public class CadastroF extends javax.swing.JFrame {
 
     ArquivoEmJava arquivo = new ArquivoEmJava();
-
     /**
      * Creates new form CadastroF
      */
@@ -43,11 +43,12 @@ public class CadastroF extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         telefone = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
-        cpf = new javax.swing.JFormattedTextField();
+        cnpj = new javax.swing.JFormattedTextField();
         nome = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         email = new javax.swing.JTextField();
+        Arquivo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Fornecedores");
@@ -83,7 +84,7 @@ public class CadastroF extends javax.swing.JFrame {
         jLabel2.setText("Idade:");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setText("CPF:");
+        jLabel3.setText("CNPJ:");
 
         try {
             telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
@@ -96,11 +97,11 @@ public class CadastroF extends javax.swing.JFrame {
         jLabel4.setText("Enedereço:");
 
         try {
-            cpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            cnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        cpf.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cnpj.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         nome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -112,18 +113,27 @@ public class CadastroF extends javax.swing.JFrame {
 
         email.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
+        Arquivo.setText("Arquivo");
+        Arquivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ArquivoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(Arquivo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(183, 183, 183))
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cpf, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(nome, javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,9 +181,11 @@ public class CadastroF extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(endereco, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cpf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Arquivo))
                 .addGap(57, 57, 57))
         );
 
@@ -193,13 +205,21 @@ public class CadastroF extends javax.swing.JFrame {
         arquivo.nome = nome.getText();
         arquivo.idade = idade.getText();
         arquivo.email = email.getText();
+        arquivo.telefone = telefone.getText();
+        arquivo.cnpj = cnpj.getText();
         arquivo.CriaArquivo();
+       
+       
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void idadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idadeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_idadeActionPerformed
+
+    private void ArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ArquivoActionPerformed
+        PegaImagem img = new PegaImagem();    // TODO add your handling code here:
+    }//GEN-LAST:event_ArquivoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,8 +261,9 @@ public class CadastroF extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Arquivo;
     private javax.swing.JLabel Logo2;
-    private javax.swing.JFormattedTextField cpf;
+    private javax.swing.JFormattedTextField cnpj;
     private javax.swing.JTextField email;
     private javax.swing.JTextField endereco;
     private javax.swing.JTextField idade;

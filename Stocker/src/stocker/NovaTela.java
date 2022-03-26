@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package stocker;
 
@@ -17,20 +16,22 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
 /**
  *
- * @author Hiury
+ * @author hiurylucas
  */
-public class ClassFor {
-
-    ArquivoEmJava arquivo = new ArquivoEmJava();
+public class NovaTela {
+    public JPanel tela1, tela2;
+    public JFrame criaT;
+    public JButton estoque, pedido, venda, entrega;
+     ArquivoEmJava arquivo = new ArquivoEmJava();
     private int posicao = -30;
     private ArrayList<JButton> label = new ArrayList();
     public JPanel panel;
@@ -53,17 +54,13 @@ public class ClassFor {
     private JTextArea descricao = new JTextArea();
     private int escolhido2;
     
+     public int escolhido;
     
-    
-   public int escolhido;
-
-    String[] variavel = new String[20];
-
-    public ClassFor() {
+    public NovaTela(){
         int i = 0;
+        panel1();
         icon.setImage(icon.getImage().getScaledInstance(25, 25, 1));
         icon2.setImage(icon2.getImage().getScaledInstance(25, 25, 1));
-        panel1();
         arquivo.LeArquivo();
 
         while (i < arquivo.nomes.size()) {
@@ -71,30 +68,12 @@ public class ClassFor {
 
             i++;
         }
-        panelDes();
-        desc.setVisible(false);
-        criaJFrame();
-
+     
+       
     }
-
-    public void criaJFrame() {
-        janela = new JFrame();
-        janela.setTitle("Tela de Fornecedores");
-        janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        janela.setLayout(null);
-
-        janela.setVisible(true);
-        janela.setResizable(false);
-        janela.setPreferredSize(new Dimension(730, 500));
-        janela.add(panel);
-        janela.add(desc);
-        setIcon(janela);
-
-        janela.pack();
-
-    }
-
-    public class CriaCheckBox {
+    
+    
+     public class CriaCheckBox {
 
         public void criaCheck(Integer i) {
             teste3 = new MyEventHandler2();
@@ -175,7 +154,7 @@ public class ClassFor {
     MyEventHandler teste2 = new MyEventHandler();
     MyEventHandler2 teste3 = new MyEventHandler2();
 
-    private void panel1() {
+    public JPanel panel1() {
         panel = new JPanel();
         panel.setLayout(null);
         panel.setLocation(100, 0);
@@ -198,21 +177,25 @@ public class ClassFor {
         scroll.setViewportView(panel2);
         panel2.setPreferredSize(new Dimension(100, aumenta1));
         panel.setSize(new Dimension(150, 460));
-        panel.setLocation(100, 0);
+        panel.setLocation(300, 0);
 
+        
+        return panel;
     }
 
-    public void panelDes() {
+    public JPanel panelDes() {
         Border raisedbevel, blackline;
         blackline = BorderFactory.createLineBorder(Color.black);
         raisedbevel = BorderFactory.createRaisedBevelBorder();
         desc.setLayout(null);
         desc.setBackground(Color.white);
-        desc.setLocation(260, 10);
-        desc.setSize(450, 445);
+        desc.setLocation(460, 10);
+        desc.setSize(550, 445);
         desc.setBorder(blackline);
         criaLabels();
 
+        
+        return desc;
     }
 
     public void criaLabels() {
@@ -279,9 +262,8 @@ public class ClassFor {
         desc.add(deleta);
 
     }
-
-    public void setIcon(JFrame janela) {
-        janela.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("boxtramp.png"))); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
+    
+   
+    
 }
