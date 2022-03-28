@@ -53,11 +53,12 @@ public class NovaTela {
     private JLabel telefone = new JLabel();
     private JTextArea descricao = new JTextArea();
     private int escolhido2;
-    
+    public JPanel fornecedor;
      public int escolhido;
     
     public NovaTela(){
         int i = 0;
+        novoPanel();
         panel1();
         icon.setImage(icon.getImage().getScaledInstance(25, 25, 1));
         icon2.setImage(icon2.getImage().getScaledInstance(25, 25, 1));
@@ -154,7 +155,7 @@ public class NovaTela {
     MyEventHandler teste2 = new MyEventHandler();
     MyEventHandler2 teste3 = new MyEventHandler2();
 
-    public JPanel panel1() {
+    public void panel1() {
         panel = new JPanel();
         panel.setLayout(null);
         panel.setLocation(100, 0);
@@ -177,10 +178,10 @@ public class NovaTela {
         scroll.setViewportView(panel2);
         panel2.setPreferredSize(new Dimension(100, aumenta1));
         panel.setSize(new Dimension(150, 460));
-        panel.setLocation(300, 0);
+        panel.setLocation(280, 0);
 
         
-        return panel;
+      
     }
 
     public JPanel panelDes() {
@@ -189,13 +190,25 @@ public class NovaTela {
         raisedbevel = BorderFactory.createRaisedBevelBorder();
         desc.setLayout(null);
         desc.setBackground(Color.white);
-        desc.setLocation(460, 10);
+        desc.setLocation(440, 10);
         desc.setSize(550, 445);
         desc.setBorder(blackline);
         criaLabels();
 
         
         return desc;
+    }
+    
+    
+    
+    public void novoPanel(){
+        fornecedor = new JPanel();
+        fornecedor.setLayout(null);
+        fornecedor.setSize(710,484);
+        fornecedor.setLocation(290,0);
+        fornecedor.setBackground(Color.blue);
+        
+ 
     }
 
     public void criaLabels() {

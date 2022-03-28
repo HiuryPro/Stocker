@@ -10,7 +10,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <Events>
     <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
@@ -31,43 +31,38 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="venda" min="-2" pref="250" max="-2" attributes="0"/>
-                  <Component id="pedidos" min="-2" pref="250" max="-2" attributes="0"/>
-                  <Component id="entrega" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
-                  <Component id="estoque" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="estoque" alignment="0" max="32767" attributes="0"/>
+                  <Component id="Fornecedores" alignment="0" pref="260" max="32767" attributes="0"/>
+                  <Component id="venda" alignment="0" max="32767" attributes="0"/>
+                  <Component id="entrega" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="697" max="32767" attributes="0"/>
+              <EmptySpace pref="741" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
+              <Component id="estoque" min="-2" pref="125" max="-2" attributes="0"/>
+              <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="estoque" min="-2" pref="125" max="-2" attributes="0"/>
-                      <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="120" pref="120" max="-2" attributes="0"/>
-                              <Component id="entrega" min="-2" pref="125" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="venda" min="-2" pref="125" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" attributes="0">
                       <EmptySpace min="120" pref="120" max="-2" attributes="0"/>
-                      <Component id="pedidos" min="-2" pref="125" max="-2" attributes="0"/>
+                      <Component id="entrega" min="-2" pref="125" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="venda" min="-2" pref="125" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="1" pref="13" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace min="120" pref="120" max="-2" attributes="0"/>
+              <Component id="Fornecedores" min="-2" pref="125" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="pedidos">
+    <Component class="javax.swing.JButton" name="Fornecedores">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="cc" green="66" red="0" type="rgb"/>
@@ -78,8 +73,11 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Pedidos"/>
+        <Property name="text" type="java.lang.String" value="Fornecedores"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="FornecedoresActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="estoque">
       <Properties>
@@ -128,6 +126,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value=" Entregas"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="entregaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

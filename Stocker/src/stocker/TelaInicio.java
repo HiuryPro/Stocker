@@ -34,7 +34,7 @@ public class TelaInicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pedidos = new javax.swing.JButton();
+        Fornecedores = new javax.swing.JButton();
         estoque = new javax.swing.JButton();
         venda = new javax.swing.JButton();
         entrega = new javax.swing.JButton();
@@ -48,10 +48,15 @@ public class TelaInicio extends javax.swing.JFrame {
             }
         });
 
-        pedidos.setBackground(new java.awt.Color(0, 102, 204));
-        pedidos.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        pedidos.setForeground(new java.awt.Color(255, 255, 255));
-        pedidos.setText("Pedidos");
+        Fornecedores.setBackground(new java.awt.Color(0, 102, 204));
+        Fornecedores.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        Fornecedores.setForeground(new java.awt.Color(255, 255, 255));
+        Fornecedores.setText("Fornecedores");
+        Fornecedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FornecedoresActionPerformed(evt);
+            }
+        });
 
         estoque.setBackground(new java.awt.Color(0, 102, 204));
         estoque.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -77,39 +82,40 @@ public class TelaInicio extends javax.swing.JFrame {
         entrega.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         entrega.setForeground(new java.awt.Color(255, 255, 255));
         entrega.setText(" Entregas");
+        entrega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                entregaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(venda, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(entrega, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(estoque, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(697, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(estoque, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Fornecedores, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                    .addComponent(venda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(entrega, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(741, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addComponent(estoque, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(115, 115, 115)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(estoque, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(115, 115, 115)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(120, 120, 120)
-                                .addComponent(entrega, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(venda, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(120, 120, 120)
-                        .addComponent(pedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(1, 13, Short.MAX_VALUE))
+                        .addComponent(entrega, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(venda, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addComponent(Fornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -117,15 +123,21 @@ public class TelaInicio extends javax.swing.JFrame {
         ImageIcon icon1 = new ImageIcon("src/img/vendas1.png");
         ImageIcon icon2 = new ImageIcon("src/img/entrega.png");
         ImageIcon icon3 = new ImageIcon("src/img/pedidos.png");
-        icon.setImage(icon.getImage().getScaledInstance(120, 100, 1));
-        icon1.setImage(icon1.getImage().getScaledInstance(140, 120, 1));
-        icon2.setImage(icon2.getImage().getScaledInstance(120, 100, 1));
-        icon3.setImage(icon3.getImage().getScaledInstance(120, 100, 1));
+        icon.setImage(icon.getImage().getScaledInstance(100, 100, 1));
+        icon1.setImage(icon1.getImage().getScaledInstance(120, 100, 1));
+        icon2.setImage(icon2.getImage().getScaledInstance(100, 80, 1));
+        icon3.setImage(icon3.getImage().getScaledInstance(100, 80, 1));
         estoque.setIcon(icon);
         venda.setIcon(icon1);
         entrega.setIcon(icon2);
-        pedidos.setIcon(icon3);
+        Fornecedores.setIcon(icon3);
         ImageIcon logo = new ImageIcon("src/img/Stocker_blue_transp.png");
+        add(tela.panel);
+        add(tela.panelDes());
+        add(tela.fornecedor);
+        tela.panel.setVisible(false);
+        tela.panelDes().setVisible(false);
+        tela.fornecedor.setVisible(false);
 
 // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
@@ -135,13 +147,27 @@ public class TelaInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_vendaActionPerformed
 
     private void estoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estoqueActionPerformed
-
-        add(tela.panel1());
-        add(tela.panelDes());
+        tela.panel.setVisible(false);
+        tela.panelDes().setVisible(false);
+        tela.fornecedor.setVisible(true);
         initComponents();
         pack();
         // TODO add your handling code here:
     }//GEN-LAST:event_estoqueActionPerformed
+
+    private void FornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FornecedoresActionPerformed
+        tela.panelDes().setVisible(false);
+        tela.panel.setVisible(true);
+        tela.fornecedor.setVisible(false);
+        initComponents();
+        pack();
+// TODO add your handling code here:
+    }//GEN-LAST:event_FornecedoresActionPerformed
+
+    private void entregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entregaActionPerformed
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_entregaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,9 +205,9 @@ public class TelaInicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Fornecedores;
     private javax.swing.JButton entrega;
     private javax.swing.JButton estoque;
-    private javax.swing.JButton pedidos;
     private javax.swing.JButton venda;
     // End of variables declaration//GEN-END:variables
  private void setIcon() {
