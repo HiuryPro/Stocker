@@ -28,10 +28,11 @@ import javax.swing.border.Border;
  * @author hiurylucas
  */
 public class NovaTela {
+
     public JPanel tela1, tela2;
     public JFrame criaT;
     public JButton estoque, pedido, venda, entrega;
-     ArquivoEmJava arquivo = new ArquivoEmJava();
+    ArquivoEmJava arquivo = new ArquivoEmJava();
     private int posicao = -30;
     private ArrayList<JButton> label = new ArrayList();
     public JPanel panel;
@@ -41,7 +42,7 @@ public class NovaTela {
     public JFrame janela;
     private int muda = 0;
     private int aumenta1 = 300;
-            
+
     private ImageIcon icon = new ImageIcon("src/img/trash.png");
     private ImageIcon icon2 = new ImageIcon("src/img/trash-aberto.png");
     private ImageIcon icon3 = new ImageIcon("src/img/vendas.png");
@@ -54,9 +55,10 @@ public class NovaTela {
     private JTextArea descricao = new JTextArea();
     private int escolhido2;
     public JPanel fornecedor;
-     public int escolhido;
-    
-    public NovaTela(){
+    public int escolhido;
+    public JButton cadastroF;
+
+    public NovaTela() {
         int i = 0;
         novoPanel();
         panel1();
@@ -69,12 +71,10 @@ public class NovaTela {
 
             i++;
         }
-     
-       
+
     }
-    
-    
-     public class CriaCheckBox {
+
+    public class CriaCheckBox {
 
         public void criaCheck(Integer i) {
             teste3 = new MyEventHandler2();
@@ -88,7 +88,7 @@ public class NovaTela {
             panel2.add(label.get(muda));
             teste3.escolhido = muda;
             teste2.label2 = label.get(muda);
-            
+
             label.get(muda).addActionListener(teste3);
 
             muda++;
@@ -135,18 +135,18 @@ public class NovaTela {
 
     private class MyEventHandler2 implements ActionListener {
 
-     
         public int escolhido;
- 
-     
+        String pattern = "##.###.###/####-##";
+        String pattern2 = "(##) #####-####";
+        String pattern3 = "###.###.###.###";
 
         public void actionPerformed(ActionEvent evt) {
-           escolhido2 = escolhido;
-           desc.setVisible(true);
-           nome.setText("Nome: " + arquivo.nomes.get(escolhido));
-           idade.setText("Idade: " + arquivo.idades.get(escolhido));
-           email.setText("Email: " + arquivo.emails.get(escolhido));
-           telefone.setText("Telefone: " +arquivo.telefones.get(escolhido));
+            escolhido2 = escolhido;
+            desc.setVisible(true);
+            nome.setText("Nome: " + arquivo.nomes.get(escolhido));
+            idade.setText("Idade: " + String.format(pattern3, arquivo.inscEs.get(escolhido)));
+            email.setText("Email: " + arquivo.emails.get(escolhido));
+            telefone.setText("Telefone: " + String.format(pattern2, arquivo.telefones.get(escolhido)));
         }
 
     }
@@ -170,18 +170,17 @@ public class NovaTela {
         panel3.setLayout(null);
         panel3.setBackground(Color.WHITE);
         scroll = new JScrollPane();
-        scroll.setSize(new Dimension(150, 150));
+        scroll.setSize(new Dimension(150, 200));
         panel.add(panel3);
         panel.add(scroll);
-        scroll.setLocation(0, 150);
+        scroll.setLocation(0, 283);
 
         scroll.setViewportView(panel2);
         panel2.setPreferredSize(new Dimension(100, aumenta1));
-        panel.setSize(new Dimension(150, 460));
+        panel.setSize(new Dimension(150, 484));
         panel.setLocation(280, 0);
+        CadastroFor();
 
-        
-      
     }
 
     public JPanel panelDes() {
@@ -195,29 +194,43 @@ public class NovaTela {
         desc.setBorder(blackline);
         criaLabels();
 
-        
         return desc;
     }
-    
-    
-    
-    public void novoPanel(){
+
+    public void novoPanel() {
         fornecedor = new JPanel();
         fornecedor.setLayout(null);
-        fornecedor.setSize(710,484);
-        fornecedor.setLocation(290,0);
+        fornecedor.setSize(710, 484);
+        fornecedor.setLocation(290, 0);
         fornecedor.setBackground(Color.blue);
-        
- 
+
+    }
+
+    public void CadastroFor() {
+        cadastroF = new JButton();
+        cadastroF.setText("Cadastrar Fornecedor");
+        cadastroF.setSize(150, 30);
+        cadastroF.setLocation(0, 20);
+        cadastroF.setVisible(true);
+        cadastroF.addActionListener(new ChamaCadastroF());
+        panel.add(cadastroF);
+    }
+
+    private class ChamaCadastroF implements ActionListener {
+
+        public int escolhido;
+
+        public void actionPerformed(ActionEvent evt) {
+            new CadastroF().setVisible(true);
+        }
+
     }
 
     public void criaLabels() {
         teste2 = new MyEventHandler();
         escolhido2 = escolhido;
         Font fonte = new Font("Arial", Font.PLAIN, 14);
-        
-       
-       
+
         foto.setLocation(10, 0);
 
         foto.setSize(new Dimension(90, 90));
@@ -225,27 +238,23 @@ public class NovaTela {
         foto.setText("Foto");
         foto.setIcon(icon3);
 
-       
         nome.setLocation(120, 30);
         nome.setSize(new Dimension(150, 30));
         nome.setText("Nome");
         nome.setFont(fonte);
 
-        
         idade.setLocation(270, 30);
 
         idade.setSize(new Dimension(150, 30));
         idade.setText("Idade");
         idade.setFont(fonte);
 
-        
         email.setLocation(10, 120);
 
         email.setSize(new Dimension(230, 30));
         email.setFont(fonte);
         email.setText("Email: hiurylucas@unipam.edu.br");
 
-       
         telefone.setLocation(250, 120);
 
         telefone.setSize(new Dimension(230, 30));
@@ -275,8 +284,5 @@ public class NovaTela {
         desc.add(deleta);
 
     }
-    
-    
-   
-    
+
 }

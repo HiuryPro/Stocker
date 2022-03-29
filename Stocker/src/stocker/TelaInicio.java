@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 public class TelaInicio extends javax.swing.JFrame {
 
     NovaTela tela = new NovaTela();
-
+    
     /**
      * Creates new form TelaInicio
      */
@@ -98,7 +98,7 @@ public class TelaInicio extends javax.swing.JFrame {
                     .addComponent(Fornecedores, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
                     .addComponent(venda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(entrega, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(741, Short.MAX_VALUE))
+                .addContainerGap(738, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

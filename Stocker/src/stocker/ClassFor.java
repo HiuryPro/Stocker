@@ -164,7 +164,7 @@ public class ClassFor {
            escolhido2 = escolhido;
            desc.setVisible(true);
            nome.setText("Nome: " + arquivo.nomes.get(escolhido));
-           idade.setText("Idade: " + arquivo.idades.get(escolhido));
+           idade.setText("Idade: " + arquivo.inscEs.get(escolhido));
            email.setText("Email: " + arquivo.emails.get(escolhido));
            telefone.setText("Telefone: " +arquivo.telefones.get(escolhido));
         }

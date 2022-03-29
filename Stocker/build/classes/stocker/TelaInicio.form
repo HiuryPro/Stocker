@@ -37,7 +37,7 @@
                   <Component id="venda" alignment="0" max="32767" attributes="0"/>
                   <Component id="entrega" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="741" max="32767" attributes="0"/>
+              <EmptySpace pref="738" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
