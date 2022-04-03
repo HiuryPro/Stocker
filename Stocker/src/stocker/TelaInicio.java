@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 public class TelaInicio extends javax.swing.JFrame {
 
     NovaTela tela = new NovaTela();
-    
+
     /**
      * Creates new form TelaInicio
      */
@@ -38,10 +38,12 @@ public class TelaInicio extends javax.swing.JFrame {
         estoque = new javax.swing.JButton();
         venda = new javax.swing.JButton();
         entrega = new javax.swing.JButton();
+        Teste23 = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Stocker");
         setBackground(new java.awt.Color(102, 102, 102));
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -88,31 +90,43 @@ public class TelaInicio extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout Teste23Layout = new javax.swing.GroupLayout(Teste23);
+        Teste23.setLayout(Teste23Layout);
+        Teste23Layout.setHorizontalGroup(
+            Teste23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 651, Short.MAX_VALUE)
+        );
+        Teste23Layout.setVerticalGroup(
+            Teste23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(estoque, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Fornecedores, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                    .addComponent(venda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(entrega, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(738, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(estoque, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(entrega, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Fornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(venda, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Teste23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(estoque, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(115, 115, 115)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(120, 120, 120)
-                        .addComponent(entrega, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(venda, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(235, 235, 235)
+                .addComponent(entrega, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(120, 120, 120)
                 .addComponent(Fornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(240, 240, 240)
+                .addComponent(venda, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(Teste23)
         );
 
         pack();
@@ -143,24 +157,27 @@ public class TelaInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void vendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vendaActionPerformed
-        new Navendas().setVisible(true);              // TODO add your handling code here:
+                    // TODO add your handling code here:
     }//GEN-LAST:event_vendaActionPerformed
 
     private void estoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estoqueActionPerformed
-        tela.panel.setVisible(false);
-        tela.panelDes().setVisible(false);
-        tela.fornecedor.setVisible(true);
-        initComponents();
-        pack();
+        Estoque tela2 = new Estoque();
+        Teste23.add(tela2);
+        tela2.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_estoqueActionPerformed
 
     private void FornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FornecedoresActionPerformed
+        /*
         tela.panelDes().setVisible(false);
         tela.panel.setVisible(true);
         tela.fornecedor.setVisible(false);
         initComponents();
         pack();
+        */
+        Fornecedores tela3 = new Fornecedores();
+        Teste23.add(tela3);
+        tela3.setVisible(true);
 // TODO add your handling code here:
     }//GEN-LAST:event_FornecedoresActionPerformed
 
@@ -206,6 +223,7 @@ public class TelaInicio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Fornecedores;
+    private javax.swing.JDesktopPane Teste23;
     private javax.swing.JButton entrega;
     private javax.swing.JButton estoque;
     private javax.swing.JButton venda;

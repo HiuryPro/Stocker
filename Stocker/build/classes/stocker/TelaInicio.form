@@ -7,6 +7,7 @@
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="66" green="66" red="66" type="rgb"/>
     </Property>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -31,13 +32,14 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="estoque" alignment="0" max="32767" attributes="0"/>
-                  <Component id="Fornecedores" alignment="0" pref="260" max="32767" attributes="0"/>
-                  <Component id="venda" alignment="0" max="32767" attributes="0"/>
-                  <Component id="entrega" alignment="0" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="estoque" min="-2" pref="260" max="-2" attributes="0"/>
+                  <Component id="entrega" min="-2" pref="260" max="-2" attributes="0"/>
+                  <Component id="Fornecedores" min="-2" pref="260" max="-2" attributes="0"/>
+                  <Component id="venda" min="-2" pref="260" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="738" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="Teste23" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -45,19 +47,18 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Component id="estoque" min="-2" pref="125" max="-2" attributes="0"/>
-              <EmptySpace min="115" pref="115" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="120" pref="120" max="-2" attributes="0"/>
-                      <Component id="entrega" min="-2" pref="125" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="venda" min="-2" pref="125" max="-2" attributes="0"/>
-              </Group>
+              <EmptySpace min="235" pref="235" max="-2" attributes="0"/>
+              <Component id="entrega" min="-2" pref="125" max="-2" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
               <EmptySpace min="120" pref="120" max="-2" attributes="0"/>
               <Component id="Fornecedores" min="-2" pref="125" max="-2" attributes="0"/>
           </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace min="240" pref="240" max="-2" attributes="0"/>
+              <Component id="venda" min="-2" pref="125" max="-2" attributes="0"/>
+          </Group>
+          <Component id="Teste23" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -130,5 +131,20 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="entregaActionPerformed"/>
       </Events>
     </Component>
+    <Container class="javax.swing.JDesktopPane" name="Teste23">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="651" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+    </Container>
   </SubComponents>
 </Form>

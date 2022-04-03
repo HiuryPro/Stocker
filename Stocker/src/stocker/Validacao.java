@@ -5,10 +5,12 @@
  */
 package stocker;
 
+import java.text.ParseException;
 import java.util.InputMismatchException;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -105,6 +107,16 @@ public class Validacao {
             return false;
                     }
     }
-     
+    
+    public String format(String pattern, Object value) {
+        MaskFormatter mask;
+        try {
+            mask = new MaskFormatter(pattern);
+            mask.setValueContainsLiteralCharacters(false);
+            return mask.valueToString(value);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
 
+}
 }

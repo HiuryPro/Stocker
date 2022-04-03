@@ -49,15 +49,22 @@ public class NovaTela {
     private JScrollPane scroll;
     private JLabel nome = new JLabel();
     private JLabel foto = new JLabel();
-    private JLabel idade = new JLabel();
+    private JLabel insce = new JLabel();
     private JLabel email = new JLabel();
     private JLabel telefone = new JLabel();
+    private JLabel cnpj = new JLabel();
+    private JLabel cidade = new JLabel();
+    private JLabel estado = new JLabel();
+    
     private JTextArea descricao = new JTextArea();
     private int escolhido2;
     public JPanel fornecedor;
     public int escolhido;
     public JButton cadastroF;
-
+    
+    Validacao altera = new Validacao();
+    
+    
     public NovaTela() {
         int i = 0;
         novoPanel();
@@ -144,9 +151,10 @@ public class NovaTela {
             escolhido2 = escolhido;
             desc.setVisible(true);
             nome.setText("Nome: " + arquivo.nomes.get(escolhido));
-            idade.setText("Idade: " + String.format(pattern3, arquivo.inscEs.get(escolhido)));
+            insce.setText("Inscrição Estadual: " + altera.format(pattern3, arquivo.inscEs.get(escolhido)));
             email.setText("Email: " + arquivo.emails.get(escolhido));
-            telefone.setText("Telefone: " + String.format(pattern2, arquivo.telefones.get(escolhido)));
+            telefone.setText("Telefone: " + altera.format(pattern2, arquivo.telefones.get(escolhido)));
+            cnpj.setText("CNPJ: " + altera.format(pattern, arquivo.cnpjs.get(escolhido)));
         }
 
     }
@@ -190,7 +198,7 @@ public class NovaTela {
         desc.setLayout(null);
         desc.setBackground(Color.white);
         desc.setLocation(440, 10);
-        desc.setSize(550, 445);
+        desc.setSize(450, 465);
         desc.setBorder(blackline);
         criaLabels();
 
@@ -231,42 +239,52 @@ public class NovaTela {
         escolhido2 = escolhido;
         Font fonte = new Font("Arial", Font.PLAIN, 14);
 
-        foto.setLocation(10, 0);
-
-        foto.setSize(new Dimension(90, 90));
-        icon3.setImage(icon3.getImage().getScaledInstance(foto.getWidth(), foto.getHeight(), 1));
-        foto.setText("Foto");
-        foto.setIcon(icon3);
-
-        nome.setLocation(120, 30);
+      
+        nome.setLocation(10, 30);
         nome.setSize(new Dimension(150, 30));
         nome.setText("Nome");
         nome.setFont(fonte);
 
-        idade.setLocation(270, 30);
+        insce.setLocation(160, 30);
 
-        idade.setSize(new Dimension(150, 30));
-        idade.setText("Idade");
-        idade.setFont(fonte);
+        insce.setSize(new Dimension(240, 30));
+        insce.setText("CNPJ");
+        insce.setFont(fonte);
 
-        email.setLocation(10, 120);
+        cnpj.setLocation(10, 90);
+        cnpj.setSize(new Dimension(220, 30));
+        cnpj.setText("CNPJ");
+        cnpj.setFont(fonte);
+        
+        
+        
+        
+        
+        
+        email.setLocation(10, 190);
 
-        email.setSize(new Dimension(230, 30));
+        email.setSize(new Dimension(250, 30));
         email.setFont(fonte);
         email.setText("Email: hiurylucas@unipam.edu.br");
 
-        telefone.setLocation(250, 120);
+        telefone.setLocation(250, 190);
 
         telefone.setSize(new Dimension(230, 30));
         telefone.setFont(fonte);
         telefone.setText("Telefone: (34) 98893-8608");
 
-        descricao.setLocation(10, 250);
+        descricao.setLocation(10, 280);
         descricao.setSize(430, 100);
         descricao.setBackground(new Color(238, 238, 238));
         descricao.setLineWrap(true);
         descricao.setEditable(false);
 
+        
+        
+        
+        
+        
+        
         JCheckBox deleta = new JCheckBox();
         deleta.setIcon(icon);
         deleta.setRolloverIcon(icon2);
@@ -277,10 +295,11 @@ public class NovaTela {
 
         desc.add(nome);
         desc.add(foto);
-        desc.add(idade);
+        desc.add(insce);
         desc.add(email);
         desc.add(telefone);
         desc.add(descricao);
+        desc.add(cnpj);
         desc.add(deleta);
 
     }
