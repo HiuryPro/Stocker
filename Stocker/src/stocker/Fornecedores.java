@@ -32,11 +32,12 @@ public class Fornecedores extends javax.swing.JInternalFrame {
             Logger.getLogger(Fornecedores.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
-        combo.setSelectedIndex(-1);
         for (i = 0; i < arquivo.nomes.size(); i++) {
             combo.addItem(arquivo.nomes.get(i));
 
         }
+         combo.setSelectedItem(null);
+         descri.setVisible(false);
 
     }
 
@@ -50,12 +51,17 @@ public class Fornecedores extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         combo = new javax.swing.JComboBox<>();
-        jPanel1 = new javax.swing.JPanel();
+        descri = new javax.swing.JPanel();
         nome = new javax.swing.JLabel();
         telefone = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        descricao = new javax.swing.JTextArea();
+        estado = new javax.swing.JLabel();
+        insce = new javax.swing.JLabel();
         cnpj = new javax.swing.JLabel();
+        email = new javax.swing.JLabel();
+        cidade = new javax.swing.JLabel();
+        delete = new javax.swing.JToggleButton();
 
         setClosable(true);
         setTitle("Informações dos Fornecedores");
@@ -67,45 +73,88 @@ public class Fornecedores extends javax.swing.JInternalFrame {
             }
         });
 
+        descri.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
         nome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         nome.setText("jLabel1");
 
         telefone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         telefone.setText("jLabel1");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        descricao.setColumns(20);
+        descricao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        descricao.setLineWrap(true);
+        descricao.setRows(5);
+        descricao.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(descricao);
+
+        estado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        estado.setText("jLabel3");
+
+        insce.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        insce.setText("jLabel1");
 
         cnpj.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cnpj.setText("jLabel3");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(cnpj, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(telefone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+        email.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        email.setText("jLabel3");
+
+        cidade.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cidade.setText("jLabel3");
+
+        delete.setText("Deletar");
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout descriLayout = new javax.swing.GroupLayout(descri);
+        descri.setLayout(descriLayout);
+        descriLayout.setHorizontalGroup(
+            descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(descriLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(delete)
+                    .addGroup(descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
+                        .addGroup(descriLayout.createSequentialGroup()
+                            .addGroup(descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(nome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cnpj, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                .addComponent(email, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(estado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(18, 18, 18)
+                            .addGroup(descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(insce, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                                .addComponent(telefone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        descriLayout.setVerticalGroup(
+            descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(descriLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(insce, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                .addGroup(descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cidade, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(delete)
+                .addGap(27, 27, 27))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -115,20 +164,20 @@ public class Fornecedores extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(descri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(descri, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(189, 189, 189)
                 .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(233, Short.MAX_VALUE))
         );
 
         pack();
@@ -137,6 +186,7 @@ public class Fornecedores extends javax.swing.JInternalFrame {
     private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
         int i;
         i = 0;
+        descricao.setEditable(false);
         String pattern = "##.###.###/####-##";
         String pattern2 = "(##) #####-####";
         String pattern3 = "###.###.###.###";
@@ -146,22 +196,37 @@ public class Fornecedores extends javax.swing.JInternalFrame {
                 nome.setText("Nome: " + arquivo.nomes.get(i));
                 telefone.setText("Telefone: " + altera.format(pattern2, arquivo.telefones.get(i)));
                 cnpj.setText("CNPJ: " + altera.format(pattern, arquivo.cnpjs.get(i)));
-
+                insce.setText("Inscrição Estadual: " + altera.format(pattern3, arquivo.inscEs.get(i)));
+                email.setText("Email: " + arquivo.emails.get(i));
+                 cidade.setText("Cidade: " + arquivo.cidades.get(i));
+                 estado.setText("Estado: "+ arquivo.estados.get(i));
+                 descricao.setText(arquivo.descris.get(i));
             }
             
             i++;
         }
-
+        descri.setVisible(true);
 
     }//GEN-LAST:event_comboActionPerformed
 
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        combo.removeItem(combo.getSelectedItem());
+        descri.setVisible(false);
+// TODO add your handling code here:
+    }//GEN-LAST:event_deleteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel cidade;
     private javax.swing.JLabel cnpj;
     private javax.swing.JComboBox<String> combo;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JToggleButton delete;
+    private javax.swing.JPanel descri;
+    private javax.swing.JTextArea descricao;
+    private javax.swing.JLabel email;
+    private javax.swing.JLabel estado;
+    private javax.swing.JLabel insce;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel nome;
     private javax.swing.JLabel telefone;
     // End of variables declaration//GEN-END:variables

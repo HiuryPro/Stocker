@@ -49,6 +49,7 @@ public class TelaInicio extends javax.swing.JFrame {
                 formWindowOpened(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Fornecedores.setBackground(new java.awt.Color(0, 102, 204));
         Fornecedores.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -59,6 +60,7 @@ public class TelaInicio extends javax.swing.JFrame {
                 FornecedoresActionPerformed(evt);
             }
         });
+        getContentPane().add(Fornecedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 267, 125));
 
         estoque.setBackground(new java.awt.Color(0, 102, 204));
         estoque.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -69,6 +71,7 @@ public class TelaInicio extends javax.swing.JFrame {
                 estoqueActionPerformed(evt);
             }
         });
+        getContentPane().add(estoque, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 267, 125));
 
         venda.setBackground(new java.awt.Color(0, 102, 204));
         venda.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -79,6 +82,7 @@ public class TelaInicio extends javax.swing.JFrame {
                 vendaActionPerformed(evt);
             }
         });
+        getContentPane().add(venda, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 267, 125));
 
         entrega.setBackground(new java.awt.Color(0, 102, 204));
         entrega.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -89,6 +93,7 @@ public class TelaInicio extends javax.swing.JFrame {
                 entregaActionPerformed(evt);
             }
         });
+        getContentPane().add(entrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 267, 125));
 
         javax.swing.GroupLayout Teste23Layout = new javax.swing.GroupLayout(Teste23);
         Teste23.setLayout(Teste23Layout);
@@ -101,33 +106,7 @@ public class TelaInicio extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(estoque, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(entrega, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Fornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(venda, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Teste23))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(estoque, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(235, 235, 235)
-                .addComponent(entrega, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addComponent(Fornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(240, 240, 240)
-                .addComponent(venda, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(Teste23)
-        );
+        getContentPane().add(Teste23, new org.netbeans.lib.awtextra.AbsoluteConstraints(266, 0, -1, 485));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -137,22 +116,16 @@ public class TelaInicio extends javax.swing.JFrame {
         ImageIcon icon1 = new ImageIcon("src/img/vendas1.png");
         ImageIcon icon2 = new ImageIcon("src/img/entrega.png");
         ImageIcon icon3 = new ImageIcon("src/img/pedidos.png");
-        icon.setImage(icon.getImage().getScaledInstance(100, 100, 1));
-        icon1.setImage(icon1.getImage().getScaledInstance(120, 100, 1));
-        icon2.setImage(icon2.getImage().getScaledInstance(100, 80, 1));
-        icon3.setImage(icon3.getImage().getScaledInstance(100, 80, 1));
+        icon.setImage(icon.getImage().getScaledInstance(90, 90, 1));
+        icon1.setImage(icon1.getImage().getScaledInstance(110, 90, 1));
+        icon2.setImage(icon2.getImage().getScaledInstance(90, 70, 1));
+        icon3.setImage(icon3.getImage().getScaledInstance(90, 70, 1));
         estoque.setIcon(icon);
         venda.setIcon(icon1);
         entrega.setIcon(icon2);
         Fornecedores.setIcon(icon3);
         ImageIcon logo = new ImageIcon("src/img/Stocker_blue_transp.png");
-        add(tela.panel);
-        add(tela.panelDes());
-        add(tela.fornecedor);
-        tela.panel.setVisible(false);
-        tela.panelDes().setVisible(false);
-        tela.fornecedor.setVisible(false);
-
+       
 // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
@@ -168,13 +141,7 @@ public class TelaInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_estoqueActionPerformed
 
     private void FornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FornecedoresActionPerformed
-        /*
-        tela.panelDes().setVisible(false);
-        tela.panel.setVisible(true);
-        tela.fornecedor.setVisible(false);
-        initComponents();
-        pack();
-        */
+
         Fornecedores tela3 = new Fornecedores();
         Teste23.add(tela3);
         tela3.setVisible(true);

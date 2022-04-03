@@ -36,25 +36,24 @@ public class Estoque extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Fornecedores = new javax.swing.JButton();
+        Comprar = new javax.swing.JButton();
         estoque = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        telaComprar = new javax.swing.JDesktopPane();
 
         setClosable(true);
         setMinimumSize(new java.awt.Dimension(651, 485));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Fornecedores.setBackground(new java.awt.Color(0, 102, 204));
-        Fornecedores.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        Fornecedores.setForeground(new java.awt.Color(255, 255, 255));
-        Fornecedores.setText("Fornecedores");
-        Fornecedores.addActionListener(new java.awt.event.ActionListener() {
+        Comprar.setBackground(new java.awt.Color(0, 102, 204));
+        Comprar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        Comprar.setForeground(new java.awt.Color(255, 255, 255));
+        Comprar.setText("Comprar");
+        Comprar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FornecedoresActionPerformed(evt);
+                ComprarActionPerformed(evt);
             }
         });
-        getContentPane().add(Fornecedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 260, 125));
+        getContentPane().add(Comprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 326, 125));
 
         estoque.setBackground(new java.awt.Color(0, 102, 204));
         estoque.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -65,36 +64,30 @@ public class Estoque extends javax.swing.JInternalFrame {
                 estoqueActionPerformed(evt);
             }
         });
-        getContentPane().add(estoque, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 125));
+        getContentPane().add(estoque, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 325, 125));
 
-        jToggleButton1.setText("jToggleButton1");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jToggleButton1)
-                .addContainerGap(402, Short.MAX_VALUE))
+        javax.swing.GroupLayout telaComprarLayout = new javax.swing.GroupLayout(telaComprar);
+        telaComprar.setLayout(telaComprarLayout);
+        telaComprarLayout.setHorizontalGroup(
+            telaComprarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 640, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jToggleButton1)
-                .addContainerGap(155, Short.MAX_VALUE))
+        telaComprarLayout.setVerticalGroup(
+            telaComprarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 330, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 520, 200));
+        getContentPane().add(telaComprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 124, 640, 330));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void FornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FornecedoresActionPerformed
-      
+    private void ComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComprarActionPerformed
+        Compras compra = new Compras();
+        telaComprar.add(compra);
+        compra.setVisible(true);
         // TODO add your handling code here:
-    }//GEN-LAST:event_FornecedoresActionPerformed
+    }//GEN-LAST:event_ComprarActionPerformed
 
     private void estoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estoqueActionPerformed
        
@@ -103,10 +96,9 @@ public class Estoque extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Fornecedores;
+    private javax.swing.JButton Comprar;
     private javax.swing.JButton estoque;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JDesktopPane telaComprar;
     // End of variables declaration//GEN-END:variables
 
 }
