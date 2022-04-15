@@ -103,11 +103,11 @@ public class Validacao {
             JOptionPane.showMessageDialog(null, "CNPJ invalido");
             return false;
         } catch (InputMismatchException erro) {
-              JOptionPane.showMessageDialog(null, "CNPJ invalido");
+            JOptionPane.showMessageDialog(null, "CNPJ invalido");
             return false;
-                    }
+        }
     }
-    
+
     public String format(String pattern, Object value) {
         MaskFormatter mask;
         try {
@@ -118,5 +118,7 @@ public class Validacao {
             throw new RuntimeException(e);
         }
 
-}
+    }
+
+    
 }

@@ -212,6 +212,7 @@ public class Fornecedores extends javax.swing.JInternalFrame {
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         combo.removeItem(combo.getSelectedItem());
         descri.setVisible(false);
+        combo.setSelectedItem(null);
 // TODO add your handling code here:
     }//GEN-LAST:event_deleteActionPerformed
 
