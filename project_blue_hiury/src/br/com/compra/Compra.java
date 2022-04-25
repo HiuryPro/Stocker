@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,7 +27,6 @@ public class Compra extends javax.swing.JInternalFrame {
     /**
      * Creates new form Compra
      */
-    
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs2 = null;
@@ -35,7 +35,53 @@ public class Compra extends javax.swing.JInternalFrame {
     Statement st2;
     Statement st3;
     Statement st;
+    public int estoque;
     public String nomes;
+
+    public Compra() {
+        initComponents();
+        conexao = ModuloConexao.conector();
+        try {
+            this.setMaximum(true);
+
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Estoque.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        pegar();
+    }
+
+    private void pegaEstoque() {
+        String sql = "Select * from  estoque where nome_produto = '" + String.valueOf(combo.getSelectedItem()).trim() + "'";
+        try {
+
+            st2 = conexao.createStatement();
+            rs2 = st2.executeQuery(sql);
+            while (rs2.next()) {
+                estoque = rs2.getInt("qtdestoque");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    public void pegar() {
+        String sql = "SELECT * FROM produto";
+        try {
+
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                nomes = rs.getString("nome");
+                combo.addItem(nomes);
+            }
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+    }
 
     private void inserir() {
         /*
@@ -52,38 +98,18 @@ public class Compra extends javax.swing.JInternalFrame {
             
         } catch (Exception e) {
         }
-*/
-    }
-
-    
-    public Compra() {
-        initComponents();
-         conexao = ModuloConexao.conector();
-           try {
-            this.setMaximum(true);
-            
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(Estoque.class.getName()).log(Level.SEVERE, null, ex);
-        }
-           
-          pegar();
-    }
-
-    
-    public void pegar() {
-
+         */
+        String sql = "update  estoque set qtdestoque = ?  where nome_produto = '" + String.valueOf(combo.getSelectedItem()).trim() + "'";
+        estoque = estoque + Integer.parseInt(edtQuantidade.getText());
         try {
-            String sql = "SELECT * FROM produto";
-            st = conexao.createStatement();
-            rs = st.executeQuery(sql);
-            while (rs.next()) {
-                nomes = rs.getString("nome");
-                combo.addItem(nomes);
-            }
-            rs.close();
-            st.close();
-        } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+            pst = conexao.prepareStatement(sql);
+
+            pst.setInt(1, estoque);
+
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
 
     }
@@ -363,6 +389,7 @@ public class Compra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_edtDataInicialActionPerformed
 
     private void btSalavrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalavrActionPerformed
+        pegaEstoque();
         inserir();    // TODO add your handling code here:
     }//GEN-LAST:event_btSalavrActionPerformed
 

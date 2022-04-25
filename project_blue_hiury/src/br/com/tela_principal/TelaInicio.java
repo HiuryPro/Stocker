@@ -10,13 +10,12 @@ import javax.swing.ImageIcon;
 import br.com.fornecedor.Fornecedores;
 import br.com.estoque.Estoque;
 import br.com.compra.telaVenda;
+
 /**
  *
  * @author Hiury
  */
 public class TelaInicio extends javax.swing.JFrame {
-
-   
 
     /**
      * Creates new form TelaInicio
@@ -135,21 +134,19 @@ public class TelaInicio extends javax.swing.JFrame {
         icon1.setImage(icon1.getImage().getScaledInstance(115, 95, 1));
         icon2.setImage(icon2.getImage().getScaledInstance(95, 75, 1));
         icon3.setImage(icon3.getImage().getScaledInstance(90, 70, 1));
-         icon4.setImage(icon4.getImage().getScaledInstance(95, 75, 1));
+        icon4.setImage(icon4.getImage().getScaledInstance(95, 75, 1));
         estoque.setIcon(icon);
         venda.setIcon(icon1);
         entrega.setIcon(icon2);
         Fornecedores.setIcon(icon3);
         clientes.setIcon(icon4);
         ImageIcon logo = new ImageIcon("src/img/Stocker_blue_transp.png");
-       
+
 // TODO add your handling code here:
     }//GEN-LAST:event_formWindowOpened
 
     private void clientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesActionPerformed
-        telaVenda tela4 = new telaVenda();
-        Teste23.add(tela4);
-        tela4.setVisible(true);        // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_clientesActionPerformed
 
     private void estoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estoqueActionPerformed
@@ -173,7 +170,9 @@ public class TelaInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_entregaActionPerformed
 
     private void vendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vendaActionPerformed
-        // TODO add your handling code here:
+        telaVenda tela4 = new telaVenda();
+        Teste23.add(tela4);
+        tela4.setVisible(true);   // TODO add your handling code here:
     }//GEN-LAST:event_vendaActionPerformed
 
     /**
