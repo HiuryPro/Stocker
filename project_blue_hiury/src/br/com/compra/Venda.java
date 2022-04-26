@@ -17,6 +17,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,6 +42,7 @@ public class Venda extends javax.swing.JInternalFrame {
     Statement st;
     public String nomes;
     Validacao altera = new Validacao();
+    public int estoque;
 
     public Venda() {
         initComponents();
@@ -48,11 +54,12 @@ public class Venda extends javax.swing.JInternalFrame {
             java.util.logging.Logger.getLogger(Venda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        pegar();
+        pegarProduto();
+        inserirTabela();
 
     }
 
-    public void pegar() {
+    public void pegarProduto() {
 
         try {
             String sql = "SELECT * FROM produto";
@@ -70,6 +77,91 @@ public class Venda extends javax.swing.JInternalFrame {
 
     }
 
+    private void pegaEstoque() {
+        String sql = "Select * from  estoque where nome_produto = '" + String.valueOf(combo.getSelectedItem()).trim() + "'";
+        try {
+
+            st2 = conexao.createStatement();
+            rs2 = st2.executeQuery(sql);
+            while (rs2.next()) {
+                estoque = rs2.getInt("qtdestoque");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    public void inserir() {
+        String sql = "update  estoque set qtdestoque = ?  where nome_produto = '" + String.valueOf(combo.getSelectedItem()).trim() + "'";
+        estoque = estoque - Integer.parseInt(qtd.getText());
+        try {
+
+            pst = conexao.prepareStatement(sql);
+            pst.setInt(1, estoque);
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        sql = "insert into  produto_venda(nome_produto, preco_unitario, quantidade, total, data_saida) values(?, ?, ?, ?, ? )";
+
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+        try {
+            java.util.Date utilDate = format.parse(dataS.getText());
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, String.valueOf(combo.getSelectedItem()));
+            pst.setFloat(2, Float.parseFloat(edtValor.getText()));
+            pst.setInt(3, Integer.parseInt(qtd.getText()));
+            pst.setFloat(4, Float.parseFloat(edtValor.getText()) * Integer.parseInt(qtd.getText()));
+            pst.setDate(5, sqlDate);
+
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    public void inserirTabela() {
+
+        int i, j;
+        i = 0;
+        j = 0;
+        String data;
+           String pattern3 = "####/##/##";
+        try {
+
+            String sql = "SELECT * FROM produto_venda";
+
+            st2 = conexao.createStatement();
+            rs3 = st2.executeQuery(sql);
+            while (rs3.next()) {
+                tabela.setValueAt(rs3.getString("nome_produto"), i, j);
+                j++;
+                tabela.setValueAt(rs3.getFloat("preco_unitario"), i, j);
+                j++;
+                tabela.setValueAt(rs3.getInt("quantidade"), i, j);
+                j++;
+                tabela.setValueAt(rs3.getFloat("total"), i, j);
+                j++;
+                data = String.valueOf(rs3.getDate("data_Saida")).replaceAll("[^0-9]+", "");
+                tabela.setValueAt(altera.format(pattern3, data), i, j);
+                j++;
+
+                j = 0;
+                i++;
+
+            }
+
+           
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,7 +173,7 @@ public class Venda extends javax.swing.JInternalFrame {
 
         jLabel11 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        edtQuantidade = new javax.swing.JTextField();
+        qtd = new javax.swing.JTextField();
         btSair = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         btSalavr = new javax.swing.JButton();
@@ -89,10 +181,10 @@ public class Venda extends javax.swing.JInternalFrame {
         edtValor = new javax.swing.JTextField();
         combo = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        dataS = new javax.swing.JFormattedTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        tabela = new javax.swing.JTable();
+        total = new javax.swing.JLabel();
 
         setClosable(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -105,12 +197,18 @@ public class Venda extends javax.swing.JInternalFrame {
         jLabel10.setText("Valor");
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, -1, -1));
 
-        edtQuantidade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtQuantidadeActionPerformed(evt);
+        qtd.setText("0");
+        qtd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                qtdMouseClicked(evt);
             }
         });
-        getContentPane().add(edtQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 82, 30));
+        qtd.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                qtdKeyReleased(evt);
+            }
+        });
+        getContentPane().add(qtd, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 82, 30));
 
         btSair.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btSair.setText("Sair");
@@ -132,6 +230,18 @@ public class Venda extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setText("Data De Saida");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, -1, -1));
+
+        edtValor.setText("0.00");
+        edtValor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                edtValorMouseClicked(evt);
+            }
+        });
+        edtValor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                edtValorKeyReleased(evt);
+            }
+        });
         getContentPane().add(edtValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, 56, 30));
 
         getContentPane().add(combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 131, 30));
@@ -140,60 +250,89 @@ public class Venda extends javax.swing.JInternalFrame {
         jLabel12.setText("Produto");
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0"))));
-        getContentPane().add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 130, 30));
+        try {
+            dataS.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        getContentPane().add(dataS, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 130, 30));
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabela.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "produto", "valor", "quantidade", "total"
+                "produto", "valor", "quantidade", "total", "data de Saida"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Float.class
+                java.lang.String.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Float.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabela);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, 180));
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 131, 30));
+        getContentPane().add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 131, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void edtQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtQuantidadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edtQuantidadeActionPerformed
-
     private void btSalavrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalavrActionPerformed
-        // TODO add your handling code here:
+        pegaEstoque();
+        inserir();
+        inserirTabela();
+// TODO add your handling code here:
     }//GEN-LAST:event_btSalavrActionPerformed
+
+    private void edtValorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edtValorMouseClicked
+        if (edtValor.getText().equals("0.00"))
+            edtValor.setText(null);  // TODO add your handling code here:
+    }//GEN-LAST:event_edtValorMouseClicked
+
+    private void qtdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_qtdMouseClicked
+        if (qtd.getText().equals("0"))
+            qtd.setText(null); // TODO add your handling code here:
+    }//GEN-LAST:event_qtdMouseClicked
+
+    private void qtdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_qtdKeyReleased
+        if (qtd.getText() != null && edtValor.getText() != null)
+            total.setText(String.valueOf(Integer.parseInt(qtd.getText()) * Float.parseFloat(edtValor.getText())));  // TODO add your handling code here:
+    }//GEN-LAST:event_qtdKeyReleased
+
+    private void edtValorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtValorKeyReleased
+        if (qtd.getText() != null && edtValor.getText() != null)
+            total.setText(String.valueOf(Integer.parseInt(qtd.getText()) * Float.parseFloat(edtValor.getText())));  // TODO add your handling code here:
+    }//GEN-LAST:event_edtValorKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btSair;
     private javax.swing.JButton btSalavr;
     private javax.swing.JComboBox<String> combo;
-    private javax.swing.JTextField edtQuantidade;
+    private javax.swing.JFormattedTextField dataS;
     private javax.swing.JTextField edtValor;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField qtd;
+    private javax.swing.JTable tabela;
+    private javax.swing.JLabel total;
     // End of variables declaration//GEN-END:variables
 }
