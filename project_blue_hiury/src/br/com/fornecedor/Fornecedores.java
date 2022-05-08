@@ -31,7 +31,7 @@ public class Fornecedores extends javax.swing.JInternalFrame {
     Statement st;
     public String nomes;
     Validacao altera = new Validacao();
-
+    public int id;
     /**
      * Creates new form Fornecedores
      */
@@ -53,8 +53,9 @@ public class Fornecedores extends javax.swing.JInternalFrame {
         descri.setVisible(true);
     }
 
-    public Fornecedores() {
+    public Fornecedores(int i1) {
         int i;
+        id = i1;
         try {
             this.setMaximum(true);
         } catch (PropertyVetoException ex) {

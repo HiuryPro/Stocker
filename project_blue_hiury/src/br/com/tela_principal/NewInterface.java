@@ -32,6 +32,11 @@ public class NewInterface extends javax.swing.JFrame {
     ResultSet rs = null;
     ResultSet confere = null;
     PreparedStatement executa = null;
+    private boolean correto = false;
+    
+    
+    
+    
     
     public NewInterface() {
         initComponents();
@@ -58,6 +63,7 @@ public class NewInterface extends javax.swing.JFrame {
     
     public void login() {
         int i = 1;
+        correto = false;
         
         while (i <= conta()) {
             String CodigoDeConsulta = "SELECT * from usuario_login where id = " + i;
@@ -72,12 +78,10 @@ public class NewInterface extends javax.swing.JFrame {
                         novoLogin.setVisible(true);
                         
                     } else {
-                        new TelaInicio().setVisible(true);
+                        new TelaInicio(i).setVisible(true);
                         this.dispose();
                     }
-                    
-                }else{
-                    JOptionPane.showMessageDialog(null, "Login/Senha incorretos");
+                    correto = true;
                 }
                 
             } catch (SQLException ex) {
@@ -85,6 +89,9 @@ public class NewInterface extends javax.swing.JFrame {
                 
             }
             i++;
+        }
+        if(correto == false){
+            JOptionPane.showMessageDialog(null,"Login/Senha incorreto");
         }
         
     }

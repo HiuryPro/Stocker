@@ -15,10 +15,11 @@ import br.com.produto.Produtos;
  * @author Hiury
  */
 public class Estoque extends javax.swing.JInternalFrame {
-
+    public int id;
     /** Creates new form Teste */
-    public Estoque() {
+    public Estoque(int i) {
         initComponents();
+        id = i;
         try {
             this.setMaximum(true);
             
@@ -87,7 +88,7 @@ public class Estoque extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProdutosActionPerformed
-        Produtos produto = new Produtos();
+        Produtos produto = new Produtos(id);
         telaComprar.add(produto);
         produto.setVisible(true);
         // TODO add your handling code here:

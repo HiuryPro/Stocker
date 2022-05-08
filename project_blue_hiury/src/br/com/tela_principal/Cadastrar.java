@@ -42,6 +42,7 @@ public class Cadastrar extends javax.swing.JFrame {
 
     public void inserirUsuario() {
         String sql = "insert into usuario_dados (nome_empresa, cnpj, email, estado, cidade, endereco, ganho_mensal, telefone ) values(?, ?, ?, ? ,?, ?, ?, ?)";
+        
         try {
             pst = conexao.prepareStatement(sql);
 

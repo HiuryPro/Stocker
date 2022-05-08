@@ -27,9 +27,11 @@ public class Produtos extends javax.swing.JInternalFrame {
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
+    public int id;
 
     public void inserir() {
         String sql = "insert into produto(nome, descricao, preco) values(?, ?, ?)";
+        
         try {
             pst = conexao.prepareStatement(sql);
 
@@ -58,8 +60,9 @@ public class Produtos extends javax.swing.JInternalFrame {
 
     }
 
-    public Produtos() {
+    public Produtos(int i) {
         initComponents();
+        id = i;
         conexao = ModuloConexao.conector();
         try {
             this.setMaximum(true);
@@ -176,7 +179,7 @@ public class Produtos extends javax.swing.JInternalFrame {
                             .addComponent(edtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
                             .addComponent(jLabel2)
                             .addComponent(jScrollPane1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,7 +243,7 @@ public class Produtos extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(78, Short.MAX_VALUE))))
+                        .addContainerGap(346, Short.MAX_VALUE))))
         );
 
         pack();

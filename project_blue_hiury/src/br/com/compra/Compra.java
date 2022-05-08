@@ -37,9 +37,11 @@ public class Compra extends javax.swing.JInternalFrame {
     Statement st;
     public int estoque;
     public String nomes;
+    public int id;
 
-    public Compra() {
+    public Compra(int i) {
         initComponents();
+        id = i;
         conexao = ModuloConexao.conector();
         try {
             this.setMaximum(true);

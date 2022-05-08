@@ -43,11 +43,14 @@ public class Venda extends javax.swing.JInternalFrame {
     public String nomes;
     Validacao altera = new Validacao();
     public int estoque;
-
-    public Venda() {
+    public int id;
+    
+    
+    
+    public Venda(int i) {
         initComponents();
         conexao = ModuloConexao.conector();
-
+        id = i;
         try {
             this.setMaximum(true);
         } catch (PropertyVetoException ex) {
@@ -93,35 +96,39 @@ public class Venda extends javax.swing.JInternalFrame {
     }
 
     public void inserir() {
-        String sql = "update  estoque set qtdestoque = ?  where nome_produto = '" + String.valueOf(combo.getSelectedItem()).trim() + "'";
-        estoque = estoque - Integer.parseInt(qtd.getText());
-        try {
 
-            pst = conexao.prepareStatement(sql);
-            pst.setInt(1, estoque);
-            pst.executeUpdate();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-        sql = "insert into  produto_venda(nome_produto, preco_unitario, quantidade, total, data_saida) values(?, ?, ?, ?, ? )";
+        if (estoque >= Integer.parseInt(qtd.getText())) {
+            String sql = "update  estoque set qtdestoque = ?  where nome_produto = '" + String.valueOf(combo.getSelectedItem()).trim() + "'";
+            try {
+                estoque = estoque - Integer.parseInt(qtd.getText());
+                pst = conexao.prepareStatement(sql);
+                pst.setInt(1, estoque);
+                pst.executeUpdate();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+            sql = "insert into  produto_venda(nome_produto, preco_unitario, quantidade, total, data_saida) values(?, ?, ?, ?, ? )";
 
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-        try {
-            java.util.Date utilDate = format.parse(dataS.getText());
-            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            try {
+                java.util.Date utilDate = format.parse(dataS.getText());
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1, String.valueOf(combo.getSelectedItem()));
-            pst.setFloat(2, Float.parseFloat(edtValor.getText()));
-            pst.setInt(3, Integer.parseInt(qtd.getText()));
-            pst.setFloat(4, Float.parseFloat(edtValor.getText()) * Integer.parseInt(qtd.getText()));
-            pst.setDate(5, sqlDate);
+                pst = conexao.prepareStatement(sql);
+                pst.setString(1, String.valueOf(combo.getSelectedItem()));
+                pst.setFloat(2, Float.parseFloat(edtValor.getText()));
+                pst.setInt(3, Integer.parseInt(qtd.getText()));
+                pst.setFloat(4, Float.parseFloat(edtValor.getText()) * Integer.parseInt(qtd.getText()));
+                pst.setDate(5, sqlDate);
 
-            pst.executeUpdate();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
+                pst.executeUpdate();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }else
+            JOptionPane.showMessageDialog(null,"Erro","Quantidade de Estoque insuficiente", 1);
+
     }
 
     public void inserirTabela() {
@@ -130,7 +137,7 @@ public class Venda extends javax.swing.JInternalFrame {
         i = 0;
         j = 0;
         String data;
-           String pattern3 = "####/##/##";
+        String pattern3 = "####/##/##";
         try {
 
             String sql = "SELECT * FROM produto_venda";
@@ -146,7 +153,7 @@ public class Venda extends javax.swing.JInternalFrame {
                 j++;
                 tabela.setValueAt(rs3.getFloat("total"), i, j);
                 j++;
-                data = String.valueOf(rs3.getDate("data_Saida")).replaceAll("[^0-9]+", "");
+                data = String.valueOf(rs3.getDate("data_saida")).replaceAll("[^0-9]+", "");
                 tabela.setValueAt(altera.format(pattern3, data), i, j);
                 j++;
 
@@ -155,7 +162,6 @@ public class Venda extends javax.swing.JInternalFrame {
 
             }
 
-           
         } catch (SQLException ex) {
             java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }

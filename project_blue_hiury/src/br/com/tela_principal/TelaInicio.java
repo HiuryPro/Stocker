@@ -17,12 +17,16 @@ import br.com.compra.telaVenda;
  */
 public class TelaInicio extends javax.swing.JFrame {
 
+    
+    
+    public int id;
     /**
      * Creates new form TelaInicio
      */
-    public TelaInicio() {
+    public TelaInicio(int i) {
         initComponents();
         setIcon();
+        id = i;
 
     }
 
@@ -69,7 +73,7 @@ public class TelaInicio extends javax.swing.JFrame {
         estoque.setBackground(new java.awt.Color(0, 102, 204));
         estoque.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         estoque.setForeground(new java.awt.Color(255, 255, 255));
-        estoque.setText("Etoque");
+        estoque.setText("Estoque");
         estoque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 estoqueActionPerformed(evt);
@@ -150,7 +154,7 @@ public class TelaInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_clientesActionPerformed
 
     private void estoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estoqueActionPerformed
-        Estoque tela2 = new Estoque();
+        Estoque tela2 = new Estoque(id);
         Teste23.add(tela2);
         tela2.setVisible(true);
         // TODO add your handling code here:
@@ -158,7 +162,7 @@ public class TelaInicio extends javax.swing.JFrame {
 
     private void FornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FornecedoresActionPerformed
 
-        Fornecedores tela3 = new Fornecedores();
+        Fornecedores tela3 = new Fornecedores(id);
         Teste23.add(tela3);
         tela3.setVisible(true);
 // TODO add your handling code here:
@@ -170,7 +174,7 @@ public class TelaInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_entregaActionPerformed
 
     private void vendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vendaActionPerformed
-        telaVenda tela4 = new telaVenda();
+        telaVenda tela4 = new telaVenda(id);
         Teste23.add(tela4);
         tela4.setVisible(true);   // TODO add your handling code here:
     }//GEN-LAST:event_vendaActionPerformed
@@ -206,7 +210,7 @@ public class TelaInicio extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaInicio().setVisible(true);
+                new TelaInicio(0).setVisible(true);
             }
         });
     }

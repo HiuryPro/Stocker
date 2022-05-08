@@ -14,8 +14,11 @@ public class telaVenda extends javax.swing.JInternalFrame {
     /**
      * Creates new form telaVenda
      */
-    public telaVenda() {
+    
+    public int id;
+    public telaVenda(int i) {
         initComponents();
+        id = i;
     }
 
     /**
@@ -64,23 +67,23 @@ public class telaVenda extends javax.swing.JInternalFrame {
         );
         telaComprarLayout.setVerticalGroup(
             telaComprarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 387, Short.MAX_VALUE)
+            .addGap(0, 570, Short.MAX_VALUE)
         );
 
-        getContentPane().add(telaComprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 747, 387));
+        getContentPane().add(telaComprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 747, 570));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void venderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_venderActionPerformed
-        Venda venda = new Venda();
+        Venda venda = new Venda(id);
         telaComprar.add(venda);
         venda.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_venderActionPerformed
 
     private void comprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comprarActionPerformed
-        Compra compra = new Compra();
+        Compra compra = new Compra(id);
         telaComprar.add(compra);
         compra.setVisible(true);
         // TODO add your handling code here:
