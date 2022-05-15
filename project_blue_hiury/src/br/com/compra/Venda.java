@@ -17,10 +17,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
+import java.util.Locale;
+import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JOptionPane;
 
 /**
@@ -44,12 +47,14 @@ public class Venda extends javax.swing.JInternalFrame {
     Validacao altera = new Validacao();
     public int estoque;
     public int id;
-    
-    
-    
+    public String numeroNF;
+    public NotaF nota = new NotaF();
+
     public Venda(int i) {
+
         initComponents();
         conexao = ModuloConexao.conector();
+
         id = i;
         try {
             this.setMaximum(true);
@@ -58,6 +63,7 @@ public class Venda extends javax.swing.JInternalFrame {
         }
 
         pegarProduto();
+        pegarCliente();
         inserirTabela();
 
     }
@@ -71,6 +77,24 @@ public class Venda extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 nomes = rs.getString("nome");
                 combo.addItem(nomes);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void pegarCliente() {
+
+        try {
+            String sql = "SELECT * FROM cliente";
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                nomes = rs.getString("nome");
+                clientC.addItem(nomes);
             }
             rs.close();
             st.close();
@@ -126,9 +150,23 @@ public class Venda extends javax.swing.JInternalFrame {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
-        }else
-            JOptionPane.showMessageDialog(null,"Erro","Quantidade de Estoque insuficiente", 1);
+            inserirTabela();
+            nota.pegaNF();
+            nota.clienteID(clientC);
+            nota.inseriNotaFiscal();
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro", "Quantidade de Estoque insuficiente", 1);
+        }
 
+    }
+
+    public void confirmacao() {
+        int confirmacao;
+        confirmacao = JOptionPane.showConfirmDialog(null, "Deseja realizar está venda?", "Confirmação", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacao == JOptionPane.YES_OPTION) {
+            inserir();
+        }
     }
 
     public void inserirTabela() {
@@ -191,13 +229,15 @@ public class Venda extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         total = new javax.swing.JLabel();
+        clientC = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
 
         setClosable(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel11.setText("Total");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel10.setText("Valor");
@@ -253,8 +293,8 @@ public class Venda extends javax.swing.JInternalFrame {
         getContentPane().add(combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 131, 30));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel12.setText("Produto");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        jLabel12.setText("Cliente");
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         try {
             dataS.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -266,6 +306,11 @@ public class Venda extends javax.swing.JInternalFrame {
         tabela.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -292,16 +337,22 @@ public class Venda extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tabela);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, 180));
-        getContentPane().add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 131, 30));
+        getContentPane().add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 131, 30));
+
+        getContentPane().add(clientC, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 130, 30));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel13.setText("Produto");
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalavrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalavrActionPerformed
+        int teste;
         pegaEstoque();
-        inserir();
-        inserirTabela();
-// TODO add your handling code here:
+        confirmacao();
+
     }//GEN-LAST:event_btSalavrActionPerformed
 
     private void edtValorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edtValorMouseClicked
@@ -328,12 +379,14 @@ public class Venda extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btSair;
     private javax.swing.JButton btSalavr;
+    private javax.swing.JComboBox<String> clientC;
     private javax.swing.JComboBox<String> combo;
     private javax.swing.JFormattedTextField dataS;
     private javax.swing.JTextField edtValor;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
