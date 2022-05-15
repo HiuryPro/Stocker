@@ -3,25 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< Updated upstream
-            <file>file:/C:/Users/samue/Documents/GitHub/Stocker/project_blue_hiury/src/br/com/validacao/Validacoes.java</file>
-            <file>file:/C:/Users/samue/Documents/GitHub/Stocker/project_blue_hiury/src/br/com/tela_principal/NewInterface.java</file>
-            <file>file:/C:/Users/samue/Documents/GitHub/Stocker/project_blue_hiury/src/br/com/tela_principal/NovoCadastro.java</file>
-            <file>file:/C:/Users/samue/Documents/GitHub/Stocker/project_blue_hiury/src/br/com/tela_principal/Cadastrar.java</file>
-=======
-            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/fornecedor/CadastroF.java</file>
-            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/compra/Compra.java</file>
-            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/Relatorio/Relat.java</file>
-            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/estoque/Estoque.java</file>
+            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/compra/ItemCompra.java</file>
             <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/compra/NewJFrame.java</file>
-            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/dal_connexao/ModuloConexao.java</file>
+            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/fornecedor/CadastroF.java</file>
             <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/compra/NotaF.java</file>
-            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/compra/Venda.java</file>
-            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/tela_principal/Cadastrar.java</file>
-            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/tela_principal/TelaInicio.java</file>
             <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/tela_principal/NovoCadastro.java</file>
+            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/tela_principal/Cadastrar.java</file>
+            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/Relatorio/Relat.java</file>
+            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/tela_principal/TelaInicio.java</file>
             <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/compra/telaVenda.java</file>
->>>>>>> Stashed changes
+            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/compra/Venda.java</file>
+            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/dal_connexao/ModuloConexao.java</file>
+            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/compra/Compra.java</file>
+            <file>file:/C:/Users/Hiury/Documents/Git-Projeto/Stocker/project_blue_hiury/src/br/com/estoque/Estoque.java</file>
         </group>
     </open-files>
 </project-private>

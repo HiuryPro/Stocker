@@ -21,7 +21,7 @@ import java.util.ArrayList;
  *
  * @author samue
  */
-public class NewJFrame extends javax.swing.JFrame {
+public class NewJFrame_1 extends javax.swing.JFrame {
 
     Connection conexao = null;
     List lista = null;
@@ -147,7 +147,7 @@ public class NewJFrame extends javax.swing.JFrame {
     Vector<Fornecedor> fornecedor;
     compraData DAO;
 
-    public NewJFrame() {
+    public NewJFrame_1() {
         initComponents();
         ifEntrada.setVisible(false);
 
@@ -577,7 +577,7 @@ public class NewJFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewJFrame().setVisible(true);
+                new NewJFrame_1().setVisible(true);
             }
         });
     }

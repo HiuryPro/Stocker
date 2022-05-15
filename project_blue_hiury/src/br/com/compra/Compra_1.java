@@ -10,7 +10,7 @@ import br.com.compra.ItemCompra;
  *
  * @author samue
  */
-public class Compra {
+public class Compra_1 {
     
     private Fornecedor fornecedor;
     private Integer chave_nf;
