@@ -94,8 +94,8 @@ public class Relat extends javax.swing.JFrame {
             
             
             
-            JasperDesign jDesign = JRXmlLoader.load("C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\relatorio.jrxml");
-            String sql = "SELECT * FROM produto_venda, varia_estoque";
+            JasperDesign jDesign = JRXmlLoader.load("C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\Relatorio.jrxml");
+            String sql = "SELECT * FROM produto_venda";
             JRDesignQuery updateQuery = new JRDesignQuery();
             updateQuery.setText(sql);
             jDesign.setQuery(updateQuery);
