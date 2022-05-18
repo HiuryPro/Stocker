@@ -32,39 +32,20 @@ public class Fornecedores extends javax.swing.JInternalFrame {
     public String nomes;
     Validacao altera = new Validacao();
     public int id;
+
     /**
      * Creates new form Fornecedores
      */
-    public void pegar() {
-        conexao = ModuloConexao.conector();
-
-        try {
-            String sql = "SELECT * FROM fornecedor";
-            st = conexao.createStatement();
-            rs = st.executeQuery(sql);
-            while (rs.next()) {
-                nomes = rs.getString("nome");
-                combo.addItem(nomes);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Fornecedores.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        descri.setVisible(true);
-    }
 
     public Fornecedores(int i1) {
         int i;
         id = i1;
-        try {
-            this.setMaximum(true);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(Fornecedores.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        initComponents();
 
-        descri.setVisible(false);
-        pegar();
+      
+        initComponents();
+        cad.setText("<html>Cadastrar<br>Fornecedor</html>");
+        cadP.setText("<html>Cadastrar<br>Fornecedor-Produto</html>");
+        fornecedor.setText("<html>Dados<br>Fornecedor</html>");
 
     }
 
@@ -77,213 +58,96 @@ public class Fornecedores extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        combo = new javax.swing.JComboBox<>();
-        descri = new javax.swing.JPanel();
-        nome = new javax.swing.JLabel();
-        telefone = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        descricao = new javax.swing.JTextArea();
-        estado = new javax.swing.JLabel();
-        insce = new javax.swing.JLabel();
-        cnpj = new javax.swing.JLabel();
-        email = new javax.swing.JLabel();
-        cidade = new javax.swing.JLabel();
-        delete = new javax.swing.JToggleButton();
-        jButton1 = new javax.swing.JButton();
+        jDialog1 = new javax.swing.JDialog();
+        cadP = new javax.swing.JButton();
+        cad = new javax.swing.JButton();
+        fornecedor = new javax.swing.JButton();
+        telaF = new javax.swing.JDesktopPane();
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setClosable(true);
-        setTitle("Informações dos Fornecedores");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        combo.setMaximumRowCount(4);
-        combo.addActionListener(new java.awt.event.ActionListener() {
+        cadP.setBackground(new java.awt.Color(0, 102, 204));
+        cadP.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        cadP.setForeground(new java.awt.Color(255, 255, 255));
+        cadP.setText("Fornecedor-Produto");
+        cadP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboActionPerformed(evt);
+                cadPActionPerformed(evt);
             }
         });
+        getContentPane().add(cadP, new org.netbeans.lib.awtextra.AbsoluteConstraints(248, 0, 248, 125));
 
-        descri.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        nome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        nome.setText("jLabel1");
-
-        telefone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        telefone.setText("jLabel1");
-
-        descricao.setColumns(20);
-        descricao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        descricao.setLineWrap(true);
-        descricao.setRows(5);
-        descricao.setWrapStyleWord(true);
-        jScrollPane1.setViewportView(descricao);
-
-        estado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        estado.setText("jLabel3");
-
-        insce.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        insce.setText("jLabel1");
-
-        cnpj.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cnpj.setText("jLabel3");
-
-        email.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        email.setText("jLabel3");
-
-        cidade.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cidade.setText("jLabel3");
-
-        delete.setText("Deletar");
-        delete.addActionListener(new java.awt.event.ActionListener() {
+        cad.setBackground(new java.awt.Color(0, 102, 204));
+        cad.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        cad.setForeground(new java.awt.Color(255, 255, 255));
+        cad.setText("Cadastrar Fornecedor");
+        cad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteActionPerformed(evt);
+                cadActionPerformed(evt);
             }
         });
+        getContentPane().add(cad, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 248, 125));
 
-        javax.swing.GroupLayout descriLayout = new javax.swing.GroupLayout(descri);
-        descri.setLayout(descriLayout);
-        descriLayout.setHorizontalGroup(
-            descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, descriLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(delete)
-                .addGap(29, 29, 29))
-            .addGroup(descriLayout.createSequentialGroup()
-                .addGroup(descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(descriLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(nome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cnpj, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(email, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(estado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(telefone, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                            .addComponent(insce, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(descriLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(9, Short.MAX_VALUE))
-        );
-        descriLayout.setVerticalGroup(
-            descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(descriLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(insce, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(descriLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cidade, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
-                .addComponent(delete)
-                .addGap(30, 30, 30))
-        );
-
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton1.setText("Cadastrar Fornecedores");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        fornecedor.setBackground(new java.awt.Color(0, 102, 204));
+        fornecedor.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        fornecedor.setForeground(new java.awt.Color(255, 255, 255));
+        fornecedor.setText("Fornecedor");
+        fornecedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                fornecedorActionPerformed(evt);
             }
         });
+        getContentPane().add(fornecedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 0, 248, 125));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(11, 11, 11)
-                .addComponent(descri, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        javax.swing.GroupLayout telaFLayout = new javax.swing.GroupLayout(telaF);
+        telaF.setLayout(telaFLayout);
+        telaFLayout.setHorizontalGroup(
+            telaFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 745, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(103, 103, 103)
-                .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(descri, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        telaFLayout.setVerticalGroup(
+            telaFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 580, Short.MAX_VALUE)
         );
+
+        getContentPane().add(telaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 125, 745, 580));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
+    private void cadPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadPActionPerformed
 
-        int i;
-        i = 0;
 
-        descricao.setEditable(false);
-        String pattern = "##.###.###/####-##";
-        String pattern2 = "(##) #####-####";
-        String pattern3 = "###.###.###.###";
-        conexao = ModuloConexao.conector();
-        try {
+    }//GEN-LAST:event_cadPActionPerformed
 
-            String sql = "SELECT * FROM fornecedor WHERE id = " + combo.getSelectedIndex() + 1;
+    private void cadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadActionPerformed
+         CadastroForn cad = new CadastroForn();
+        telaF.add(cad);
+        cad.setVisible(true);
+    }//GEN-LAST:event_cadActionPerformed
 
-            st2 = conexao.createStatement();
-            rs3 = st2.executeQuery(sql);
-
-            rs3.next();
-            nome.setText("Nome: " + rs3.getString("nome"));
-            cnpj.setText("CNPJ:" + altera.format(pattern, rs3.getString("cnpj")));
-            telefone.setText("Telefone: " + altera.format(pattern2, rs3.getString("telefone")));
-            insce.setText("Inscrição Estadual: " + altera.format(pattern3, rs3.getString("inscE")));
-            email.setText("Email: " + rs3.getString("email"));
-            cidade.setText("Cidade: " + rs3.getString("cidade"));
-            estado.setText("Estado: " + rs3.getString("estado"));
-            descricao.setText(rs3.getString("descricao"));
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Fornecedores.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        descri.setVisible(true);
-
-    }//GEN-LAST:event_comboActionPerformed
-
-    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-        combo.removeItem(combo.getSelectedItem());
-        descri.setVisible(false);
-        combo.setSelectedItem(null);
-// TODO add your handling code here:
-    }//GEN-LAST:event_deleteActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new CadastroF().setVisible(true);   // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void fornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fornecedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fornecedorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel cidade;
-    private javax.swing.JLabel cnpj;
-    private javax.swing.JComboBox<String> combo;
-    private javax.swing.JToggleButton delete;
-    private javax.swing.JPanel descri;
-    private javax.swing.JTextArea descricao;
-    private javax.swing.JLabel email;
-    private javax.swing.JLabel estado;
-    private javax.swing.JLabel insce;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel nome;
-    private javax.swing.JLabel telefone;
+    private javax.swing.JButton cad;
+    private javax.swing.JButton cadP;
+    private javax.swing.JButton fornecedor;
+    private javax.swing.JDialog jDialog1;
+    private javax.swing.JDesktopPane telaF;
     // End of variables declaration//GEN-END:variables
 }

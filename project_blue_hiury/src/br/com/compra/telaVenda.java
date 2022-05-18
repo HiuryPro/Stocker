@@ -5,6 +5,10 @@
  */
 package br.com.compra;
 
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Hiury
@@ -14,11 +18,13 @@ public class telaVenda extends javax.swing.JInternalFrame {
     /**
      * Creates new form telaVenda
      */
-    
     public int id;
+
     public telaVenda(int i) {
-        initComponents();
-        id = i;
+       
+            initComponents();
+            id = i;
+       
     }
 
     /**
@@ -67,10 +73,10 @@ public class telaVenda extends javax.swing.JInternalFrame {
         );
         telaComprarLayout.setVerticalGroup(
             telaComprarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
+            .addGap(0, 582, Short.MAX_VALUE)
         );
 
-        getContentPane().add(telaComprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 747, 570));
+        getContentPane().add(telaComprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 125, 747, 582));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

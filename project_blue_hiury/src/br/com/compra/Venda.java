@@ -42,11 +42,10 @@ public class Venda extends javax.swing.JInternalFrame {
     Statement st;
     public String nomes;
     Validacao altera = new Validacao();
+    NotaF nota = new NotaF();
     public int estoque;
     public int id;
-    
-    
-    
+
     public Venda(int i) {
         initComponents();
         conexao = ModuloConexao.conector();
@@ -56,7 +55,7 @@ public class Venda extends javax.swing.JInternalFrame {
         } catch (PropertyVetoException ex) {
             java.util.logging.Logger.getLogger(Venda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-
+        pegarCliente();
         pegarProduto();
         inserirTabela();
 
@@ -71,6 +70,24 @@ public class Venda extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 nomes = rs.getString("nome");
                 combo.addItem(nomes);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void pegarCliente() {
+
+        try {
+            String sql = "SELECT * FROM cliente";
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+                nomes = rs.getString("nome");
+                cliente.addItem(nomes);
             }
             rs.close();
             st.close();
@@ -107,7 +124,7 @@ public class Venda extends javax.swing.JInternalFrame {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
-            sql = "insert into  produto_venda(nome_produto, preco_unitario, quantidade, total, data_saida) values(?, ?, ?, ?, ? )";
+            sql = "insert into  produto_venda(nome_produto, preco_unitario, quantidade, total, data_saida, cliente) values(?, ?, ?, ?, ?, ? )";
 
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -121,21 +138,27 @@ public class Venda extends javax.swing.JInternalFrame {
                 pst.setInt(3, Integer.parseInt(qtd.getText()));
                 pst.setFloat(4, Float.parseFloat(edtValor.getText()) * Integer.parseInt(qtd.getText()));
                 pst.setDate(5, sqlDate);
+                pst.setString(6, String.valueOf(cliente.getSelectedItem()));
 
                 pst.executeUpdate();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
-        }else
-            JOptionPane.showMessageDialog(null,"Erro","Quantidade de Estoque insuficiente", 1);
+            nota.pegaNF();
+            nota.clienteID(cliente);
+            nota.inseriNotaFiscal();
+            inserirTabela();
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro", "Quantidade de Estoque insuficiente", 1);
+        }
 
     }
 
     public void inserirTabela() {
 
-        int i, j;
+        int i;
         i = 0;
-        j = 0;
+
         String data;
         String pattern3 = "####/##/##";
         try {
@@ -145,25 +168,55 @@ public class Venda extends javax.swing.JInternalFrame {
             st2 = conexao.createStatement();
             rs3 = st2.executeQuery(sql);
             while (rs3.next()) {
-                tabela.setValueAt(rs3.getString("nome_produto"), i, j);
-                j++;
-                tabela.setValueAt(rs3.getFloat("preco_unitario"), i, j);
-                j++;
-                tabela.setValueAt(rs3.getInt("quantidade"), i, j);
-                j++;
-                tabela.setValueAt(rs3.getFloat("total"), i, j);
-                j++;
-                data = String.valueOf(rs3.getDate("data_saida")).replaceAll("[^0-9]+", "");
-                tabela.setValueAt(altera.format(pattern3, data), i, j);
-                j++;
+                tabela.setValueAt(rs3.getString("nome_produto"), i, 0);
 
-                j = 0;
+                tabela.setValueAt(rs3.getFloat("preco_unitario"), i, 1);
+
+                tabela.setValueAt(rs3.getInt("quantidade"), i, 2);
+
+                tabela.setValueAt(rs3.getFloat("total"), i, 3);
+
+                data = String.valueOf(rs3.getDate("data_saida")).replaceAll("[^0-9]+", "");
+                tabela.setValueAt(altera.format(pattern3, data), i, 4);
+
                 i++;
 
             }
 
         } catch (SQLException ex) {
             java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void inserirVariaE() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String sqls = "insert into varia_estoque(produto,data, quantidadeE) values(?, ?, ?)";
+        try {
+            java.util.Date utilDate = format.parse(dataS.getText());
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            pst = conexao.prepareStatement(sqls);
+
+            pst.setString(1, String.valueOf(combo.getSelectedItem()));
+            pst.setDate(2, sqlDate);
+            pst.setInt(3, estoque);
+            
+            pst.executeUpdate();
+            pst.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+    }
+
+    public void Confirma() {
+        int resultado = JOptionPane.showConfirmDialog(null, "Deseja Vender", "Confirmação", JOptionPane.YES_NO_OPTION);
+
+        if (resultado == JOptionPane.YES_OPTION) {
+            inserir();
+            inserirVariaE();
+        } else {
+
         }
 
     }
@@ -191,13 +244,15 @@ public class Venda extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         total = new javax.swing.JLabel();
+        cliente = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel11.setText("Total");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel10.setText("Valor");
@@ -292,16 +347,25 @@ public class Venda extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tabela);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, 180));
-        getContentPane().add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 131, 30));
+        getContentPane().add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 131, 30));
+
+        cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clienteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 140, 30));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("Cliente");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 70, 20));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalavrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalavrActionPerformed
         pegaEstoque();
-        inserir();
-        inserirTabela();
-// TODO add your handling code here:
+        Confirma(); // TODO add your handling code here:
     }//GEN-LAST:event_btSalavrActionPerformed
 
     private void edtValorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edtValorMouseClicked
@@ -324,13 +388,19 @@ public class Venda extends javax.swing.JInternalFrame {
             total.setText(String.valueOf(Integer.parseInt(qtd.getText()) * Float.parseFloat(edtValor.getText())));  // TODO add your handling code here:
     }//GEN-LAST:event_edtValorKeyReleased
 
+    private void clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_clienteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btSair;
     private javax.swing.JButton btSalavr;
+    private javax.swing.JComboBox<String> cliente;
     private javax.swing.JComboBox<String> combo;
     private javax.swing.JFormattedTextField dataS;
     private javax.swing.JTextField edtValor;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

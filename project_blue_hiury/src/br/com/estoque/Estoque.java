@@ -79,10 +79,10 @@ public class Estoque extends javax.swing.JInternalFrame {
         );
         telaComprarLayout.setVerticalGroup(
             telaComprarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 393, Short.MAX_VALUE)
+            .addGap(0, 582, Short.MAX_VALUE)
         );
 
-        getContentPane().add(telaComprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 124, 747, 393));
+        getContentPane().add(telaComprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 124, 747, 582));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

@@ -12,14 +12,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignDataset;
 import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -36,7 +41,7 @@ public class Relat extends javax.swing.JFrame {
      */
     Connection con;
     PreparedStatement pst;
-   
+
     public Relat() {
         initComponents();
 
@@ -52,6 +57,10 @@ public class Relat extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        deData = new javax.swing.JFormattedTextField();
+        ateData = new javax.swing.JFormattedTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,21 +71,60 @@ public class Relat extends javax.swing.JFrame {
             }
         });
 
+        try {
+            deData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        deData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deDataActionPerformed(evt);
+            }
+        });
+
+        try {
+            ateData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        jLabel1.setText("De");
+
+        jLabel2.setText("Até");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(140, 140, 140)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(141, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(deData, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ateData, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(110, 110, 110)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(109, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(117, 117, 117)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ateData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addGap(54, 54, 54))
         );
 
         pack();
@@ -85,24 +133,42 @@ public class Relat extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         try {
-           
+
             String url = "jdbc:mysql://localhost:3306/stocker";
             String user = "root";
             String password = "";
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stocker","root","");
-            
-            
-            
-            JasperDesign jDesign = JRXmlLoader.load("C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\Relatorio.jrxml");
-            String sql = "SELECT * FROM produto_venda";
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stocker", "root", "");
+
+            JasperDesign jDesign = JRXmlLoader.load("C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\relatorio.jrxml");
+            String sql = "SELECT * FROM produto_venda where (data_saida BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))"; // or  (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))";
+
             JRDesignQuery updateQuery = new JRDesignQuery();
             updateQuery.setText(sql);
             jDesign.setQuery(updateQuery);
 
             JasperReport jReport = JasperCompileManager.compileReport(jDesign);
-            JasperPrint jPrint = JasperFillManager.fillReport(jReport, null, con);
-            JasperViewer.viewReport(jPrint);
+            String para = deData.getText();
+            String para2 = ateData.getText();
+            HashMap<String, Object> hm = new HashMap<>();
+            java.util.Date utilDate, utilDate2;
+            try {
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                utilDate = format.parse(deData.getText());
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                utilDate2 = format.parse(ateData.getText());
+                java.sql.Date sqlDate2 = new java.sql.Date(utilDate2.getTime());
+                JOptionPane.showMessageDialog(null, sqlDate2+""+sqlDate);
+                
+                String teste = "Select * from varia_estoque where (data BETWEEN '" + sqlDate + " ' AND '" + sqlDate2 + "')";
+                hm.put("query", sqlDate);
+                hm.put("query2", sqlDate2);
+                JasperPrint jPrint = JasperFillManager.fillReport(jReport, hm, con);
+                JasperViewer.viewReport(jPrint, false);
+
+            } catch (ParseException ex) {
+                Logger.getLogger(Relat.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
 // TODO add your handling code here:
         } catch (JRException ex) {
@@ -113,6 +179,10 @@ public class Relat extends javax.swing.JFrame {
             Logger.getLogger(Relat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void deDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deDataActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deDataActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,6 +220,10 @@ public class Relat extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField ateData;
+    private javax.swing.JFormattedTextField deData;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }

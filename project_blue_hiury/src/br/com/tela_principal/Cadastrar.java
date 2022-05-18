@@ -6,6 +6,7 @@
 package br.com.tela_principal;
 
 import br.com.dal_connexao.ModuloConexao;
+import br.com.fornecedor.Validacao;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,6 +33,7 @@ public class Cadastrar extends javax.swing.JFrame {
     PreparedStatement executa = null;
     Boolean inserido = false;
     Boolean existente = true;
+    Validacao valida = new Validacao();
 
     public Cadastrar() {
         initComponents();
@@ -112,7 +114,8 @@ public class Cadastrar extends javax.swing.JFrame {
     }
 
     public void inserirUsuario() {
-        String sql = "insert into usuario_dados (nome_empresa, cnpj, email, estado, cidade, endereco, ganho_mensal, telefone ) values(?, ?, ?, ? ,?, ?, ?, ?)";
+        if(valida.validaCNPJ(cnpj.getText().replaceAll("[^0-9]+", ""))){
+             String sql = "insert into usuario_dados (nome_empresa, cnpj, email, estado, cidade, endereco, ganho_mensal, telefone ) values(?, ?, ?, ? ,?, ?, ?, ?)";
 
         try {
             pst = conexao.prepareStatement(sql);
@@ -133,6 +136,10 @@ public class Cadastrar extends javax.swing.JFrame {
             inserido = false;
         }
 
+        }else{
+            JOptionPane.showMessageDialog(null, "Cnpj invalido");
+        }
+       
     }
 
     public String abrevia() {
