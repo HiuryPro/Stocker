@@ -36,12 +36,10 @@ public class Fornecedores extends javax.swing.JInternalFrame {
     /**
      * Creates new form Fornecedores
      */
-
     public Fornecedores(int i1) {
         int i;
         id = i1;
 
-      
         initComponents();
         cad.setText("<html>Cadastrar<br>Fornecedor</html>");
         cadP.setText("<html>Cadastrar<br>Fornecedor-Produto</html>");
@@ -128,12 +126,14 @@ public class Fornecedores extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cadPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadPActionPerformed
-
+        CadastroFP cad = new CadastroFP();
+        telaF.add(cad);
+        cad.setVisible(true);
 
     }//GEN-LAST:event_cadPActionPerformed
 
     private void cadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadActionPerformed
-         CadastroForn cad = new CadastroForn();
+        CadastroForn cad = new CadastroForn();
         telaF.add(cad);
         cad.setVisible(true);
     }//GEN-LAST:event_cadActionPerformed
