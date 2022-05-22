@@ -43,7 +43,7 @@ public class Fornecedores extends javax.swing.JInternalFrame {
         initComponents();
         cad.setText("<html>Cadastrar<br>Fornecedor</html>");
         cadP.setText("<html>Cadastrar<br>Fornecedor-Produto</html>");
-        fornecedor.setText("<html>Dados<br>Fornecedor</html>");
+        fornecedorD.setText("<html>Dados<br>Fornecedor</html>");
 
     }
 
@@ -59,7 +59,7 @@ public class Fornecedores extends javax.swing.JInternalFrame {
         jDialog1 = new javax.swing.JDialog();
         cadP = new javax.swing.JButton();
         cad = new javax.swing.JButton();
-        fornecedor = new javax.swing.JButton();
+        fornecedorD = new javax.swing.JButton();
         telaF = new javax.swing.JDesktopPane();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
@@ -98,16 +98,16 @@ public class Fornecedores extends javax.swing.JInternalFrame {
         });
         getContentPane().add(cad, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 248, 125));
 
-        fornecedor.setBackground(new java.awt.Color(0, 102, 204));
-        fornecedor.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        fornecedor.setForeground(new java.awt.Color(255, 255, 255));
-        fornecedor.setText("Fornecedor");
-        fornecedor.addActionListener(new java.awt.event.ActionListener() {
+        fornecedorD.setBackground(new java.awt.Color(0, 102, 204));
+        fornecedorD.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        fornecedorD.setForeground(new java.awt.Color(255, 255, 255));
+        fornecedorD.setText("Fornecedor");
+        fornecedorD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fornecedorActionPerformed(evt);
+                fornecedorDActionPerformed(evt);
             }
         });
-        getContentPane().add(fornecedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 0, 248, 125));
+        getContentPane().add(fornecedorD, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 0, 248, 125));
 
         javax.swing.GroupLayout telaFLayout = new javax.swing.GroupLayout(telaF);
         telaF.setLayout(telaFLayout);
@@ -138,15 +138,17 @@ public class Fornecedores extends javax.swing.JInternalFrame {
         cad.setVisible(true);
     }//GEN-LAST:event_cadActionPerformed
 
-    private void fornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fornecedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fornecedorActionPerformed
+    private void fornecedorDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fornecedorDActionPerformed
+        FornecedorDados cad = new FornecedorDados();
+        telaF.add(cad);
+        cad.setVisible(true);// TODO add your handling code here:
+    }//GEN-LAST:event_fornecedorDActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cad;
     private javax.swing.JButton cadP;
-    private javax.swing.JButton fornecedor;
+    private javax.swing.JButton fornecedorD;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDesktopPane telaF;
     // End of variables declaration//GEN-END:variables
