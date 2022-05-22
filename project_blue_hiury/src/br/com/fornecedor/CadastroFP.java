@@ -116,7 +116,7 @@ public class CadastroFP extends javax.swing.JInternalFrame {
     }
 
     public void Confirma() {
-        int resultado = JOptionPane.showConfirmDialog(null, "Deseja Vender", "Confirmação", JOptionPane.YES_NO_OPTION);
+        int resultado = JOptionPane.showConfirmDialog(null, "Deseja Cadastrar", "Confirmação", JOptionPane.YES_NO_OPTION);
 
         if (resultado == JOptionPane.YES_OPTION) {
             inserir();

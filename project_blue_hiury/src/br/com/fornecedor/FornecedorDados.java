@@ -7,6 +7,8 @@ package br.com.fornecedor;
 
 import br.com.dal_connexao.ModuloConexao;
 import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,22 +22,24 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
      */
     Connection conexao = null;
     PreparedStatement pst = null;
-    ResultSet rs2 = null;
     ResultSet rs = null;
-    ResultSet rs3 = null;
-    Statement st2;
-    Statement st3;
     Statement st;
     public int estoque;
     public String nomes;
     public int id;
     public int rowCount = 0;
+    public int escolhido;
+    public ArrayList<String> produto = new ArrayList();
+    public ArrayList<Float> preco = new ArrayList();
+
     Validacao altera = new Validacao();
 
     public FornecedorDados() {
         initComponents();
         dica.setText("<html>Clicar duas vezes<br>na tabela para editar</html>");
         conexao = ModuloConexao.conector();
+        pr.setVisible(false);
+        ip.setVisible(false);
         pegaF();
     }
 
@@ -58,51 +62,191 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
     }
 
     public void AdicionaTabela() {
-        if (!" ".equals(String.valueOf(forn.getSelectedItem()))) {
-            String sql = "SELECT produto, preco FROM fornecedor_produto where fornecedor = '" + String.valueOf(forn.getSelectedItem()) + "'";
-            try {
 
-                st = conexao.createStatement();
-                rs = st.executeQuery(sql);
+        String sql = "SELECT produto, preco FROM fornecedor_produto where fornecedor = '" + String.valueOf(forn.getSelectedItem()) + "'";
+        try {
 
-                while (rs.next()) {
-                    rowCount++;
-                    ((DefaultTableModel) tabela.getModel()).setRowCount(rowCount);
-                    tabela.setValueAt(rs.getString("produto"), rowCount - 1, 0);
-                    tabela.setValueAt(rs.getFloat("preco"), rowCount - 1, 1);
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
 
-                }
+            produto.clear();
+            preco.clear();
 
-            } catch (SQLException ex) {
-                java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            while (rs.next()) {
+                produto.add(rs.getString("produto"));
+                preco.add(rs.getFloat("preco"));
+                rowCount++;
+                ((DefaultTableModel) tabela.getModel()).setRowCount(rowCount);
+                tabela.setValueAt(rs.getString("produto"), rowCount - 1, 0);
+                tabela.setValueAt(rs.getFloat("preco"), rowCount - 1, 1);
+
             }
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
     }
 
     public void pegaDados() {
-        if (!" ".equals(String.valueOf(forn.getSelectedItem()))) {
-            String sql = "SELECT * FROM fornecedor where nome = '" + String.valueOf(forn.getSelectedItem()) + "'";
-            try {
 
-                st = conexao.createStatement();
-                rs = st.executeQuery(sql);
+        String sql = "SELECT * FROM fornecedor where nome = '" + String.valueOf(forn.getSelectedItem()) + "'";
+        try {
 
-                while (rs.next()) {
-                    nome.setText(rs.getString("nome"));
-                    cnpj.setText(rs.getString("cnpj"));
-                    inscE.setText(rs.getString("inscE"));
-                    email.setText(rs.getString("email"));
-                    cidade.setText(rs.getString("Cidade"));
-                    estado.setText(rs.getString("estado"));
-                    telefone.setText(rs.getString("telefone"));
-                    descri.setText(rs.getString("descricao"));
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
 
-                }
+            while (rs.next()) {
+                nome.setText(rs.getString("nome"));
+                cnpj.setText(rs.getString("cnpj"));
+                inscE.setText(rs.getString("inscE"));
+                email.setText(rs.getString("email"));
+                cidade.setText(rs.getString("Cidade"));
+                estado.setText(rs.getString("estado"));
+                telefone.setText(rs.getString("telefone"));
+                descri.setText(rs.getString("descricao"));
 
-            } catch (SQLException ex) {
-                java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void atualizaDadosP() {
+        int count, qtd;
+        qtd = ((DefaultTableModel) tabela.getModel()).getRowCount();
+        for (count = 0; count < qtd; count++) {
+            String sql = "UPDATE fornecedor_produto SET produto = ?, preco = ? WHERE produto = '" + produto.get(count) + "' and preco = " + preco.get(count);
+            try {
+                pst = conexao.prepareStatement(sql);
+
+                pst.setString(1, String.valueOf(tabela.getValueAt(count, 0)));
+                pst.setFloat(2, Float.parseFloat(String.valueOf(tabela.getValueAt(count, 1))));
+
+                pst.executeUpdate();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+
+    }
+
+    public void deletaDadosP() {
+        escolhido = Integer.parseInt(linha.getText()) - 1;
+        String sql = "Delete from fornecedor_produto where produto = '" + tabela.getValueAt(escolhido, 0) + "' and preco = " + tabela.getValueAt(escolhido, 1);
+        try {
+            pst = conexao.prepareStatement(sql);
+
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    public void deletaLinha() {
+        if (rowCount > 0) {
+            rowCount--;
+            ((DefaultTableModel) tabela.getModel()).removeRow(escolhido);
+            ((DefaultTableModel) tabela.getModel()).setRowCount(escolhido);
+        }
+
+    }
+
+    public void atualizaForn() {
+
+        String sql = "UPDATE fornecedor SET nome = ?, cnpj = ?, inscE = ?, email = ?, cidade = ?, estado = ?, telefone = ?, descricao = ? WHERE nome = '" + String.valueOf(forn.getSelectedItem()) + "'";
+        try {
+            pst = conexao.prepareStatement(sql);
+
+            pst.setString(1, nome.getText());
+            pst.setString(2, cnpj.getText().replaceAll("[^0-9]+", ""));
+            pst.setString(3, inscE.getText().replaceAll("[^0-9]+", ""));
+            pst.setString(4, email.getText());
+            pst.setString(5, cidade.getText());
+            pst.setString(6, estado.getText());
+            pst.setString(7, telefone.getText().replaceAll("[^0-9]+", ""));
+            pst.setString(8, descri.getText());
+
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+    }
+
+    public void deletaForn() {
+
+        String sql = "Delete from fornecedor_produto where fornecedor ='" + String.valueOf(forn.getSelectedItem()) + "'";
+        try {
+            pst = conexao.prepareStatement(sql);
+
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+        sql = "Delete from fornecedor where nome ='" + String.valueOf(forn.getSelectedItem()) + "'";
+        try {
+            pst = conexao.prepareStatement(sql);
+
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+    }
+
+    public void ConfirmaADP() {
+        int resultado = JOptionPane.showConfirmDialog(null, "Deseja Alterar os Dados de Produto?", "Confirmação", JOptionPane.YES_NO_OPTION);
+
+        if (resultado == JOptionPane.YES_OPTION) {
+            atualizaDadosP();
+
+        } else {
+            // tabela.setValueAt()
+        }
+
+    }
+
+    public void ConfirmaDDP() {
+        int resultado = JOptionPane.showConfirmDialog(null, "Deseja Apagar os Dados de Produto?", "Confirmação", JOptionPane.YES_NO_OPTION);
+
+        if (resultado == JOptionPane.YES_OPTION) {
+            deletaDadosP();
+            deletaLinha();
+
+        } else {
+            // tabela.setValueAt()
+        }
+
+    }
+
+    public void ConfirmaAF() {
+        int resultado = JOptionPane.showConfirmDialog(null, "Deseja Alterar os Dados do Fornecedor?", "Confirmação", JOptionPane.YES_NO_OPTION);
+
+        if (resultado == JOptionPane.YES_OPTION) {
+            atualizaForn();
+
+        } else {
+            // tabela.setValueAt()
+        }
+
+    }
+
+    public void ConfirmaDF() {
+        int resultado = JOptionPane.showConfirmDialog(null, "Deseja Deletar todos os Dados do Fornecedor?", "Confirmação", JOptionPane.YES_NO_OPTION);
+
+        if (resultado == JOptionPane.YES_OPTION) {
+            deletaForn();
+            forn.removeAllItems();
+            pegaF();
+            pr.setVisible(false);
+            ip.setVisible(false);
+
+        } else {
+            // tabela.setValueAt()
         }
 
     }
@@ -117,7 +261,7 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         forn = new javax.swing.JComboBox<>();
-        jPanel1 = new javax.swing.JPanel();
+        ip = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         email = new javax.swing.JTextField();
@@ -134,19 +278,19 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         cnpj = new javax.swing.JFormattedTextField();
         inscE = new javax.swing.JFormattedTextField();
         telefone = new javax.swing.JFormattedTextField();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        AtualizaForn = new javax.swing.JButton();
+        delF = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         cidade = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
+        pr = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        deletaP = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        linha = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         dica = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        AtualizaP = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -156,22 +300,22 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
             }
         });
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        ip.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Email:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, -1, -1));
+        ip.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel8.setText("Estado:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, -1, -1));
+        ip.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, -1, -1));
 
         email.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 240, 35));
+        ip.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 240, 35));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Descrição");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, -1, -1));
+        ip.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, -1, -1));
 
         descri.setColumns(20);
         descri.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -180,31 +324,31 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         descri.setWrapStyleWord(true);
         jScrollPane1.setViewportView(descri);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 410, 90));
+        ip.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 410, 90));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Inscrição Estadual");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
-        jPanel1.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 170, 35));
+        ip.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
+        ip.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 170, 35));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Nome:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 67, -1));
+        ip.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 67, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Telefone:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 87, -1));
+        ip.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 87, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("CNPJ:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 67, -1));
+        ip.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 67, -1));
 
         nome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jPanel1.add(nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 230, 35));
+        ip.add(nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 230, 35));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setText("Cidade:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
+        ip.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
 
         try {
             cnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
@@ -212,7 +356,7 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
         cnpj.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jPanel1.add(cnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 150, 35));
+        ip.add(cnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, 150, 35));
 
         try {
             inscE.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###.###")));
@@ -221,7 +365,7 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         }
         inscE.setText("   .   .   .");
         inscE.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jPanel1.add(inscE, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 130, 35));
+        ip.add(inscE, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 130, 35));
 
         try {
             telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
@@ -229,20 +373,30 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
         telefone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jPanel1.add(telefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 150, 35));
+        ip.add(telefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 150, 35));
 
-        jButton3.setText("Atualizar Dados");
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 500, -1, -1));
+        AtualizaForn.setText("Atualizar Dados");
+        AtualizaForn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AtualizaFornActionPerformed(evt);
+            }
+        });
+        ip.add(AtualizaForn, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 500, -1, -1));
 
-        jButton4.setText("Deletar Fornecedor");
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(276, 500, -1, -1));
+        delF.setText("Deletar Fornecedor");
+        delF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delFActionPerformed(evt);
+            }
+        });
+        ip.add(delF, new org.netbeans.lib.awtextra.AbsoluteConstraints(276, 500, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel10.setText("Informações Pessoais");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 180, 40));
-        jPanel1.add(cidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 170, 35));
+        ip.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 180, 40));
+        ip.add(cidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 170, 35));
 
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pr.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -266,26 +420,36 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         tabela.setPreferredSize(new java.awt.Dimension(210, 403));
         jScrollPane3.setViewportView(tabela);
 
-        jPanel3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 42, 270, 203));
+        pr.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 42, 270, 203));
 
-        jButton2.setText("Deletar Dados");
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, -1, 30));
+        deletaP.setText("Deletar Dados");
+        deletaP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deletaPActionPerformed(evt);
+            }
+        });
+        pr.add(deletaP, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, -1, 30));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel9.setText("Produtos");
-        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, 80, 40));
-        jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 48, -1));
+        pr.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, 80, 40));
+        pr.add(linha, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 48, -1));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setText("linha:");
-        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 290, 41, -1));
+        pr.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 290, 41, -1));
 
         dica.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         dica.setText("Clicar duas vezes na tabela");
-        jPanel3.add(dica, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 140, 60));
+        pr.add(dica, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 140, 60));
 
-        jButton1.setText("Atualizar Dados");
-        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, -1, 30));
+        AtualizaP.setText("Atualizar Dados");
+        AtualizaP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AtualizaPActionPerformed(evt);
+            }
+        });
+        pr.add(AtualizaP, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, -1, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -297,50 +461,73 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addComponent(forn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(forn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(30, 30, 30)
+                .addComponent(forn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(pr, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(9, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(ip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void fornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fornActionPerformed
-        rowCount = 0;
-        ((DefaultTableModel) tabela.getModel()).setRowCount(rowCount);
-        AdicionaTabela();
-        pegaDados();
+        if (!" ".equals(String.valueOf(forn.getSelectedItem()))) {
+            pr.setVisible(true);
+            ip.setVisible(true);
+            rowCount = 0;
+            ((DefaultTableModel) tabela.getModel()).setRowCount(rowCount);
+            AdicionaTabela();
+            pegaDados();
+        }
+
     }//GEN-LAST:event_fornActionPerformed
+
+    private void AtualizaPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizaPActionPerformed
+        ConfirmaADP();
+
+    }//GEN-LAST:event_AtualizaPActionPerformed
+
+    private void deletaPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletaPActionPerformed
+        ConfirmaDDP();
+
+    }//GEN-LAST:event_deletaPActionPerformed
+
+    private void AtualizaFornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizaFornActionPerformed
+        ConfirmaAF();
+    }//GEN-LAST:event_AtualizaFornActionPerformed
+
+    private void delFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delFActionPerformed
+        ConfirmaDF();
+    }//GEN-LAST:event_delFActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AtualizaForn;
+    private javax.swing.JButton AtualizaP;
     private javax.swing.JTextField cidade;
     private javax.swing.JFormattedTextField cnpj;
+    private javax.swing.JButton delF;
+    private javax.swing.JButton deletaP;
     private javax.swing.JTextArea descri;
     private javax.swing.JLabel dica;
     private javax.swing.JTextField email;
     private javax.swing.JTextField estado;
     private javax.swing.JComboBox<String> forn;
     private javax.swing.JFormattedTextField inscE;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JPanel ip;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -352,12 +539,11 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField linha;
     private javax.swing.JFormattedTextField nome;
+    private javax.swing.JPanel pr;
     private javax.swing.JTable tabela;
     private javax.swing.JFormattedTextField telefone;
     // End of variables declaration//GEN-END:variables
