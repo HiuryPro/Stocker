@@ -8,12 +8,14 @@ package br.com.compra;
 import br.com.dal_connexao.ModuloConexao;
 import br.com.estoque.Estoque;
 import br.com.fornecedor.Fornecedores;
+import br.com.fornecedor.Validacao;
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -38,19 +40,16 @@ public class Compra extends javax.swing.JInternalFrame {
     public int estoque;
     public String nomes;
     public int id;
+    Validacao altera = new Validacao();
 
     public Compra(int i) {
         initComponents();
         id = i;
         conexao = ModuloConexao.conector();
-        try {
-            this.setMaximum(true);
+      
 
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(Estoque.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        pegar();
+        pegaF();
+        inserirTabela();
     }
 
     private void pegaEstoque() {
@@ -69,13 +68,14 @@ public class Compra extends javax.swing.JInternalFrame {
     }
 
     public void pegar() {
-        String sql = "SELECT * FROM produto";
+
+        String sql = "SELECT * FROM fornecedor_produto where fornecedor = '" + String.valueOf(cbfornecedo.getSelectedItem()) + "'";
         try {
 
             st = conexao.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                nomes = rs.getString("nome");
+                nomes = rs.getString("produto");
                 combo.addItem(nomes);
             }
 
@@ -85,24 +85,26 @@ public class Compra extends javax.swing.JInternalFrame {
 
     }
 
-    private void inserir() {
-        /*
-        String sql = "insert into notas_fiscal_entrada(numero_nf, chave_nf, id_fornecedor, valor_frete, "
-                + "data_entrada, dataemissao) value(?, ?, ? ,?, ?, ?, ?) ";
+    public void pegaF() {
+        String sql = "SELECT DISTINCT fornecedor FROM fornecedor_produto";
         try {
-            pst = conexao.prepareStatement(sql);
-            pst.setInt(1, Integer.parseInt(edtNumNf.getText()));
-            pst.setInt(2, Integer.parseInt(edtChaveNf.getText()));
-            //pst.setInt(3, Integer.parseInt((cbfornecedo.getSelectedIndex())));
-            pst.setFloat(4, Float.parseFloat(edtValorFre.getText()));
-            pst.setString(5, edtDataInicial.getText());
-            pst.setString(6, edtDataEntrada.getText());
-            
-        } catch (Exception e) {
+
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+            while (rs.next()) {
+
+                cbfornecedo.addItem(rs.getString("fornecedor"));
+            }
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-         */
+
+    }
+
+    private void inserir() {
         String sql = "update  estoque set qtdestoque = ?  where nome_produto = '" + String.valueOf(combo.getSelectedItem()).trim() + "'";
-        estoque = estoque + Integer.parseInt(edtQuantidade.getText());
+        estoque = estoque + Integer.parseInt(qtd.getText());
         try {
 
             pst = conexao.prepareStatement(sql);
@@ -116,6 +118,98 @@ public class Compra extends javax.swing.JInternalFrame {
 
     }
 
+    public void inseriprodutoC() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String sql = "insert into  produto_compra(produtoC, precoC, quantidadeC, frete, totalC, data_entrada, fornecedor) values(?, ?, ?, ?, ?, ?, ?)";
+        try {
+            java.util.Date utilDate = format.parse(dataE.getText());
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, String.valueOf(combo.getSelectedItem()));
+            pst.setFloat(2, Float.parseFloat(edtValor.getText()));
+            pst.setInt(3, Integer.parseInt(qtd.getText()));
+            pst.setFloat(4, Float.parseFloat(frete.getText()));
+            pst.setFloat(5, (Float.parseFloat(edtValor.getText()) * Integer.parseInt(qtd.getText())) + Float.parseFloat(frete.getText()));
+            pst.setDate(6, sqlDate);
+            pst.setString(7, String.valueOf(cbfornecedo.getSelectedItem()));
+
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    public void inserirTabela() {
+
+        int i;
+        i = 0;
+
+        String data;
+        String pattern3 = "####/##/##";
+        try {
+
+            String sql = "SELECT *, date_format(data_entrada, '%d/%m/%Y') as teste FROM produto_compra";
+
+            st2 = conexao.createStatement();
+            rs3 = st2.executeQuery(sql);
+            while (rs3.next()) {
+                tabela.setValueAt(rs3.getString("produtoC"), i, 0);
+
+                tabela.setValueAt(rs3.getFloat("precoC"), i, 1);
+
+                tabela.setValueAt(rs3.getInt("quantidadeC"), i, 2);
+
+                tabela.setValueAt(rs3.getFloat("frete"), i, 3);
+                tabela.setValueAt(rs3.getFloat("totalC"), i, 4);
+                tabela.setValueAt(rs3.getString("fornecedor"), i, 5);
+
+                tabela.setValueAt(rs3.getString("teste"), i, 6);
+
+                i++;
+
+            }
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+    }
+    
+     public void inserirVariaE() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String sqls = "insert into varia_estoque(produto,data, quantidadeE) values(?, ?, ?)";
+        try {
+            java.util.Date utilDate = format.parse(dataE.getText());
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            pst = conexao.prepareStatement(sqls);
+
+            pst.setString(1, String.valueOf(combo.getSelectedItem()));
+            pst.setDate(2, sqlDate);
+            pst.setInt(3, estoque);
+            
+            pst.executeUpdate();
+            pst.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+    }
+
+    public void Confirma() {
+        int resultado = JOptionPane.showConfirmDialog(null, "Deseja Comprar", "Confirmação", JOptionPane.YES_NO_OPTION);
+
+        if (resultado == JOptionPane.YES_OPTION) {
+            inserir();
+            inseriprodutoC();
+            inserirTabela();
+            inserirVariaE();
+        } else {
+
+        }
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -125,54 +219,37 @@ public class Compra extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel4 = new javax.swing.JLabel();
         edtValor = new javax.swing.JTextField();
-        edtDataEntrada = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        btInserir = new javax.swing.JButton();
-        edtValorFre = new javax.swing.JTextField();
         btSair = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        btExcluir = new javax.swing.JButton();
         btSalavr = new javax.swing.JButton();
-        edtTotal = new javax.swing.JTextField();
-        btEditar = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabela = new javax.swing.JTable();
         cbfornecedo = new javax.swing.JComboBox<>();
-        edtQuantidade = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        qtd = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        edtNumNf = new javax.swing.JTextField();
-        edtChaveNf = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        edtDataInicial = new javax.swing.JTextField();
+        frete = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         combo = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        dataE = new javax.swing.JFormattedTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setClosable(true);
 
-        jLabel4.setText("Data De Entrada");
-
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel10.setText("Valor");
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Fornecedor");
-
-        btInserir.setText("Inserir");
-
-        edtValorFre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtValorFreActionPerformed(evt);
-            }
-        });
 
         btSair.setText("Sair");
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Valor Frete");
-
-        btExcluir.setText("Excluir");
 
         btSalavr.setText("Salvar");
         btSalavr.addActionListener(new java.awt.event.ActionListener() {
@@ -181,66 +258,83 @@ public class Compra extends javax.swing.JInternalFrame {
             }
         });
 
-        edtTotal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtTotalActionPerformed(evt);
-            }
-        });
-
-        btEditar.setText("Editar");
-
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel11.setText("Total");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Produto", "Descrição", "QNT.", "Preço"
+                "Produto", "Preço", "Quantidade", "Frete", "Total", "Fornecedor", "Data entrada"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, true, true, true
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class
             };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
             }
         });
-        jTable1.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(jTable1);
+        tabela.setColumnSelectionAllowed(true);
+        jScrollPane1.setViewportView(tabela);
+        tabela.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        cbfornecedo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        edtQuantidade.addActionListener(new java.awt.event.ActionListener() {
+        cbfornecedo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cbfornecedo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtQuantidadeActionPerformed(evt);
+                cbfornecedoActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Numero NF");
+        qtd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                qtdActionPerformed(evt);
+            }
+        });
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel9.setText("Quantidade");
 
-        edtChaveNf.addActionListener(new java.awt.event.ActionListener() {
+        frete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtChaveNfActionPerformed(evt);
+                freteActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Chave NF");
-
-        edtDataInicial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtDataInicialActionPerformed(evt);
-            }
-        });
-
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("Data De Emissão");
+
+        combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        combo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("Produto");
+
+        try {
+            dataE.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -249,179 +343,147 @@ public class Compra extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(edtNumNf))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(edtChaveNf, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel2))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel5)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(cbfornecedo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGap(22, 22, 22)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(edtDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(edtDataEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel4)))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel6)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(edtValorFre, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(btInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(btEditar)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(btExcluir)))
-                                    .addGap(11, 11, 11))))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(btSalavr)
-                                    .addGap(38, 38, 38)
-                                    .addComponent(btSair))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 633, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(11, 11, 11)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(edtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addComponent(cbfornecedo, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(edtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel1)
+                            .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(qtd, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(edtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel5)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(dataE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(345, 345, 345)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
-                            .addComponent(edtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(frete, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(90, 90, 90))
+                                    .addComponent(jLabel6)))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 58, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(262, 262, 262)
+                .addComponent(btSalavr, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel4)))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(edtNumNf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtChaveNf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtDataEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(edtValorFre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(3, 3, 3)
-                            .addComponent(jLabel5)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(cbfornecedo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(qtd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(frete, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbfornecedo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(dataE, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(edtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(edtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(edtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btSalavr, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btSalavr, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btSair, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void edtValorFreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtValorFreActionPerformed
+    private void qtdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qtdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_edtValorFreActionPerformed
+    }//GEN-LAST:event_qtdActionPerformed
 
-    private void edtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtTotalActionPerformed
+    private void freteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_freteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_edtTotalActionPerformed
-
-    private void edtQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtQuantidadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edtQuantidadeActionPerformed
-
-    private void edtChaveNfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtChaveNfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edtChaveNfActionPerformed
-
-    private void edtDataInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtDataInicialActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edtDataInicialActionPerformed
+    }//GEN-LAST:event_freteActionPerformed
 
     private void btSalavrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalavrActionPerformed
         pegaEstoque();
-        inserir();    // TODO add your handling code here:
+        Confirma();
+// TODO add your handling code here:
     }//GEN-LAST:event_btSalavrActionPerformed
+
+    private void cbfornecedoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbfornecedoActionPerformed
+        if (String.valueOf(cbfornecedo.getSelectedItem()).equals(" ")) {
+            combo.removeAllItems();
+            combo.addItem(" ");
+        } else {
+            combo.removeAllItems();
+            combo.addItem(" ");
+            pegar();
+        }
+
+    }//GEN-LAST:event_cbfornecedoActionPerformed
+
+    private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
+        if (String.valueOf(combo.getSelectedItem()).equals(" ")) {
+
+        } else {
+            String sql = "SELECT * FROM fornecedor_produto where fornecedor = '" + String.valueOf(cbfornecedo.getSelectedItem()) + "' and produto ='" + String.valueOf(combo.getSelectedItem()) + "'";
+            try {
+
+                st = conexao.createStatement();
+                rs = st.executeQuery(sql);
+                while (rs.next()) {
+                    edtValor.setText(String.valueOf(rs.getFloat("preco")));
+                }
+
+            } catch (SQLException ex) {
+                java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+
+        } // TODO add your handling code here:
+    }//GEN-LAST:event_comboActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btEditar;
-    private javax.swing.JButton btExcluir;
-    private javax.swing.JButton btInserir;
     private javax.swing.JButton btSair;
     private javax.swing.JButton btSalavr;
     private javax.swing.JComboBox<String> cbfornecedo;
     private javax.swing.JComboBox<String> combo;
-    private javax.swing.JTextField edtChaveNf;
-    private javax.swing.JTextField edtDataEntrada;
-    private javax.swing.JTextField edtDataInicial;
-    private javax.swing.JTextField edtNumNf;
-    private javax.swing.JTextField edtQuantidade;
-    private javax.swing.JTextField edtTotal;
+    private javax.swing.JFormattedTextField dataE;
     private javax.swing.JTextField edtValor;
-    private javax.swing.JTextField edtValorFre;
+    private javax.swing.JTextField frete;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField qtd;
+    private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }

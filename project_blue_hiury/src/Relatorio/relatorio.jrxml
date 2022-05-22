@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null"  pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7c72072c-bfe7-451d-90ef-40bf3b8bc918">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="79c704f8-97da-41f5-b883-b85b9aaae276">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-<<<<<<< Updated upstream
-	<property name="ireport.y" value="48"/>
-=======
-	<property name="ireport.y" value="690"/>
->>>>>>> Stashed changes
-	<queryString language="SQL">
-		<![CDATA[Select * from produto_venda]]>
+	<property name="ireport.y" value="334"/>
+	<style name="Heading 2" fontSize="14" isBold="true" isItalic="true"/>
+	<subDataset name="teste" uuid="03931dd6-6ea0-43eb-8759-6bc0964ee464">
+		<parameter name="query" class="java.sql.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="query2" class="java.sql.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[Select * from varia_estoque where data BETWEEN '$P!{query}' AND '$P!{query2}']]>
+		</queryString>
+		<field name="id" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="produto" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="quantidadeE" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="data" class="java.sql.Date">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="query" class="java.sql.Date"/>
+	<parameter name="query2" class="java.sql.Date"/>
+	<queryString>
+		<![CDATA[Select *  from produto_venda]]>
 	</queryString>
 	<field name="id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -28,183 +50,132 @@
 	<field name="data_saida" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="cliente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="teste" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-<<<<<<< Updated upstream
-		<band height="143" splitType="Stretch">
+		<band height="166" splitType="Stretch">
 			<image>
-				<reportElement x="27" y="0" width="503" height="143" uuid="988a2840-2dbc-4f01-950c-429d88199239"/>
-=======
-		<band height="151" splitType="Stretch">
-			<image>
-				<reportElement x="54" y="-1" width="468" height="152" uuid="e9fe6c7d-76df-4005-8964-27db72ee3688"/>
->>>>>>> Stashed changes
+				<reportElement x="46" y="0" width="484" height="157" uuid="9e8e835d-922b-4485-938d-770cfef9bc47"/>
 				<imageExpression><![CDATA["C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\Stocker_blue_transp.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="38" splitType="Stretch"/>
+		<band height="35" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="43" splitType="Stretch">
+		<band height="37" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="20" width="100" height="20" uuid="6ac09751-6351-40c2-af7d-5623741ba718"/>
+				<reportElement x="0" y="17" width="88" height="20" uuid="2bbad18e-e045-4a46-984b-bfca4404d62f"/>
 				<text><![CDATA[Produto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="100" y="20" width="72" height="20" uuid="9f8e5fa2-2598-4c0d-a964-4a25e019f320"/>
+				<reportElement x="88" y="17" width="87" height="20" uuid="745bb0bd-f4d5-4a51-8738-0eee6ce13e4c"/>
 				<text><![CDATA[Preço]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="172" y="20" width="77" height="20" uuid="adc292a9-b471-430a-b325-922dea4b2a9e"/>
+				<reportElement x="175" y="17" width="87" height="20" uuid="5ec1553a-61c8-4595-ac8e-4d3b358bffaf"/>
 				<text><![CDATA[Quantidade]]></text>
 			</staticText>
 			<staticText>
-<<<<<<< Updated upstream
-				<reportElement x="0" y="41" width="55" height="20" uuid="17f32453-3e03-4e84-bd16-77e570163f22"/>
-				<text><![CDATA[id]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="55" y="41" width="100" height="20" uuid="fb863ed5-1a24-450c-8104-95cd13e412d3"/>
-				<text><![CDATA[Nome produto]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="155" y="41" width="100" height="20" uuid="ce2f7e8a-e1c1-40d3-a9a1-23d669d6355d"/>
-				<text><![CDATA[Preço unitario]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="255" y="41" width="100" height="20" uuid="cd142152-63ba-4605-ba83-6ae51ae4d81c"/>
-				<text><![CDATA[Quantidade]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="355" y="41" width="100" height="20" uuid="2e451cb3-5f2a-4d94-8975-12678fa0c374"/>
-				<text><![CDATA[Total vendido]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="455" y="41" width="100" height="20" uuid="a3fda3ec-b765-4eb6-aebc-2a56331d9040"/>
-				<text><![CDATA[data de saida]]></text>
-=======
-				<reportElement x="249" y="23" width="100" height="20" uuid="42a3be4a-f31a-41db-a773-a03ed14e5d0b"/>
+				<reportElement x="262" y="17" width="100" height="20" uuid="2905165b-e5a9-49cf-bde1-1591ede0a5a6"/>
 				<text><![CDATA[Cliente]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="349" y="20" width="100" height="20" uuid="c42fd9ce-986e-46fe-8117-09915dc09e1d"/>
+				<reportElement x="362" y="17" width="93" height="20" uuid="9cbc91ba-56db-44fe-8bb7-50d0f8e9ace4"/>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="449" y="20" width="100" height="20" uuid="ea89c270-f137-47e9-abcd-1225fcf5c939"/>
-				<text><![CDATA[Data saida]]></text>
->>>>>>> Stashed changes
+				<reportElement x="455" y="17" width="100" height="20" uuid="371dbb62-840a-4b81-989f-01496df29b6f"/>
+				<text><![CDATA[data_saida]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="21" splitType="Stretch">
+		<band height="36" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="55" height="20" uuid="1ef0dad1-521f-4dbd-8aa5-c2d61c143cb3"/>
-				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="55" y="0" width="100" height="20" uuid="b346e47f-33e7-47f8-936a-27788376094f"/>
+				<reportElement x="0" y="0" width="88" height="20" uuid="e66a0edb-256a-4e94-917e-d3369d606247"/>
 				<textFieldExpression><![CDATA[$F{nome_produto}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="155" y="0" width="100" height="20" uuid="b37c07ab-61ff-4943-84da-a562df2f4be5"/>
+				<reportElement x="88" y="0" width="87" height="20" uuid="ecac05d6-2d2f-4178-84f8-fd8086a0ccc6"/>
 				<textFieldExpression><![CDATA[$F{preco_unitario}]]></textFieldExpression>
 			</textField>
 			<textField>
-<<<<<<< Updated upstream
-				<reportElement x="255" y="0" width="100" height="20" uuid="4842755a-021f-41b0-b94e-e3b051b8ad77"/>
+				<reportElement x="175" y="0" width="87" height="20" uuid="55612074-1997-4aaf-8926-8b0805a37aa9"/>
 				<textFieldExpression><![CDATA[$F{quantidade}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="355" y="0" width="100" height="20" uuid="abc78f7f-559c-445f-a998-442a5b7a9aa6"/>
-				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="455" y="0" width="100" height="20" uuid="2a50ea70-5c28-4637-86f6-311d70e2ebfb"/>
-=======
-				<reportElement x="0" y="0" width="100" height="20" uuid="af2e5a23-cb78-4ed3-ab1a-1e67e5beb42c"/>
-				<textFieldExpression><![CDATA[$F{nome_produto}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="100" y="0" width="72" height="20" uuid="e8cbc4da-f160-4a16-97c6-a7ad4a3ce93c"/>
-				<textFieldExpression><![CDATA[$F{preco_unitario}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="249" y="0" width="100" height="20" uuid="72fcb759-e664-4690-92a6-bc9b64a67deb"/>
+				<reportElement x="262" y="0" width="100" height="20" uuid="daceb4ec-58b1-4f01-9138-4f0856f79ce6"/>
 				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="172" y="2" width="77" height="20" uuid="12cde38a-b72a-4e27-8c5f-3e5f31de7a6f"/>
-				<textFieldExpression><![CDATA[$F{quantidade}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="349" y="2" width="100" height="20" uuid="a9b7e48e-dd74-459a-9746-e7be4cc765d5"/>
+				<reportElement x="362" y="0" width="93" height="20" uuid="cde76d4d-00e1-42a9-b52d-d40a07c8d99c"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="449" y="2" width="100" height="20" uuid="d32a9b48-2490-4817-be85-ac24b3bd19d0"/>
->>>>>>> Stashed changes
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="455" y="0" width="100" height="20" uuid="70c25144-e13a-4795-a930-b3fd947c817a"/>
 				<textFieldExpression><![CDATA[$F{data_saida}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="24" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="28" splitType="Stretch">
+		<band height="54" splitType="Stretch">
 			<textField>
-				<reportElement x="455" y="8" width="100" height="20" uuid="eecf3a56-9169-4421-bcac-7487f6ca1c6b"/>
+				<reportElement x="455" y="14" width="100" height="20" uuid="e770b287-a41d-4439-8b27-fc760efffdcf"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="34" width="100" height="20" uuid="1759b7ba-4bb0-4548-92fd-58132efd1722"/>
+				<textFieldExpression><![CDATA[$P{query}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="34" width="100" height="20" uuid="bce33bad-ea05-46ed-a7ba-5bca57c442d4"/>
+				<textFieldExpression><![CDATA[$P{query}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-<<<<<<< Updated upstream
-		<band height="42" splitType="Stretch"/>
-=======
-		<band height="722" splitType="Stretch">
-			<pieChart>
-				<chart>
-					<reportElement x="0" y="0" width="555" height="336" uuid="7d33b78a-2009-4fb9-b8af-e009d5235b65"/>
-					<chartTitle/>
-					<chartSubtitle/>
-					<chartLegend/>
-				</chart>
-				<pieDataset>
-					<keyExpression><![CDATA[$F{nome_produto}]]></keyExpression>
-					<valueExpression><![CDATA[$F{quantidade}]]></valueExpression>
-					<labelExpression><![CDATA[$F{quantidade}.toString()]]></labelExpression>
-				</pieDataset>
-				<piePlot>
-					<plot/>
-					<itemLabel/>
-				</piePlot>
-			</pieChart>
+		<band height="337" splitType="Stretch">
 			<timeSeriesChart>
 				<chart>
-					<reportElement x="0" y="288" width="555" height="336" uuid="7d829afe-dc5a-4e80-9a02-b12c2e11d7d5"/>
-					<chartTitle/>
+					<reportElement positionType="Float" x="0" y="0" width="555" height="170" isPrintWhenDetailOverflows="true" uuid="760ff637-7e66-4072-be7b-1eaa3c3ae7de"/>
+					<chartTitle position="Top">
+						<titleExpression><![CDATA["Variação de Estoque"]]></titleExpression>
+					</chartTitle>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<timeSeriesDataset>
+					<dataset>
+						<datasetRun subDataset="teste" uuid="30a97519-43df-4b9c-99ec-43ea3d41fbbe">
+							<datasetParameter name="query">
+								<datasetParameterExpression><![CDATA[$P{query}]]></datasetParameterExpression>
+							</datasetParameter>
+							<datasetParameter name="query2">
+								<datasetParameterExpression><![CDATA[$P{query2}]]></datasetParameterExpression>
+							</datasetParameter>
+						</datasetRun>
+					</dataset>
 					<timeSeries>
 						<seriesExpression><![CDATA[$F{produto}]]></seriesExpression>
 						<timePeriodExpression><![CDATA[$F{data}]]></timePeriodExpression>
 						<valueExpression><![CDATA[$F{quantidadeE}]]></valueExpression>
-						<labelExpression><![CDATA[""]]></labelExpression>
+						<labelExpression><![CDATA[$F{produto}]]></labelExpression>
 					</timeSeries>
 				</timeSeriesDataset>
 				<timeSeriesPlot>
 					<plot/>
 					<timeAxisFormat>
-						<axisFormat/>
+						<axisFormat tickLabelMask="dd/MM/yyyy"/>
 					</timeAxisFormat>
 					<valueAxisFormat>
 						<axisFormat/>
@@ -212,6 +183,5 @@
 				</timeSeriesPlot>
 			</timeSeriesChart>
 		</band>
->>>>>>> Stashed changes
 	</summary>
 </jasperReport>

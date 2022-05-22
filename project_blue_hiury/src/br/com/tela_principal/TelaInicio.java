@@ -68,7 +68,7 @@ public class TelaInicio extends javax.swing.JFrame {
             .addGap(0, 730, Short.MAX_VALUE)
         );
 
-        getContentPane().add(Teste23, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 755, 730));
+        getContentPane().add(Teste23, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 758, 730));
 
         estoque.setBackground(new java.awt.Color(0, 102, 204));
         estoque.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
