@@ -52,7 +52,7 @@ public class telaVenda extends javax.swing.JInternalFrame {
                 venderActionPerformed(evt);
             }
         });
-        getContentPane().add(vender, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 380, 125));
+        getContentPane().add(vender, new org.netbeans.lib.awtextra.AbsoluteConstraints(373, 0, 374, 125));
 
         comprar.setBackground(new java.awt.Color(0, 102, 204));
         comprar.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -63,7 +63,7 @@ public class telaVenda extends javax.swing.JInternalFrame {
                 comprarActionPerformed(evt);
             }
         });
-        getContentPane().add(comprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 125));
+        getContentPane().add(comprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 373, 125));
 
         javax.swing.GroupLayout telaComprarLayout = new javax.swing.GroupLayout(telaComprar);
         telaComprar.setLayout(telaComprarLayout);

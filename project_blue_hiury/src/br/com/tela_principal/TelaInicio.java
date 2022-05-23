@@ -5,6 +5,7 @@
  */
 package br.com.tela_principal;
 
+import br.com.cliente.TelaCliente;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import br.com.fornecedor.Fornecedores;
@@ -150,7 +151,9 @@ public class TelaInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void clientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesActionPerformed
-        // TODO add your handling code here:
+        TelaCliente tela2 = new TelaCliente();
+        Teste23.add(tela2);
+        tela2.setVisible(true);
     }//GEN-LAST:event_clientesActionPerformed
 
     private void estoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estoqueActionPerformed
