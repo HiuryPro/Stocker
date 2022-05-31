@@ -174,6 +174,17 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e);
         }
 
+        sql = "UPDATE fornecedor_produto SET fornecedor = ? WHERE fornecedor = '" + String.valueOf(forn.getSelectedItem()) + "'";
+        
+        try {
+            pst = conexao.prepareStatement(sql);
+
+            pst.setString(1, nome.getText());
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
     }
 
     public void deletaForn() {
@@ -228,6 +239,9 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
 
         if (resultado == JOptionPane.YES_OPTION) {
             atualizaForn();
+            forn.removeAllItems();
+            pegaF();
+            forn.setSelectedItem(nome.getText());
 
         } else {
             // tabela.setValueAt()
@@ -291,6 +305,7 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
         dica = new javax.swing.JLabel();
         AtualizaP = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
 
         setClosable(true);
 
@@ -344,6 +359,11 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         ip.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 67, -1));
 
         nome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        nome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nomeActionPerformed(evt);
+            }
+        });
         ip.add(nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 230, 35));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -451,6 +471,9 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         });
         pr.add(AtualizaP, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, -1, 30));
 
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel12.setText("Fornecedores");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -459,7 +482,10 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel12))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
                         .addComponent(forn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(pr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
@@ -469,15 +495,18 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(forn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(pr, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(ip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel12)
+                        .addGap(7, 7, 7)
+                        .addComponent(forn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(pr, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(ip, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         pack();
@@ -513,6 +542,10 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         ConfirmaDF();
     }//GEN-LAST:event_delFActionPerformed
 
+    private void nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nomeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AtualizaForn;
@@ -531,6 +564,7 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

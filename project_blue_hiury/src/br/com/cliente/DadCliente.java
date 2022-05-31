@@ -108,6 +108,9 @@ public class DadCliente extends javax.swing.JInternalFrame {
 
         if (resultado == JOptionPane.YES_OPTION) {
             atualizaClien();
+            clien.removeAllItems();
+            pegaC();
+            clien.setSelectedItem(edtNome.getText());
 
         } else {
             // tabela.setValueAt()
