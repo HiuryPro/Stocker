@@ -75,7 +75,9 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void daClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daClienteActionPerformed
-
+        DadCliente venda = new DadCliente();
+        tela2.add(venda);
+        venda.setVisible(true);
     }//GEN-LAST:event_daClienteActionPerformed
 
     private void cadClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadClienteActionPerformed
