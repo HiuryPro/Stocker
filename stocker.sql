@@ -28,8 +28,11 @@ CREATE TABLE `cliente` (
   `cnpj` varchar(14) CHARACTER SET utf8 DEFAULT NULL,
   `cidade` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   `estado` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `faixaR` float NOT NULL,
+  `categoria` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `descricao` varchar(120) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +41,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'Cleiton','123456789','Tiros','Minas'),(2,'Julio','23145644','Tiros','Minas');
+INSERT INTO `cliente` VALUES (1,'Cleiton','123456789','Tiros','Minas',10000,'T.I','Cleiton é um cliente de Tiros.'),(2,'Julio','23145644','Tiros','Minas',40455,'Carros','Julio é um cliente de Tiros.');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,7 +88,7 @@ CREATE TABLE `fornecedor` (
   `telefone` varchar(11) DEFAULT NULL,
   `email` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +97,7 @@ CREATE TABLE `fornecedor` (
 
 LOCK TABLES `fornecedor` WRITE;
 /*!40000 ALTER TABLE `fornecedor` DISABLE KEYS */;
-INSERT INTO `fornecedor` VALUES (1,'Jorge','14572457000185','123456789012','Minas Gerais','Patos de Minas','Jorge é um fornecedor da cidade de Patos de Minas ele vende produtos diversos.','34988567329','jorgefo@gmail.com.br'),(2,'Robson','14572457000187','121212121212','Minas Gerais','Patos de Minas','Robson é um fornecedor de Patos de Minas.','34988759043','robsonfo@gmail.com.br');
+INSERT INTO `fornecedor` VALUES (1,'Jorge','14572457000185','123456789012','Minas Gerais','Patos de Minas','Jorge é um fornecedor da cidade de Patos de Minas ele vende produtos diversos.','34988567329','jorgefo@gmail.com.br');
 /*!40000 ALTER TABLE `fornecedor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,7 +114,7 @@ CREATE TABLE `fornecedor_produto` (
   `produto` varchar(30) DEFAULT NULL,
   `preco` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,7 +123,7 @@ CREATE TABLE `fornecedor_produto` (
 
 LOCK TABLES `fornecedor_produto` WRITE;
 /*!40000 ALTER TABLE `fornecedor_produto` DISABLE KEYS */;
-INSERT INTO `fornecedor_produto` VALUES (1,'Jorge','Maçã',5),(2,'Jorge','Coca-Cola',10),(3,'Robson','Maçã',6);
+INSERT INTO `fornecedor_produto` VALUES (2,'Jorge','Maçã',6);
 /*!40000 ALTER TABLE `fornecedor_produto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -326,4 +329,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-20 15:03:29
+-- Dump completed on 2022-05-31 15:02:30
