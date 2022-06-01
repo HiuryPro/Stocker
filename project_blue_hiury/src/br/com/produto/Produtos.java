@@ -6,7 +6,7 @@
 package br.com.produto;
 
 import br.com.dal_connexao.ModuloConexao;
-import br.com.estoque.Estoque;
+import br.com.estoque.TelaEstoque;
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,7 +40,7 @@ public class Produtos extends javax.swing.JInternalFrame {
             this.setMaximum(true);
 
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(Estoque.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaEstoque.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

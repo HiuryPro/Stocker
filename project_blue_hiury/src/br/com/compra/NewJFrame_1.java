@@ -15,9 +15,6 @@ import java.util.Date;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
-import br.com.compra.ItemCompra;
-import br.com.compra.ItemCompra;
-import br.com.compra.compraData;
 import java.util.ArrayList;
 
 /**

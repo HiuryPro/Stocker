@@ -6,7 +6,7 @@
 package br.com.compra;
 
 import br.com.dal_connexao.ModuloConexao;
-import br.com.estoque.Estoque;
+import br.com.estoque.TelaEstoque;
 import br.com.fornecedor.Fornecedores;
 import br.com.fornecedor.Validacao;
 import java.beans.PropertyVetoException;

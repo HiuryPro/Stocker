@@ -9,7 +9,7 @@ import br.com.cliente.TelaCliente;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import br.com.fornecedor.Fornecedores;
-import br.com.estoque.Estoque;
+import br.com.estoque.TelaEstoque;
 import br.com.compra.telaVenda;
 
 /**
@@ -75,6 +75,7 @@ public class TelaInicio extends javax.swing.JFrame {
         estoque.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         estoque.setForeground(new java.awt.Color(255, 255, 255));
         estoque.setText("Estoque");
+        estoque.setToolTipText("Clique para acessar o estoque");
         estoque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 estoqueActionPerformed(evt);
@@ -157,7 +158,7 @@ public class TelaInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_clientesActionPerformed
 
     private void estoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estoqueActionPerformed
-        Estoque tela2 = new Estoque(id);
+        TelaEstoque tela2 = new TelaEstoque(id);
         Teste23.add(tela2);
         tela2.setVisible(true);
         // TODO add your handling code here:

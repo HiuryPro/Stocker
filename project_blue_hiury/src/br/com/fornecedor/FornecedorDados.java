@@ -36,7 +36,6 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
 
     public FornecedorDados() {
         initComponents();
-        dica.setText("<html>Clicar duas vezes<br>na tabela para editar</html>");
         conexao = ModuloConexao.conector();
         pr.setVisible(false);
         ip.setVisible(false);
@@ -302,8 +301,6 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         deletaP = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         linha = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        dica = new javax.swing.JLabel();
         AtualizaP = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
 
@@ -396,20 +393,22 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         ip.add(telefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 150, 35));
 
         AtualizaForn.setText("Atualizar Dados");
+        AtualizaForn.setToolTipText("Atualiza os dados pessoais do fornecedor");
         AtualizaForn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AtualizaFornActionPerformed(evt);
             }
         });
-        ip.add(AtualizaForn, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 500, -1, -1));
+        ip.add(AtualizaForn, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 500, -1, 30));
 
         delF.setText("Deletar Fornecedor");
+        delF.setToolTipText("Deleta todos os dados deste fornecedor");
         delF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 delFActionPerformed(evt);
             }
         });
-        ip.add(delF, new org.netbeans.lib.awtextra.AbsoluteConstraints(276, 500, -1, -1));
+        ip.add(delF, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 500, -1, 30));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel10.setText("Informações Pessoais");
@@ -440,36 +439,30 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         tabela.setPreferredSize(new java.awt.Dimension(210, 403));
         jScrollPane3.setViewportView(tabela);
 
-        pr.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 42, 270, 203));
+        pr.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 42, 280, 203));
 
-        deletaP.setText("Deletar Dados");
+        deletaP.setText("Deletar linha:");
+        deletaP.setToolTipText("Selecione a linha da tabela a ser deletada na tela e no banco");
         deletaP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deletaPActionPerformed(evt);
             }
         });
-        pr.add(deletaP, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, -1, 30));
+        pr.add(deletaP, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, -1, 30));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel9.setText("Produtos");
         pr.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, 80, 40));
-        pr.add(linha, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 48, -1));
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel11.setText("linha:");
-        pr.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 290, 41, -1));
-
-        dica.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        dica.setText("Clicar duas vezes na tabela");
-        pr.add(dica, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 140, 60));
+        pr.add(linha, new org.netbeans.lib.awtextra.AbsoluteConstraints(228, 250, 50, 30));
 
         AtualizaP.setText("Atualizar Dados");
+        AtualizaP.setToolTipText("Clicar duas vezes da tabela para habilitar edição");
         AtualizaP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AtualizaPActionPerformed(evt);
             }
         });
-        pr.add(AtualizaP, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, -1, 30));
+        pr.add(AtualizaP, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, -1, 30));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel12.setText("Fornecedores");
@@ -479,34 +472,34 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
+                        .addGap(100, 100, 100)
                         .addComponent(jLabel12))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
+                        .addGap(76, 76, 76)
                         .addComponent(forn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(pr, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
                 .addComponent(ip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel12)
-                        .addGap(7, 7, 7)
-                        .addComponent(forn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(pr, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(ip, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(jLabel12)
+                .addGap(7, 7, 7)
+                .addComponent(forn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(pr, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(10, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ip, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -555,7 +548,6 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
     private javax.swing.JButton delF;
     private javax.swing.JButton deletaP;
     private javax.swing.JTextArea descri;
-    private javax.swing.JLabel dica;
     private javax.swing.JTextField email;
     private javax.swing.JTextField estado;
     private javax.swing.JComboBox<String> forn;
@@ -563,7 +555,6 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
     private javax.swing.JPanel ip;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
