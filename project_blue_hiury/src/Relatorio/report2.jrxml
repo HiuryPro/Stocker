@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5070ed31-b94e-4b0a-8805-bdefe175d9dd">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.y" value="110"/>
 	<subDataset name="chart" uuid="e1cc5006-dfb5-4317-9067-1a0a5cca6fd5">
 		<parameter name="query" class="java.lang.String"/>
 		<parameter name="query2" class="java.lang.String"/>
@@ -43,13 +43,45 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="172" splitType="Stretch">
+		<band height="176" splitType="Stretch">
 			<image>
 				<reportElement x="42" y="0" width="484" height="157" uuid="0610b3ff-4101-4614-95f1-4a96a79923cb"/>
 				<imageExpression><![CDATA["C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\Stocker_blue_transp.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
+	<columnHeader>
+		<band height="50">
+			<staticText>
+				<reportElement x="0" y="30" width="185" height="20" uuid="611c3a08-83ba-4d7d-a5da-a18d822efe9f"/>
+				<text><![CDATA[Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="30" width="185" height="20" uuid="6333c38c-041b-4808-b65f-2fc4e154fee8"/>
+				<text><![CDATA[Quantidade no Estoque]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="30" width="185" height="20" uuid="5279c819-7544-4de9-a820-3c507924ef40"/>
+				<text><![CDATA[Data de Variação]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22">
+			<textField>
+				<reportElement x="0" y="0" width="185" height="20" uuid="8c61c29d-6bb1-4931-8a97-bb828807c963"/>
+				<textFieldExpression><![CDATA[$F{produto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="0" width="185" height="20" uuid="6d196534-42cd-4d91-9fed-d872fd5a2565"/>
+				<textFieldExpression><![CDATA[$F{quantidadeE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="370" y="0" width="185" height="20" uuid="e57bcc85-f050-4c59-8c31-9613a47c857a"/>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
 	<pageFooter>
 		<band height="54" splitType="Stretch">
 			<textField>
@@ -59,12 +91,12 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="290" splitType="Stretch">
+		<band height="383" splitType="Stretch">
 			<timeSeriesChart>
 				<chart>
-					<reportElement isPrintRepeatedValues="false" x="0" y="0" width="555" height="290" uuid="e5c80e56-a67f-44bd-b9fd-53568ca8a245"/>
+					<reportElement isPrintRepeatedValues="false" x="0" y="19" width="555" height="290" uuid="e5c80e56-a67f-44bd-b9fd-53568ca8a245"/>
 					<chartTitle>
-						<titleExpression><![CDATA["Variação de estoque"]]></titleExpression>
+						<titleExpression><![CDATA["Variação de estoque entre "+ $P{query} + " e " + $P{query2}]]></titleExpression>
 					</chartTitle>
 					<chartSubtitle/>
 					<chartLegend/>
