@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author Hiury
  */
-public class NotaF {
+public class NotaFSaida {
 
     Connection conexao = null;
     PreparedStatement pst = null;
@@ -30,7 +30,7 @@ public class NotaF {
     public int clienteID;
     public String numeroNF;
 
-    public NotaF() {
+    public NotaFSaida() {
         conexao = ModuloConexao.conector();
         numeroNF = "000000000";
     }
@@ -60,7 +60,7 @@ public class NotaF {
 
             }
         } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(NotaF.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NotaFSaida.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -76,7 +76,7 @@ public class NotaF {
 
             pst.executeUpdate();
         } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(NotaF.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NotaFSaida.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -94,7 +94,7 @@ public class NotaF {
 
             }
         } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(NotaF.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NotaFSaida.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
