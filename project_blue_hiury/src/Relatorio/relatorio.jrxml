@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="79c704f8-97da-41f5-b883-b85b9aaae276">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="635"/>
+	<property name="ireport.y" value="160"/>
 	<style name="Heading 2" fontSize="14" isBold="true" isItalic="true"/>
 	<subDataset name="teste" uuid="03931dd6-6ea0-43eb-8759-6bc0964ee464">
 		<parameter name="query" class="java.sql.Date">
@@ -45,7 +45,7 @@
 		</field>
 	</subDataset>
 	<subDataset name="dataset3" uuid="df51ec97-2b50-4826-83e6-19f7b4e05ff5"/>
-	<parameter name="total" class="java.sql.Date"/>
+	<parameter name="total1" class="java.sql.Date"/>
 	<parameter name="total2" class="java.sql.Date"/>
 	<queryString>
 		<![CDATA[Select *  from produto_venda]]>
@@ -87,32 +87,40 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="43" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="43" uuid="ccf90786-39bb-4637-a848-56771e2f7d0d"/>
+				<textElement textAlignment="Center">
+					<font size="28"/>
+				</textElement>
+				<text><![CDATA[Relatório de Vendas]]></text>
+			</staticText>
+		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="37" splitType="Stretch">
+		<band height="64" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="17" width="88" height="20" uuid="2bbad18e-e045-4a46-984b-bfca4404d62f"/>
+				<reportElement x="0" y="44" width="88" height="20" uuid="2bbad18e-e045-4a46-984b-bfca4404d62f"/>
 				<text><![CDATA[Produto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="88" y="17" width="87" height="20" uuid="745bb0bd-f4d5-4a51-8738-0eee6ce13e4c"/>
+				<reportElement x="88" y="44" width="87" height="20" uuid="745bb0bd-f4d5-4a51-8738-0eee6ce13e4c"/>
 				<text><![CDATA[Preço]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="175" y="17" width="87" height="20" uuid="5ec1553a-61c8-4595-ac8e-4d3b358bffaf"/>
+				<reportElement x="175" y="44" width="87" height="20" uuid="5ec1553a-61c8-4595-ac8e-4d3b358bffaf"/>
 				<text><![CDATA[Quantidade]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="262" y="17" width="100" height="20" uuid="2905165b-e5a9-49cf-bde1-1591ede0a5a6"/>
+				<reportElement x="262" y="44" width="100" height="20" uuid="2905165b-e5a9-49cf-bde1-1591ede0a5a6"/>
 				<text><![CDATA[Cliente]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="362" y="17" width="93" height="20" uuid="9cbc91ba-56db-44fe-8bb7-50d0f8e9ace4"/>
+				<reportElement x="362" y="44" width="93" height="20" uuid="9cbc91ba-56db-44fe-8bb7-50d0f8e9ace4"/>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="455" y="17" width="100" height="20" uuid="371dbb62-840a-4b81-989f-01496df29b6f"/>
+				<reportElement x="455" y="44" width="100" height="20" uuid="371dbb62-840a-4b81-989f-01496df29b6f"/>
 				<text><![CDATA[data_saida]]></text>
 			</staticText>
 		</band>
@@ -145,6 +153,26 @@
 			</textField>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="50">
+			<staticText>
+				<reportElement x="0" y="10" width="184" height="20" uuid="a512a8d6-d180-494f-966e-f0edeb414faa"/>
+				<text><![CDATA[Quantidade total comprada no período:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="156" height="20" uuid="a828eb62-52a0-4310-bd89-46eaba77ecd9"/>
+				<text><![CDATA[Quantidade gasta no período:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="156" y="30" width="100" height="20" uuid="f6bf7902-1cff-40b6-9bf5-e8281b5538f5"/>
+				<textFieldExpression><![CDATA[$P{total2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="10" width="100" height="20" uuid="c3220e5d-8c01-4e9f-a845-b3ca2b7a0768"/>
+				<textFieldExpression><![CDATA[$P{total1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
 	<pageFooter>
 		<band height="74" splitType="Stretch">
 			<textField>

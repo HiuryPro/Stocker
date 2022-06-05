@@ -2,7 +2,49 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c2b1796-d0db-4046-af84-1e455c488060">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="111"/>
+	<subDataset name="teste2" uuid="20db0f79-b84a-4eff-a28c-15018f7181d1">
+		<queryString language="SQL">
+			<![CDATA[Select * from relatoriototal]]>
+		</queryString>
+		<field name="id" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="nome_produto" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="qtd_total" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="preco_total" class="java.lang.Float">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="teste" uuid="c6a895f7-d857-4725-b3f6-2ad12e912ff6">
+		<parameter name="query" class="java.sql.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="query2" class="java.sql.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[Select * from relatoriototal]]>
+		</queryString>
+		<field name="id" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="nome_produto" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="qtd_total" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="preco_total" class="java.lang.Float">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="total1" class="java.lang.String"/>
+	<parameter name="total2" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[Select * from produto_compra]]>
 	</queryString>
@@ -43,7 +85,15 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="43" uuid="b68e3761-9a1e-417d-85c0-caf95496a73f"/>
+				<textElement textAlignment="Center">
+					<font size="28"/>
+				</textElement>
+				<text><![CDATA[Relatório de Compras]]></text>
+			</staticText>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="64" splitType="Stretch">
@@ -110,7 +160,24 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="5" width="184" height="20" uuid="9de4ce1f-c945-45cf-a1c2-af754793958e"/>
+				<text><![CDATA[Quantidade total comprada no período:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="25" width="156" height="20" uuid="d96d667f-837a-4659-8904-a19389df13aa"/>
+				<text><![CDATA[Quantidade gasta no período:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="156" y="25" width="100" height="20" uuid="40ec51c8-46cf-4924-be3d-afebddfe2555"/>
+				<textFieldExpression><![CDATA[$P{total2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="5" width="100" height="20" uuid="54efca98-0d40-4e8c-9fc6-a836bca36c50"/>
+				<textFieldExpression><![CDATA[$P{total1}]]></textFieldExpression>
+			</textField>
+		</band>
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch">
@@ -121,6 +188,109 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="802" splitType="Stretch">
+			<barChart>
+				<chart>
+					<reportElement x="0" y="0" width="555" height="237" uuid="35abf0d9-6687-491c-b55c-e01d82164d26"/>
+					<chartTitle>
+						<titleExpression><![CDATA["Quantidade total comprado no periodo (por produto)"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="teste" uuid="1e6382da-06f0-412e-9182-9056d7106bd0"/>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{nome_produto}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nome_produto}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{qtd_total}]]></valueExpression>
+						<labelExpression><![CDATA[$F{nome_produto}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+			<barChart>
+				<chart>
+					<reportElement x="0" y="252" width="555" height="237" uuid="769381c3-2185-4c74-bcd4-8a06463c9b89"/>
+					<chartTitle>
+						<titleExpression><![CDATA["Quantidade total gasto no periodo (por produto)"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="teste" uuid="004fc22f-2a3e-4010-9ede-7138bcd9418b"/>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{nome_produto}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nome_produto}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{preco_total}]]></valueExpression>
+						<labelExpression><![CDATA[$F{nome_produto}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+			<pieChart>
+				<chart>
+					<reportElement x="0" y="496" width="277" height="306" uuid="81ffcde0-2f17-447c-a446-24fae3ccf797"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<datasetRun subDataset="teste" uuid="f9485ddf-c31e-4955-a660-58941cf26297"/>
+					</dataset>
+					<keyExpression><![CDATA[$F{nome_produto}]]></keyExpression>
+					<valueExpression><![CDATA[$F{qtd_total}]]></valueExpression>
+					<labelExpression><![CDATA[$F{qtd_total}.toString()]]></labelExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<pieChart>
+				<chart>
+					<reportElement x="277" y="496" width="278" height="306" uuid="c601df20-c1d4-4961-a116-51d5f1bf8024"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset>
+						<datasetRun subDataset="teste" uuid="ca600741-bf62-442a-8bf0-7e03e169c307"/>
+					</dataset>
+					<keyExpression><![CDATA[$F{nome_produto}]]></keyExpression>
+					<valueExpression><![CDATA[$F{preco_total}]]></valueExpression>
+					<labelExpression><![CDATA[$F{preco_total}.toString()]]></labelExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
 	</summary>
 </jasperReport>
