@@ -30,15 +30,17 @@ import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
+
 /**
  *
  * @author Hiury
  */
 public class Relatorio {
-    Connection con;
+
+    Connection con, con1, con2;
     PreparedStatement pst;
-    
-    public void criaRelatorio(JTextField deData, JTextField ateData){
+
+    public void criaRelatorio(JTextField deData, JTextField ateData) {
         try {
 
             String url = "jdbc:mysql://localhost:3306/stocker";
@@ -46,6 +48,37 @@ public class Relatorio {
             String password = "";
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stocker", "root", "");
+
+            JasperDesign jDesign = JRXmlLoader.load("C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\report1.jrxml");
+            String sql = "SELECT * FROM produto_compra where (data_entrada BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))"; // or  (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))";
+
+            JRDesignQuery updateQuery = new JRDesignQuery();
+            updateQuery.setText(sql);
+            jDesign.setQuery(updateQuery);
+
+            JasperReport jReport = JasperCompileManager.compileReport(jDesign);
+
+            JasperPrint jPrint = JasperFillManager.fillReport(jReport, null, con);
+            JasperViewer.viewReport(jPrint, false);
+
+// TODO add your handling code here:
+        } catch (JRException ex) {
+            Logger.getLogger(Relat.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Relat.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Relat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void criaRelatorio2(JTextField deData, JTextField ateData) {
+        try {
+
+            String url = "jdbc:mysql://localhost:3306/stocker";
+            String user = "root";
+            String password = "";
+            Class.forName("com.mysql.jdbc.Driver");
+            con1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/stocker", "root", "");
 
             JasperDesign jDesign = JRXmlLoader.load("C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\relatorio.jrxml");
             String sql = "SELECT * FROM produto_venda where (data_saida BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))"; // or  (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))";
@@ -55,26 +88,60 @@ public class Relatorio {
             jDesign.setQuery(updateQuery);
 
             JasperReport jReport = JasperCompileManager.compileReport(jDesign);
+
+            JasperPrint jPrint = JasperFillManager.fillReport(jReport, null, con1);
+            JasperViewer.viewReport(jPrint, false);
+
+// TODO add your handling code here:
+        } catch (JRException ex) {
+            Logger.getLogger(Relat.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Relat.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Relat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void criaRelatorio3(JTextField deData, JTextField ateData) {
+        try {
+
+            String url = "jdbc:mysql://localhost:3306/stocker";
+            String user = "root";
+            String password = "";
+            Class.forName("com.mysql.jdbc.Driver");
+            con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/stocker", "root", "");
+
+            JasperDesign jDesign = JRXmlLoader.load("C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\report2.jrxml");
+            String sql = "SELECT * FROM varia_estoque where (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))"; // or  (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))";
+
+            JRDesignQuery updateQuery = new JRDesignQuery();
+            updateQuery.setText(sql);
+            jDesign.setQuery(updateQuery);
+
+            JasperReport jReport = JasperCompileManager.compileReport(jDesign);
+
             String para = deData.getText();
             String para2 = ateData.getText();
             HashMap<String, Object> hm = new HashMap<>();
             java.util.Date utilDate, utilDate2;
+
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             try {
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                 utilDate = format.parse(deData.getText());
                 java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
                 utilDate2 = format.parse(ateData.getText());
                 java.sql.Date sqlDate2 = new java.sql.Date(utilDate2.getTime());
-                JOptionPane.showMessageDialog(null, sqlDate2+""+sqlDate);
                 
-                String teste = "Select * from varia_estoque where (data BETWEEN '" + sqlDate + " ' AND '" + sqlDate2 + "')";
+                
                 hm.put("query", sqlDate);
                 hm.put("query2", sqlDate2);
-                JasperPrint jPrint = JasperFillManager.fillReport(jReport, hm, con);
+                
+                
+                JasperPrint jPrint = JasperFillManager.fillReport(jReport, null, con2);
                 JasperViewer.viewReport(jPrint, false);
 
             } catch (ParseException ex) {
-                Logger.getLogger(Relat.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
             }
 
 // TODO add your handling code here:
@@ -86,5 +153,5 @@ public class Relatorio {
             Logger.getLogger(Relat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

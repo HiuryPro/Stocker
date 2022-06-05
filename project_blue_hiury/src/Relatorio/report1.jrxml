@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c2b1796-d0db-4046-af84-1e455c488060">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[Select * from produto_compra]]>
+	</queryString>
+	<field name="produtoC" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precoC" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantidadeC" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalC" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data_entrada" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fornecedor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="frete" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="164" splitType="Stretch">
+			<image>
+				<reportElement x="44" y="-194" width="484" height="157" uuid="8169981d-a1bb-4a7a-ad81-82444f57f2d0"/>
+				<imageExpression><![CDATA["C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\Stocker_blue_transp.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="34" y="0" width="484" height="157" uuid="eac9f48e-00cd-4e3c-a098-4012f1f73e1f"/>
+				<imageExpression><![CDATA["C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\Stocker_blue_transp.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="64" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="44" width="100" height="20" uuid="6a0cd5ca-ba80-43a0-b3c3-4ba25c18a2c1"/>
+				<text><![CDATA[Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="44" width="72" height="20" uuid="abc783f8-29eb-4ebf-8f50-f6c501c91880"/>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="172" y="44" width="63" height="20" uuid="6879f1e0-2299-4596-9ac9-439e11b2034f"/>
+				<text><![CDATA[Preço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="235" y="44" width="100" height="20" uuid="f7d5f0a7-68ae-4f8e-8966-f717f0f5f035"/>
+				<text><![CDATA[Fornecedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="465" y="44" width="90" height="20" uuid="ab607c83-e0fd-41c4-bc7d-6496ed49707a"/>
+				<text><![CDATA[Data Entrada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="396" y="44" width="69" height="20" uuid="c88e3f5f-4014-40c7-91c9-545d0cbb5812"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="335" y="44" width="61" height="20" uuid="56c43d17-df91-4d4b-8290-0f69d066644b"/>
+				<text><![CDATA[Frete]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="ed8ab1f9-9fc8-4359-b7d4-f6b51b98761c"/>
+				<textFieldExpression><![CDATA[$F{produtoC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="72" height="20" uuid="109d7d58-bb08-4a17-962c-455023fe38d0"/>
+				<textFieldExpression><![CDATA[$F{quantidadeC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="172" y="0" width="63" height="20" uuid="56799a2d-bb3d-4e47-9f1e-f550b08bb338"/>
+				<textFieldExpression><![CDATA[$F{precoC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="235" y="0" width="100" height="20" uuid="e49f3022-ddfb-4ae9-8761-ad4461a6c750"/>
+				<textFieldExpression><![CDATA[$F{fornecedor}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="396" y="0" width="69" height="20" uuid="74b13eea-5eed-43b7-bbd5-1eb439e0e4e2"/>
+				<textFieldExpression><![CDATA[$F{totalC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="335" y="0" width="61" height="20" uuid="b7aaf8fc-a0c2-4ee0-bb43-69b967c29f68"/>
+				<textFieldExpression><![CDATA[$F{frete}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="465" y="0" width="90" height="20" uuid="46a3d113-569b-46f9-9378-5ab138accee6"/>
+				<textFieldExpression><![CDATA[$F{data_entrada}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="455" y="34" width="100" height="20" uuid="8c5bff9e-eac5-4bcb-a04f-827dd6a6a496"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

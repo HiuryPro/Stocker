@@ -67,9 +67,10 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
 
             st = conexao.createStatement();
             rs = st.executeQuery(sql);
-
+            rowCount = 0;
             produto.clear();
             preco.clear();
+            tabela.removeAll();
 
             while (rs.next()) {
                 produto.add(rs.getString("produto"));
@@ -174,7 +175,7 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         }
 
         sql = "UPDATE fornecedor_produto SET fornecedor = ? WHERE fornecedor = '" + String.valueOf(forn.getSelectedItem()) + "'";
-        
+
         try {
             pst = conexao.prepareStatement(sql);
 
@@ -213,6 +214,7 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
 
         if (resultado == JOptionPane.YES_OPTION) {
             atualizaDadosP();
+            AdicionaTabela();
 
         } else {
             // tabela.setValueAt()

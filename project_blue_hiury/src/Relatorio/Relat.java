@@ -160,8 +160,13 @@ public class Relat extends javax.swing.JFrame {
                 java.sql.Date sqlDate2 = new java.sql.Date(utilDate2.getTime());
                 JOptionPane.showMessageDialog(null, sqlDate2+""+sqlDate);
                 
+                JOptionPane.showMessageDialog(null, sqlDate.getMonth() + 1);
+                JOptionPane.showMessageDialog(null, sqlDate.getYear() + 1900);
+                
+                  int[] iniciaValores = {12,32,54,6,8,89,64,64,6};
+                  
                 String teste = "Select * from varia_estoque where (data BETWEEN '" + sqlDate + " ' AND '" + sqlDate2 + "')";
-                hm.put("query", sqlDate);
+                hm.put("query", iniciaValores);
                 hm.put("query2", sqlDate2);
                 JasperPrint jPrint = JasperFillManager.fillReport(jReport, hm, con);
                 JasperViewer.viewReport(jPrint, false);

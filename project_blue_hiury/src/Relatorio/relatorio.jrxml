@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="79c704f8-97da-41f5-b883-b85b9aaae276">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="334"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Heading 2" fontSize="14" isBold="true" isItalic="true"/>
 	<subDataset name="teste" uuid="03931dd6-6ea0-43eb-8759-6bc0964ee464">
 		<parameter name="query" class="java.sql.Date">
@@ -27,6 +27,9 @@
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
 	</subDataset>
+	<subDataset name="dataset1" uuid="0dea1261-e3d3-4a55-abda-911d4ddfe204"/>
+	<subDataset name="New Dataset 1" uuid="a8ad0fce-15dc-4d68-a113-f1ffbac29470"/>
+	<subDataset name="dataset2" uuid="0e0e85ac-db8d-4ad7-b745-3cf548a7e65c"/>
 	<parameter name="query" class="java.sql.Date"/>
 	<parameter name="query2" class="java.sql.Date"/>
 	<queryString>
@@ -58,9 +61,9 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="166" splitType="Stretch">
+		<band height="162" splitType="Stretch">
 			<image>
-				<reportElement x="46" y="0" width="484" height="157" uuid="9e8e835d-922b-4485-938d-770cfef9bc47"/>
+				<reportElement x="39" y="0" width="484" height="157" uuid="9e8e835d-922b-4485-938d-770cfef9bc47"/>
 				<imageExpression><![CDATA["C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\Stocker_blue_transp.png"]]></imageExpression>
 			</image>
 		</band>
@@ -97,7 +100,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="36" splitType="Stretch">
+		<band height="22" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="88" height="20" uuid="e66a0edb-256a-4e94-917e-d3369d606247"/>
 				<textFieldExpression><![CDATA[$F{nome_produto}]]></textFieldExpression>
@@ -125,63 +128,17 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="24" splitType="Stretch"/>
+		<band height="105" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch">
 			<textField>
-				<reportElement x="455" y="14" width="100" height="20" uuid="e770b287-a41d-4439-8b27-fc760efffdcf"/>
+				<reportElement x="455" y="34" width="100" height="20" uuid="e770b287-a41d-4439-8b27-fc760efffdcf"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="0" y="34" width="100" height="20" uuid="1759b7ba-4bb0-4548-92fd-58132efd1722"/>
-				<textFieldExpression><![CDATA[$P{query}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="100" y="34" width="100" height="20" uuid="bce33bad-ea05-46ed-a7ba-5bca57c442d4"/>
-				<textFieldExpression><![CDATA[$P{query}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="337" splitType="Stretch">
-			<timeSeriesChart>
-				<chart>
-					<reportElement positionType="Float" x="0" y="0" width="555" height="170" isPrintWhenDetailOverflows="true" uuid="760ff637-7e66-4072-be7b-1eaa3c3ae7de"/>
-					<chartTitle position="Top">
-						<titleExpression><![CDATA["Variação de Estoque"]]></titleExpression>
-					</chartTitle>
-					<chartSubtitle/>
-					<chartLegend/>
-				</chart>
-				<timeSeriesDataset>
-					<dataset>
-						<datasetRun subDataset="teste" uuid="30a97519-43df-4b9c-99ec-43ea3d41fbbe">
-							<datasetParameter name="query">
-								<datasetParameterExpression><![CDATA[$P{query}]]></datasetParameterExpression>
-							</datasetParameter>
-							<datasetParameter name="query2">
-								<datasetParameterExpression><![CDATA[$P{query2}]]></datasetParameterExpression>
-							</datasetParameter>
-						</datasetRun>
-					</dataset>
-					<timeSeries>
-						<seriesExpression><![CDATA[$F{produto}]]></seriesExpression>
-						<timePeriodExpression><![CDATA[$F{data}]]></timePeriodExpression>
-						<valueExpression><![CDATA[$F{quantidadeE}]]></valueExpression>
-						<labelExpression><![CDATA[$F{produto}]]></labelExpression>
-					</timeSeries>
-				</timeSeriesDataset>
-				<timeSeriesPlot>
-					<plot/>
-					<timeAxisFormat>
-						<axisFormat tickLabelMask="dd/MM/yyyy"/>
-					</timeAxisFormat>
-					<valueAxisFormat>
-						<axisFormat/>
-					</valueAxisFormat>
-				</timeSeriesPlot>
-			</timeSeriesChart>
-		</band>
+		<band height="34" splitType="Stretch"/>
 	</summary>
 </jasperReport>
