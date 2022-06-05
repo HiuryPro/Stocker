@@ -45,6 +45,8 @@ public class Relatorio {
 
     public String data;
     public String data2;
+    public int qtdTotal;
+    public float valorTotal;
 
     public Relatorio() {
 
@@ -68,8 +70,12 @@ public class Relatorio {
             jDesign.setQuery(updateQuery);
 
             JasperReport jReport = JasperCompileManager.compileReport(jDesign);
+            HashMap<String, Object> hm = new HashMap<>();
 
-            JasperPrint jPrint = JasperFillManager.fillReport(jReport, null, con);
+             hm.put("total1", String.valueOf(qtdTotal));
+            hm.put("total2", String.valueOf(valorTotal));
+
+            JasperPrint jPrint = JasperFillManager.fillReport(jReport, hm, con);
             JasperViewer.viewReport(jPrint, false);
 
 // TODO add your handling code here:
@@ -99,8 +105,12 @@ public class Relatorio {
             jDesign.setQuery(updateQuery);
 
             JasperReport jReport = JasperCompileManager.compileReport(jDesign);
+            HashMap<String, Object> hm = new HashMap<>();
 
-            JasperPrint jPrint = JasperFillManager.fillReport(jReport, null, con1);
+            hm.put("total1", String.valueOf(qtdTotal));
+            hm.put("total2", String.valueOf(valorTotal));
+
+            JasperPrint jPrint = JasperFillManager.fillReport(jReport, hm, con1);
             JasperViewer.viewReport(jPrint, false);
 
 // TODO add your handling code here:
@@ -117,8 +127,7 @@ public class Relatorio {
         try {
             data = deData.getText();
             data2 = ateData.getText();
-            
-            
+
             Class.forName("com.mysql.jdbc.Driver");
             con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/stocker", "root", "");
 
@@ -196,6 +205,21 @@ public class Relatorio {
             } catch (SQLException ex) {
                 Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            sql = "SELECT SUM(quantidade), SUM(total) FROM produto_venda where (data_saida BETWEEN STR_TO_DATE('" + data + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + data2 + " ', \"%d/%m/%Y\"))";
+            try {
+
+                st = conexao.createStatement();
+                rs1 = st.executeQuery(sql);
+
+                while (rs1.next()) {
+                    qtdTotal = rs1.getInt("SUM(quantidade)");
+                    valorTotal = rs1.getFloat("SUM(total)");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         } else if (id == 1) {
 
             String sql = "SELECT SUM(quantidadeC), SUM(totalC), produtoC FROM produto_compra where (data_entrada BETWEEN STR_TO_DATE('" + data + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + data2 + " ', \"%d/%m/%Y\")) and produtoC = '" + nomeP + "'";
@@ -210,6 +234,20 @@ public class Relatorio {
             } catch (SQLException ex) {
                 Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            sql = "SELECT SUM(quantidadeC) as teste1, SUM(totalC) as teste2 FROM produto_compra where (data_entrada BETWEEN STR_TO_DATE('" + data + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + data2 + " ', \"%d/%m/%Y\"))";
+            try {
+
+                st = conexao.createStatement();
+                rs1 = st.executeQuery(sql);
+
+                while (rs1.next()) {
+                    qtdTotal = rs1.getInt("teste1");
+                    valorTotal = rs1.getFloat("teste2");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }
@@ -220,9 +258,7 @@ public class Relatorio {
 
         String sql = "UPDATE relatoriototal SET qtd_total = ? , preco_total = ? WHERE nome_produto = '" + nomeP + "'";
         try {
-            
-            
-            
+
             pst = conexao.prepareStatement(sql);
             pst.setInt(1, qtdTotal);
             pst.setFloat(2, valorTotal);
