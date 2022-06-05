@@ -59,6 +59,19 @@ public class Produtos extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
+        
+        sql = "insert into relatoriototal(nome_produto) values(?)";
+
+        try {
+            pst = conexao.prepareStatement(sql);
+
+            pst.setString(1, edtNome.getText());
+           
+            pst.executeUpdate();
+            pst.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
 
     }
 
