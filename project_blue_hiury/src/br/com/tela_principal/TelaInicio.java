@@ -18,9 +18,8 @@ import br.com.compra.telaVenda;
  */
 public class TelaInicio extends javax.swing.JFrame {
 
-    
-    
     public int id;
+
     /**
      * Creates new form TelaInicio
      */
@@ -43,9 +42,10 @@ public class TelaInicio extends javax.swing.JFrame {
         Teste23 = new javax.swing.JDesktopPane();
         estoque = new javax.swing.JButton();
         clientes = new javax.swing.JButton();
-        Fornecedores = new javax.swing.JButton();
         entrega = new javax.swing.JButton();
         venda = new javax.swing.JButton();
+        entregador = new javax.swing.JButton();
+        Fornecedores = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Stocker");
@@ -62,7 +62,7 @@ public class TelaInicio extends javax.swing.JFrame {
         Teste23.setLayout(Teste23Layout);
         Teste23Layout.setHorizontalGroup(
             Teste23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 758, Short.MAX_VALUE)
         );
         Teste23Layout.setVerticalGroup(
             Teste23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,7 +81,7 @@ public class TelaInicio extends javax.swing.JFrame {
                 estoqueActionPerformed(evt);
             }
         });
-        getContentPane().add(estoque, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 267, 150));
+        getContentPane().add(estoque, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 267, 122));
 
         clientes.setBackground(new java.awt.Color(0, 102, 204));
         clientes.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -92,18 +92,7 @@ public class TelaInicio extends javax.swing.JFrame {
                 clientesActionPerformed(evt);
             }
         });
-        getContentPane().add(clientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 580, 267, 150));
-
-        Fornecedores.setBackground(new java.awt.Color(0, 102, 204));
-        Fornecedores.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        Fornecedores.setForeground(new java.awt.Color(255, 255, 255));
-        Fornecedores.setText("Fornecedores");
-        Fornecedores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FornecedoresActionPerformed(evt);
-            }
-        });
-        getContentPane().add(Fornecedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 267, 140));
+        getContentPane().add(clientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 267, 122));
 
         entrega.setBackground(new java.awt.Color(0, 102, 204));
         entrega.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -114,7 +103,7 @@ public class TelaInicio extends javax.swing.JFrame {
                 entregaActionPerformed(evt);
             }
         });
-        getContentPane().add(entrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 267, 150));
+        getContentPane().add(entrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 366, 267, 122));
 
         venda.setBackground(new java.awt.Color(0, 102, 204));
         venda.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -125,7 +114,29 @@ public class TelaInicio extends javax.swing.JFrame {
                 vendaActionPerformed(evt);
             }
         });
-        getContentPane().add(venda, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 267, 140));
+        getContentPane().add(venda, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 488, 267, 122));
+
+        entregador.setBackground(new java.awt.Color(0, 102, 204));
+        entregador.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        entregador.setForeground(new java.awt.Color(255, 255, 255));
+        entregador.setText("Entregadores");
+        entregador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                entregadorActionPerformed(evt);
+            }
+        });
+        getContentPane().add(entregador, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 244, 267, 122));
+
+        Fornecedores.setBackground(new java.awt.Color(0, 102, 204));
+        Fornecedores.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        Fornecedores.setForeground(new java.awt.Color(255, 255, 255));
+        Fornecedores.setText("Fornecedores");
+        Fornecedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FornecedoresActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Fornecedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 122, 267, 122));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -136,16 +147,20 @@ public class TelaInicio extends javax.swing.JFrame {
         ImageIcon icon2 = new ImageIcon("src/img/entrega.png");
         ImageIcon icon3 = new ImageIcon("src/img/pedidos.png");
         ImageIcon icon4 = new ImageIcon("src/img/Clientes.png");
+        ImageIcon icon5 = new ImageIcon("src/img/entregador.png");
         icon.setImage(icon.getImage().getScaledInstance(95, 95, 1));
         icon1.setImage(icon1.getImage().getScaledInstance(115, 95, 1));
         icon2.setImage(icon2.getImage().getScaledInstance(95, 75, 1));
         icon3.setImage(icon3.getImage().getScaledInstance(90, 70, 1));
         icon4.setImage(icon4.getImage().getScaledInstance(95, 75, 1));
+        icon5.setImage(icon5.getImage().getScaledInstance(90, 70, 1));
+        
         estoque.setIcon(icon);
         venda.setIcon(icon1);
         entrega.setIcon(icon2);
         Fornecedores.setIcon(icon3);
         clientes.setIcon(icon4);
+        entregador.setIcon(icon5);
         ImageIcon logo = new ImageIcon("src/img/Stocker_blue_transp.png");
 
 // TODO add your handling code here:
@@ -182,6 +197,10 @@ public class TelaInicio extends javax.swing.JFrame {
         Teste23.add(tela4);
         tela4.setVisible(true);   // TODO add your handling code here:
     }//GEN-LAST:event_vendaActionPerformed
+
+    private void entregadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entregadorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_entregadorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,6 +243,7 @@ public class TelaInicio extends javax.swing.JFrame {
     private javax.swing.JDesktopPane Teste23;
     private javax.swing.JButton clientes;
     private javax.swing.JButton entrega;
+    private javax.swing.JButton entregador;
     private javax.swing.JButton estoque;
     private javax.swing.JButton venda;
     // End of variables declaration//GEN-END:variables
