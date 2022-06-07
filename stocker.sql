@@ -55,9 +55,9 @@ DROP TABLE IF EXISTS `estoque`;
 CREATE TABLE `estoque` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome_produto` varchar(20) NOT NULL,
-  `qtdestoque` int(5) DEFAULT NULL,
+  `qtdestoque` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +66,7 @@ CREATE TABLE `estoque` (
 
 LOCK TABLES `estoque` WRITE;
 /*!40000 ALTER TABLE `estoque` DISABLE KEYS */;
-INSERT INTO `estoque` VALUES (1,'Maçã',20),(2,'Coca-Cola',100);
+INSERT INTO `estoque` VALUES (1,'Maçã',25),(2,'Coca-Cola',100),(4,'Suco de laranja',30);
 /*!40000 ALTER TABLE `estoque` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,7 +165,7 @@ CREATE TABLE `produto` (
   `preco` float NOT NULL,
   `descricao` varchar(50) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,7 +174,7 @@ CREATE TABLE `produto` (
 
 LOCK TABLES `produto` WRITE;
 /*!40000 ALTER TABLE `produto` DISABLE KEYS */;
-INSERT INTO `produto` VALUES (3,'Maçã',5,'Maçã gostosa'),(4,'Coca-Cola',10,'Coca-Cola gostosa');
+INSERT INTO `produto` VALUES (3,'Maçã',5,'Maçã gostosa'),(4,'Coca-Cola',10,'Coca-Cola gostosa'),(6,'Suco de laranja',3,'Jailson');
 /*!40000 ALTER TABLE `produto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -235,6 +235,32 @@ LOCK TABLES `produto_venda` WRITE;
 /*!40000 ALTER TABLE `produto_venda` DISABLE KEYS */;
 INSERT INTO `produto_venda` VALUES (1,'Maçã',5,7,35,'2022-05-22','Cleiton'),(2,'Coca-Cola',15,12,180,'2022-05-22','Cleiton'),(3,'Maçã',5,10,50,'2022-05-17','Julio'),(4,'Coca-Cola',35,12,420,'2022-05-17','Julio');
 /*!40000 ALTER TABLE `produto_venda` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `relatoriototal`
+--
+
+DROP TABLE IF EXISTS `relatoriototal`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `relatoriototal` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_produto` varchar(30) DEFAULT NULL,
+  `qtd_total` int(11) DEFAULT 0,
+  `preco_total` float DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `relatoriototal`
+--
+
+LOCK TABLES `relatoriototal` WRITE;
+/*!40000 ALTER TABLE `relatoriototal` DISABLE KEYS */;
+INSERT INTO `relatoriototal` VALUES (1,'Maçã',20,106),(2,'Coca-Cola',30,312),(3,'Suco de laranja',0,0);
+/*!40000 ALTER TABLE `relatoriototal` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -307,7 +333,7 @@ CREATE TABLE `varia_estoque` (
   `quantidadeE` int(11) DEFAULT NULL,
   `data` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -316,7 +342,7 @@ CREATE TABLE `varia_estoque` (
 
 LOCK TABLES `varia_estoque` WRITE;
 /*!40000 ALTER TABLE `varia_estoque` DISABLE KEYS */;
-INSERT INTO `varia_estoque` VALUES (1,'Maçã',10,'2022-05-17'),(2,'Coca-Cola',120,'2022-05-17'),(3,'Maçã',30,'2022-05-20'),(4,'Coca-Cola',150,'2022-05-20'),(5,'Maçã',25,'2022-05-22'),(6,'Coca-Cola',135,'2022-05-22'),(7,'Maçã',20,'2022-05-17'),(8,'Coca-Cola',100,'2022-05-17');
+INSERT INTO `varia_estoque` VALUES (1,'Maçã',10,'2022-05-17'),(2,'Coca-Cola',120,'2022-05-17'),(3,'Maçã',30,'2022-05-20'),(4,'Coca-Cola',150,'2022-05-20'),(5,'Maçã',25,'2022-05-22'),(6,'Coca-Cola',135,'2022-05-22'),(7,'Maçã',20,'2022-05-17'),(8,'Coca-Cola',100,'2022-05-17'),(11,'Suco de laranja',30,'2022-06-04'),(14,'Maçã',25,'2022-06-07');
 /*!40000 ALTER TABLE `varia_estoque` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -329,4 +355,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-02 15:10:24
+-- Dump completed on 2022-06-07 12:22:00

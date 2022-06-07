@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5070ed31-b94e-4b0a-8805-bdefe175d9dd">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="110"/>
+	<property name="ireport.y" value="0"/>
 	<subDataset name="chart" uuid="e1cc5006-dfb5-4317-9067-1a0a5cca6fd5">
 		<parameter name="query" class="java.lang.String"/>
 		<parameter name="query2" class="java.lang.String"/>
@@ -50,18 +50,29 @@
 			</image>
 		</band>
 	</title>
-	<columnHeader>
-		<band height="50">
+	<pageHeader>
+		<band height="43">
 			<staticText>
-				<reportElement x="0" y="30" width="185" height="20" uuid="611c3a08-83ba-4d7d-a5da-a18d822efe9f"/>
+				<reportElement x="0" y="0" width="555" height="43" uuid="506b9cd1-1195-4779-b2c6-ee251993cb64"/>
+				<textElement textAlignment="Center">
+					<font size="28"/>
+				</textElement>
+				<text><![CDATA[Relatório de Variação de Estoque]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="64">
+			<staticText>
+				<reportElement x="0" y="44" width="185" height="20" uuid="611c3a08-83ba-4d7d-a5da-a18d822efe9f"/>
 				<text><![CDATA[Produto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="185" y="30" width="185" height="20" uuid="6333c38c-041b-4808-b65f-2fc4e154fee8"/>
+				<reportElement x="185" y="44" width="185" height="20" uuid="6333c38c-041b-4808-b65f-2fc4e154fee8"/>
 				<text><![CDATA[Quantidade no Estoque]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="370" y="30" width="185" height="20" uuid="5279c819-7544-4de9-a820-3c507924ef40"/>
+				<reportElement x="370" y="44" width="185" height="20" uuid="5279c819-7544-4de9-a820-3c507924ef40"/>
 				<text><![CDATA[Data de Variação]]></text>
 			</staticText>
 		</band>
