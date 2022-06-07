@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -40,27 +41,31 @@ public class Compra extends javax.swing.JInternalFrame {
     public int estoque;
     public String nomes;
     public int id;
+    public int rowCount;
     Validacao altera = new Validacao();
 
     public Compra(int i) {
         initComponents();
         id = i;
         conexao = ModuloConexao.conector();
-
+        tabela.setRowHeight(30);
+        pegaEstoque();
         pegaF();
-        inserirTabela();
+        AdicionaTabela();
     }
 
     private void pegaEstoque() {
-        String sql = "Select * from  estoque where nome_produto = '" + String.valueOf(combo.getSelectedItem()).trim() + "'";
+        String sql = "Select qtdestoque from  estoque where nome_produto = '" + String.valueOf(combo.getSelectedItem()).trim() + "'";
         try {
 
             st2 = conexao.createStatement();
             rs2 = st2.executeQuery(sql);
+
             while (rs2.next()) {
                 estoque = rs2.getInt("qtdestoque");
             }
 
+            JOptionPane.showMessageDialog(null, estoque);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -93,6 +98,35 @@ public class Compra extends javax.swing.JInternalFrame {
             while (rs.next()) {
 
                 cbfornecedo.addItem(rs.getString("fornecedor"));
+            }
+
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void AdicionaTabela() {
+
+        String sql = "SELECT *, date_format(data_entrada, '%d/%m/%Y') as teste FROM produto_compra";
+        try {
+
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+            rowCount = 0;
+            tabela.removeAll();
+
+            while (rs.next()) {
+                rowCount++;
+                ((DefaultTableModel) tabela.getModel()).setRowCount(rowCount);
+                tabela.setValueAt(rs.getString("produtoC")+ " ", rowCount - 1, 0);
+                tabela.setValueAt(rs.getFloat("precoC"), rowCount - 1, 1);
+                tabela.setValueAt(rs.getInt("quantidadeC"), rowCount - 1, 2);
+                tabela.setValueAt(rs.getFloat("frete"), rowCount - 1, 3);
+                tabela.setValueAt(rs.getFloat("totalC"), rowCount - 1, 4);
+                tabela.setValueAt(rs.getString("fornecedor")+" ", rowCount - 1, 5);
+                tabela.setValueAt(rs.getString("teste"), rowCount - 1, 6);
+
             }
 
         } catch (SQLException ex) {
@@ -139,42 +173,6 @@ public class Compra extends javax.swing.JInternalFrame {
         }
     }
 
-    public void inserirTabela() {
-
-        int i;
-        i = 0;
-
-        String data;
-        String pattern3 = "####/##/##";
-        try {
-
-            String sql = "SELECT *, date_format(data_entrada, '%d/%m/%Y') as teste FROM produto_compra";
-
-            st2 = conexao.createStatement();
-            rs3 = st2.executeQuery(sql);
-            while (rs3.next()) {
-                tabela.setValueAt(rs3.getString("produtoC"), i, 0);
-
-                tabela.setValueAt(rs3.getFloat("precoC"), i, 1);
-
-                tabela.setValueAt(rs3.getInt("quantidadeC"), i, 2);
-
-                tabela.setValueAt(rs3.getFloat("frete"), i, 3);
-                tabela.setValueAt(rs3.getFloat("totalC"), i, 4);
-                tabela.setValueAt(rs3.getString("fornecedor"), i, 5);
-
-                tabela.setValueAt(rs3.getString("teste"), i, 6);
-
-                i++;
-
-            }
-
-        } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-    }
-
     public void inserirVariaE() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         String sqls = "insert into varia_estoque(produto,data, quantidadeE) values(?, ?, ?)";
@@ -201,7 +199,7 @@ public class Compra extends javax.swing.JInternalFrame {
         if (resultado == JOptionPane.YES_OPTION) {
             inserir();
             inseriprodutoC();
-            inserirTabela();
+            AdicionaTabela();
             inserirVariaE();
         } else {
 
@@ -289,8 +287,14 @@ public class Compra extends javax.swing.JInternalFrame {
             }
         });
         tabela.setColumnSelectionAllowed(true);
+        tabela.getTableHeader().setResizingAllowed(false);
+        tabela.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tabela);
         tabela.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (tabela.getColumnModel().getColumnCount() > 0) {
+            tabela.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tabela.getColumnModel().getColumn(5).setPreferredWidth(150);
+        }
 
         cbfornecedo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cbfornecedo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
@@ -366,9 +370,6 @@ public class Compra extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(299, 299, 299)
                         .addComponent(Cad, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -383,7 +384,7 @@ public class Compra extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cbfornecedo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel1))
@@ -403,6 +404,10 @@ public class Compra extends javax.swing.JInternalFrame {
                                 .addComponent(total, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(frete, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)))))
                 .addGap(28, 28, 28))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -410,8 +415,8 @@ public class Compra extends javax.swing.JInternalFrame {
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel9)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel10))
                     .addComponent(jLabel6)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -441,9 +446,9 @@ public class Compra extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(17, 17, 17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addGap(47, 47, 47)
                 .addComponent(Cad, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(56, Short.MAX_VALUE))
         );
@@ -483,6 +488,7 @@ public class Compra extends javax.swing.JInternalFrame {
                 while (rs.next()) {
                     edtValor.setText(String.valueOf(rs.getFloat("preco")));
                 }
+                pegaEstoque();
 
             } catch (SQLException ex) {
                 java.util.logging.Logger.getLogger(Fornecedores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);

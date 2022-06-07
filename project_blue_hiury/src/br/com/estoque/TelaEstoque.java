@@ -39,26 +39,15 @@ public class TelaEstoque extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jEditorPane1 = new javax.swing.JEditorPane();
-        Produtos = new javax.swing.JButton();
         estoque = new javax.swing.JButton();
         telaComprar = new javax.swing.JDesktopPane();
+        Produtos = new javax.swing.JButton();
 
         jScrollPane1.setViewportView(jEditorPane1);
 
         setClosable(true);
         setMinimumSize(new java.awt.Dimension(651, 485));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        Produtos.setBackground(new java.awt.Color(0, 102, 204));
-        Produtos.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        Produtos.setForeground(new java.awt.Color(255, 255, 255));
-        Produtos.setText("Produtos");
-        Produtos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ProdutosActionPerformed(evt);
-            }
-        });
-        getContentPane().add(Produtos, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 374, 125));
 
         estoque.setBackground(new java.awt.Color(0, 102, 204));
         estoque.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -69,7 +58,7 @@ public class TelaEstoque extends javax.swing.JInternalFrame {
                 estoqueActionPerformed(evt);
             }
         });
-        getContentPane().add(estoque, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 373, 125));
+        getContentPane().add(estoque, new org.netbeans.lib.awtextra.AbsoluteConstraints(373, 0, 373, 125));
 
         javax.swing.GroupLayout telaComprarLayout = new javax.swing.GroupLayout(telaComprar);
         telaComprar.setLayout(telaComprarLayout);
@@ -83,6 +72,17 @@ public class TelaEstoque extends javax.swing.JInternalFrame {
         );
 
         getContentPane().add(telaComprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 124, 747, 582));
+
+        Produtos.setBackground(new java.awt.Color(0, 102, 204));
+        Produtos.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        Produtos.setForeground(new java.awt.Color(255, 255, 255));
+        Produtos.setText("Produtos");
+        Produtos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ProdutosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Produtos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 374, 125));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

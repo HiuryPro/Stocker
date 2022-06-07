@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -44,6 +45,7 @@ public class Venda extends javax.swing.JInternalFrame {
     Validacao altera = new Validacao();
     NotaFSaida nota = new NotaFSaida();
     public int estoque;
+    public int rowCount;
     public int id;
 
     public Venda(int i) {
@@ -55,9 +57,10 @@ public class Venda extends javax.swing.JInternalFrame {
         } catch (PropertyVetoException ex) {
             java.util.logging.Logger.getLogger(Venda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        tabela.setRowHeight(30);
         pegarCliente();
         pegarProduto();
-        inserirTabela();
+        AdicionaTabela();
 
     }
 
@@ -147,39 +150,32 @@ public class Venda extends javax.swing.JInternalFrame {
             nota.pegaNF();
             nota.clienteID(cliente);
             nota.inseriNotaFiscal();
-            inserirTabela();
+            AdicionaTabela();
         } else {
             JOptionPane.showMessageDialog(null, "Erro", "Quantidade de Estoque insuficiente", 1);
         }
 
     }
 
-    public void inserirTabela() {
+    public void AdicionaTabela() {
 
-        int i;
-        i = 0;
-
-        String data;
-        String pattern3 = "####/##/##";
+        String sql = "SELECT *, date_format(data_saida, '%d/%m/%Y') as teste FROM produto_venda";
         try {
 
-            String sql = "SELECT * FROM produto_venda";
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+            rowCount = 0;
+            tabela.removeAll();
 
-            st2 = conexao.createStatement();
-            rs3 = st2.executeQuery(sql);
-            while (rs3.next()) {
-                tabela.setValueAt(rs3.getString("nome_produto"), i, 0);
-
-                tabela.setValueAt(rs3.getFloat("preco_unitario"), i, 1);
-
-                tabela.setValueAt(rs3.getInt("quantidade"), i, 2);
-
-                tabela.setValueAt(rs3.getFloat("total"), i, 3);
-
-                data = String.valueOf(rs3.getDate("data_saida")).replaceAll("[^0-9]+", "");
-                tabela.setValueAt(altera.format(pattern3, data), i, 4);
-
-                i++;
+            while (rs.next()) {
+                rowCount++;
+                ((DefaultTableModel) tabela.getModel()).setRowCount(rowCount);
+                tabela.setValueAt(rs.getString("nome_produto")+" ", rowCount - 1, 0);
+                tabela.setValueAt(rs.getFloat("preco_unitario"), rowCount - 1, 1);
+                tabela.setValueAt(rs.getInt("quantidade"), rowCount - 1, 2);
+                tabela.setValueAt(rs.getFloat("total"), rowCount - 1, 3);
+                tabela.setValueAt(rs.getString("cliente")+" ", rowCount - 1, 4);
+                tabela.setValueAt(rs.getString("teste"), rowCount - 1, 5);
 
             }
 
@@ -200,7 +196,7 @@ public class Venda extends javax.swing.JInternalFrame {
             pst.setString(1, String.valueOf(combo.getSelectedItem()));
             pst.setDate(2, sqlDate);
             pst.setInt(3, estoque);
-            
+
             pst.executeUpdate();
             pst.close();
         } catch (Exception e) {
@@ -311,23 +307,23 @@ public class Venda extends javax.swing.JInternalFrame {
         tabela.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "produto", "valor", "quantidade", "total", "data de Saida"
+                "Produto", "Valor", "Quantidade", "Total", "Cliente", "Data de Saida"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Float.class, java.lang.String.class
+                java.lang.String.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -335,6 +331,10 @@ public class Venda extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(tabela);
+        if (tabela.getColumnModel().getColumnCount() > 0) {
+            tabela.getColumnModel().getColumn(0).setPreferredWidth(120);
+            tabela.getColumnModel().getColumn(2).setPreferredWidth(60);
+        }
 
         cliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cliente.addActionListener(new java.awt.event.ActionListener() {
@@ -472,6 +472,11 @@ public class Venda extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_dataSActionPerformed
 
     private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
+        if ("".equals(String.valueOf(combo.getSelectedItem()))) {
+
+        } else {
+            pegaEstoque();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_comboActionPerformed
 
