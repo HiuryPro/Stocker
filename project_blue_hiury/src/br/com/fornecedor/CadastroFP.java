@@ -8,6 +8,8 @@ package br.com.fornecedor;
 import br.com.dal_connexao.ModuloConexao;
 import java.sql.SQLException;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -78,12 +80,38 @@ public class CadastroFP extends javax.swing.JInternalFrame {
     }
 
     public void AdicionaTabela() {
+
         rowCount++;
         ((DefaultTableModel) tabela.getModel()).setRowCount(rowCount);
         tabela.setValueAt(String.valueOf(cbFornecedor.getSelectedItem()), rowCount - 1, 0);
         tabela.setValueAt(String.valueOf(cbProduto.getSelectedItem()), rowCount - 1, 1);
         tabela.setValueAt(Float.parseFloat(preco.getText()), rowCount - 1, 2);
 
+    }
+
+    public boolean confereBanco() {
+        String sql = "Select produto from fornecedor_produto";
+        boolean valida = false;
+        int i = 0;
+        try {
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                if (rs.getString("produto").equals(tabela.getValueAt(i, 1))) {
+                    JOptionPane.showMessageDialog(null, "Produto já está cadastrado no fornecedor " + String.valueOf(cbFornecedor.getSelectedItem()));
+                    valida = false;
+                } else {
+                    valida = true;
+                }
+                i++;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroFP.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return valida;
     }
 
     public void deletaLinha() {
@@ -103,10 +131,13 @@ public class CadastroFP extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, qtd);
             pst = conexao.prepareStatement(sql);
             for (i = 0; i < qtd; i++) {
-                pst.setString(1, String.valueOf(((DefaultTableModel) tabela.getModel()).getValueAt(i, 0)));
-                pst.setString(2, String.valueOf(((DefaultTableModel) tabela.getModel()).getValueAt(i, 1)));
-                pst.setFloat(3, Float.parseFloat(String.valueOf(((DefaultTableModel) tabela.getModel()).getValueAt(i, 2))));
-                pst.executeUpdate();
+                if (confereBanco()) {
+                    pst.setString(1, String.valueOf(((DefaultTableModel) tabela.getModel()).getValueAt(i, 0)));
+                    pst.setString(2, String.valueOf(((DefaultTableModel) tabela.getModel()).getValueAt(i, 1)));
+                    pst.setFloat(3, Float.parseFloat(String.valueOf(((DefaultTableModel) tabela.getModel()).getValueAt(i, 2))));
+                    pst.executeUpdate();
+                }
+
             }
 
         } catch (Exception e) {
@@ -267,9 +298,10 @@ public class CadastroFP extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cbFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(preco, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cbProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(cbProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(preco, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(39, 39, 39)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -297,7 +329,7 @@ public class CadastroFP extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void CadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadActionPerformed
-        Confirma();  
+        Confirma();
     }//GEN-LAST:event_CadActionPerformed
 
     private void precoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precoActionPerformed
