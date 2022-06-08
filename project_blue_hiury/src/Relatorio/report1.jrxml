@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c2b1796-d0db-4046-af84-1e455c488060">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="111"/>
+	<property name="ireport.y" value="0"/>
 	<subDataset name="teste2" uuid="20db0f79-b84a-4eff-a28c-15018f7181d1">
 		<queryString language="SQL">
 			<![CDATA[Select * from relatoriototal]]>
@@ -75,17 +75,13 @@
 	<title>
 		<band height="164" splitType="Stretch">
 			<image>
-				<reportElement x="44" y="-194" width="484" height="157" uuid="8169981d-a1bb-4a7a-ad81-82444f57f2d0"/>
-				<imageExpression><![CDATA["C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\Stocker_blue_transp.png"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="34" y="0" width="484" height="157" uuid="eac9f48e-00cd-4e3c-a098-4012f1f73e1f"/>
+				<reportElement x="44" y="0" width="484" height="157" uuid="3f7cda00-835a-4378-8328-05f981e1b9fc"/>
 				<imageExpression><![CDATA["C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\Stocker_blue_transp.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="46" splitType="Stretch">
+		<band height="47" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="555" height="43" uuid="b68e3761-9a1e-417d-85c0-caf95496a73f"/>
 				<textElement textAlignment="Center">
@@ -162,19 +158,19 @@
 	<columnFooter>
 		<band height="45" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="5" width="184" height="20" uuid="9de4ce1f-c945-45cf-a1c2-af754793958e"/>
-				<text><![CDATA[Quantidade total comprada no período:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="25" width="156" height="20" uuid="d96d667f-837a-4659-8904-a19389df13aa"/>
+				<reportElement x="0" y="20" width="142" height="20" uuid="85dfdd15-7b79-4c06-9abf-3b7879f35723"/>
 				<text><![CDATA[Quantidade gasta no período:]]></text>
 			</staticText>
-			<textField pattern="¤ #,##0.00">
-				<reportElement x="156" y="25" width="100" height="20" uuid="40ec51c8-46cf-4924-be3d-afebddfe2555"/>
+			<staticText>
+				<reportElement x="0" y="0" width="175" height="20" uuid="a6ae7669-e110-410b-bd72-c8b823d7a1c1"/>
+				<text><![CDATA[Quantidade comprada no período:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="142" y="20" width="100" height="20" uuid="25d6bfd2-7a90-47ca-b1d3-39e02da96189"/>
 				<textFieldExpression><![CDATA[$P{total2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="184" y="5" width="100" height="20" uuid="54efca98-0d40-4e8c-9fc6-a836bca36c50"/>
+				<reportElement x="177" y="0" width="100" height="20" uuid="c048246d-461f-4c3d-b20d-2341eea3fc6e"/>
 				<textFieldExpression><![CDATA[$P{total1}]]></textFieldExpression>
 			</textField>
 		</band>

@@ -43,9 +43,9 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="176" splitType="Stretch">
+		<band height="167" splitType="Stretch">
 			<image>
-				<reportElement x="42" y="0" width="484" height="157" uuid="0610b3ff-4101-4614-95f1-4a96a79923cb"/>
+				<reportElement x="44" y="0" width="484" height="157" uuid="68006bb3-daa6-4d1e-8c0c-c5ff96c88582"/>
 				<imageExpression><![CDATA["C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\Stocker_blue_transp.png"]]></imageExpression>
 			</image>
 		</band>
