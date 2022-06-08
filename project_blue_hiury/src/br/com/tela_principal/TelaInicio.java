@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import br.com.fornecedor.Fornecedores;
 import br.com.estoque.TelaEstoque;
 import br.com.compra.telaVenda;
+import br.com.estoque.TelaEsotoquenew;
 
 /**
  *
@@ -173,7 +174,7 @@ public class TelaInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_clientesActionPerformed
 
     private void estoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estoqueActionPerformed
-        TelaEstoque tela2 = new TelaEstoque(id);
+        TelaEsotoquenew tela2 = new TelaEsotoquenew(id);
         Teste23.add(tela2);
         tela2.setVisible(true);
         // TODO add your handling code here:
