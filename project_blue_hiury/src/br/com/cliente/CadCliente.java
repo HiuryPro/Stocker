@@ -6,10 +6,13 @@
 package br.com.cliente;
 
 import br.com.dal_connexao.ModuloConexao;
+import br.com.fornecedor.Validacao;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javax.swing.JOptionPane;
 import java.sql.*;
 
@@ -28,15 +31,23 @@ public class CadCliente extends javax.swing.JInternalFrame {
     private ResultSet rs;
     Connection conexao = null;
     Integer id = null;
+    Validacao val = new Validacao();
 
     public CadCliente() {
         initComponents();
         conexao = ModuloConexao.conector();
-       
+
+    }
+
+    public String caminho() {
+        Path path = Paths.get("");
+        String directoryName = path.toAbsolutePath().normalize().toString();
+        System.out.println("Current Working Directory is = " + directoryName);
+        return directoryName;
     }
 
     public void cidades() {
-        File arquivo = new File("C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\br\\com\\cliente\\" + String.valueOf(cbEstado.getSelectedItem()) +".txt");
+        File arquivo = new File(caminho() + "\\src\\br\\com\\cliente\\" + String.valueOf(cbEstado.getSelectedItem()) + ".txt");
 
         try {
             FileReader fr = new FileReader(arquivo);
@@ -44,7 +55,7 @@ public class CadCliente extends javax.swing.JInternalFrame {
             String linha = br.readLine();
 
             while (linha != null) {
-                cbCidade.addItem(linha);
+                // cbCidade.addItem(linha);
                 linha = br.readLine();
             }
         } catch (IOException e) {
@@ -54,25 +65,37 @@ public class CadCliente extends javax.swing.JInternalFrame {
     }
 
     public void inserir() {
-        String sql = null;
-        sql = "insert into cliente(nome, cnpj, descricao, categoria, faixaR, estado, cidade) value (?, ?, ?, ?, ?, ?, ?)";
-        try {
+        
+        if (validacaoField()) {
+            if (val.isCPF(edtCpf.getText().replaceAll("[^0-9]+", ""))) {
+                String sql = null;
+                sql = "insert into cliente(nome, cnpj, descricao, categoria, faixaR, estado, cidade, telefone, email, endereco) value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                try {
 
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1, edtNome.getText());
-            pst.setString(2, edtCnpj.getText().replaceAll("[^0-9]+", ""));
-            pst.setString(3, descricao.getText());
-            pst.setString(4, edtCategoria.getText());
-            pst.setFloat(5, Float.parseFloat(edtFaixa.getText()));
-            pst.setString(6, String.valueOf(cbEstado.getSelectedItem()));
-            pst.setString(7, String.valueOf(cbCidade.getSelectedItem()));
+                    pst = conexao.prepareStatement(sql);
+                    pst.setString(1, edtNome.getText());
+                    pst.setString(2, edtCpf.getText().replaceAll("[^0-9]+", ""));
+                    pst.setString(3, descricao.getText());
+                    pst.setString(4, edtCategoria.getText());
+                    pst.setFloat(5, Float.parseFloat(edtFaixa.getText()));
+                    pst.setString(6, String.valueOf(cbEstado.getSelectedItem()));
+                    pst.setString(7, cbCidade.getText());
+                    pst.setString(8, telefone.getText().replaceAll("[^0-9]+", ""));
+                    pst.setString(9, email.getText());
+                    pst.setString(10, endereco.getText());
 
-            pst.executeUpdate();
+                    pst.executeUpdate();
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
 
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Cpf invalido");
+            }
         }
+
     }
 
     public void Confirma() {
@@ -86,6 +109,52 @@ public class CadCliente extends javax.swing.JInternalFrame {
         }
     }
 
+    public boolean validacaoField() {
+        boolean confirma = true;
+
+        if (edtNome.getText().isEmpty()) {
+            confirma = false;
+            JOptionPane.showMessageDialog(null, "Campo nome está vazio.");
+
+        } else if (edtCpf.getText().replaceAll("[^0-9]+", "").isEmpty()) {
+            confirma = false;
+            JOptionPane.showMessageDialog(null, "Campo cpf está vazio.");
+
+        } else if (descricao.getText().isEmpty()) {
+            confirma = false;
+            JOptionPane.showMessageDialog(null, "Campo descrição está vazio.");
+
+        } else if (edtCategoria.getText().isEmpty()) {
+            confirma = false;
+            JOptionPane.showMessageDialog(null, "Campo categoria está vazio.");
+
+        } else if (edtFaixa.getText().isEmpty()) {
+            confirma = false;
+            JOptionPane.showMessageDialog(null, "Campo faixa de renda esrá vazio.");
+
+        } else if (cbCidade.getText().isEmpty()) {
+            confirma = false;
+            JOptionPane.showMessageDialog(null, "Campo cidade está vazio");
+
+        } else if (telefone.getText().replaceAll("[^0-9]+", "").isEmpty()) {
+            confirma = false;
+            JOptionPane.showMessageDialog(null, "Campo telefone está vazio.");
+
+        } else if (email.getText().isEmpty()) {
+            confirma = false;
+            JOptionPane.showMessageDialog(null, "Campo email está vazio.");
+
+        } else if (endereco.getText().isEmpty()) {
+            confirma = false;
+            JOptionPane.showMessageDialog(null, "Campo endereço está vazio.");
+
+        } else {
+            confirma = true;
+        }
+
+        return confirma;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,7 +165,7 @@ public class CadCliente extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        CPF = new javax.swing.JLabel();
         edtFaixa = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -104,25 +173,27 @@ public class CadCliente extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         cbEstado = new javax.swing.JComboBox<>();
         edtNome = new javax.swing.JTextField();
-        cbCidade = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         descricao = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        edtCnpj = new javax.swing.JFormattedTextField();
+        edtCpf = new javax.swing.JFormattedTextField();
         Cad = new javax.swing.JButton();
         email = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         telefone = new javax.swing.JFormattedTextField();
+        jLabel10 = new javax.swing.JLabel();
+        cbCidade = new javax.swing.JTextField();
+        endereco = new javax.swing.JTextField();
 
         setClosable(true);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel1.setText("Nome");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel2.setText("Cnpj");
+        CPF.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        CPF.setText("CPF");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel3.setText("Faixa De Renda");
@@ -150,14 +221,6 @@ public class CadCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        cbCidade.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cbCidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cidade" }));
-        cbCidade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCidadeActionPerformed(evt);
-            }
-        });
-
         descricao.setColumns(20);
         descricao.setRows(5);
         jScrollPane1.setViewportView(descricao);
@@ -169,7 +232,7 @@ public class CadCliente extends javax.swing.JInternalFrame {
         jLabel7.setText("Estado");
 
         try {
-            edtCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
+            edtCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -200,6 +263,15 @@ public class CadCliente extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel10.setText("Endereço:");
+
+        endereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enderecoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -209,18 +281,9 @@ public class CadCliente extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(123, 123, 123)
-                                .addComponent(jLabel6))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(cbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(cbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel4)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                             .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -230,7 +293,7 @@ public class CadCliente extends javax.swing.JInternalFrame {
                                             .addGap(247, 247, 247)))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel2)
+                                            .addComponent(CPF)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jLabel3)
                                             .addGap(75, 75, 75))
@@ -239,23 +302,37 @@ public class CadCliente extends javax.swing.JInternalFrame {
                                                 .addComponent(jLabel9)
                                                 .addGap(101, 101, 101))
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(edtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(edtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(58, 58, 58)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(edtFaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                    .addComponent(edtFaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(endereco, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel10)))))
+                                .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4)
                                         .addGroup(layout.createSequentialGroup()
-                                            .addComponent(edtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(67, 67, 67))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(jLabel5)
-                                            .addGap(184, 184, 184)))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel8)
-                                        .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(230, 230, 230)))))
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(edtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(67, 67, 67))
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                    .addComponent(jLabel5)
+                                                    .addGap(184, 184, 184)))
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel8)
+                                                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGap(230, 230, 230)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(cbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(40, 40, 40)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(295, 295, 295)
                         .addComponent(Cad, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -265,36 +342,43 @@ public class CadCliente extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtFaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(edtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel6))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addComponent(jLabel4)
-                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(CPF)
+                            .addComponent(jLabel3))
+                        .addGap(8, 8, 8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(edtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(edtFaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(8, 8, 8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(edtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6))
+                        .addGap(8, 8, 8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel4)
+                        .addGap(8, 8, 8))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(endereco, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addComponent(Cad, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -311,13 +395,9 @@ public class CadCliente extends javax.swing.JInternalFrame {
     private void cbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEstadoActionPerformed
         // TODO add your handling code here:
         cliente.estado(cbEstado.getSelectedItem().toString());
-        cidades();
+        // cidades();
 
     }//GEN-LAST:event_cbEstadoActionPerformed
-
-    private void cbCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCidadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbCidadeActionPerformed
 
     private void CadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadActionPerformed
         Confirma();
@@ -327,19 +407,25 @@ public class CadCliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_telefoneActionPerformed
 
+    private void enderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enderecoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_enderecoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel CPF;
     private javax.swing.JButton Cad;
-    private javax.swing.JComboBox<String> cbCidade;
+    private javax.swing.JTextField cbCidade;
     private javax.swing.JComboBox<String> cbEstado;
     private javax.swing.JTextArea descricao;
     private javax.swing.JTextField edtCategoria;
-    private javax.swing.JFormattedTextField edtCnpj;
+    private javax.swing.JFormattedTextField edtCpf;
     private javax.swing.JTextField edtFaixa;
     private javax.swing.JTextField edtNome;
     private javax.swing.JTextField email;
+    private javax.swing.JTextField endereco;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

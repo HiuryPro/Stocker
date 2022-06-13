@@ -316,20 +316,20 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
 
         ip.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel2.setText("Email:");
         ip.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, -1, -1));
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel8.setText("Estado:");
         ip.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, -1, -1));
 
         email.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ip.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 240, 35));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setText("Descrição");
-        ip.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, -1, -1));
+        ip.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, -1, -1));
 
         descri.setColumns(20);
         descri.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -340,20 +340,20 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
 
         ip.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 410, 90));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel5.setText("Inscrição Estadual");
         ip.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
         ip.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 170, 35));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel1.setText("Nome:");
         ip.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 67, -1));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel6.setText("Telefone:");
         ip.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 87, -1));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel3.setText("CNPJ:");
         ip.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 67, -1));
 
@@ -365,7 +365,7 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         });
         ip.add(nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 230, 35));
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel7.setText("Cidade:");
         ip.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
 

@@ -40,10 +40,10 @@ public class CadastroForn extends javax.swing.JInternalFrame {
         try {
             pst = conexao.prepareStatement(sql);
 
-            pst.setString(1, nome.getText());
-            pst.setString(2, cnpj.getText().replaceAll("[^0-9]+", ""));
+            pst.setString(1, edtNome.getText());
+            pst.setString(2, edtCnpj.getText().replaceAll("[^0-9]+", ""));
             pst.setString(3, inscE.getText().replaceAll("[^0-9]+", ""));
-            pst.setString(4, cidade.getText());
+            pst.setString(4, cbCidade.getText());
             pst.setString(5, String.valueOf(estado.getSelectedItem()));
             pst.setString(6, descri.getText());
             pst.setString(7, telefone.getText().replaceAll("[^0-9]+", ""));
@@ -56,6 +56,44 @@ public class CadastroForn extends javax.swing.JInternalFrame {
 
     }
 
+    public boolean validacaoField() {
+        boolean confirma = true;
+
+        if (edtNome.getText().isEmpty()) {
+            confirma = false;
+            JOptionPane.showMessageDialog(null, "Campo nome está vazio.");
+
+        } else if (edtCnpj.getText().replaceAll("[^0-9]+", "").isEmpty()) {
+            confirma = false;
+            JOptionPane.showMessageDialog(null, "Campo cpf está vazio.");
+
+        } else if (inscE.getText().replaceAll("[^0-9]+", "").isEmpty()) {
+            confirma = false;
+            JOptionPane.showMessageDialog(null, "Campo Inscrição Estadual está vazio.");
+
+        } else if (email.getText().isEmpty()) {
+            confirma = false;
+            JOptionPane.showMessageDialog(null, "Campo email está vazio.");
+
+        } else if (cbCidade.getText().isEmpty()) {
+            confirma = false;
+            JOptionPane.showMessageDialog(null, "Campo cidade está vazio");
+
+        } else if (telefone.getText().replaceAll("[^0-9]+", "").isEmpty()) {
+            confirma = false;
+            JOptionPane.showMessageDialog(null, "Campo telefone está vazio.");
+
+        } else if (descri.getText().isEmpty()) {
+            confirma = false;
+            JOptionPane.showMessageDialog(null, "Campo descrição está vazio.");
+
+        } else {
+            confirma = true;
+        }
+
+        return confirma;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -65,12 +103,12 @@ public class CadastroForn extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        cnpj = new javax.swing.JFormattedTextField();
+        edtCnpj = new javax.swing.JFormattedTextField();
         estado = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        cidade = new javax.swing.JTextField();
+        cbCidade = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        nome = new javax.swing.JFormattedTextField();
+        edtNome = new javax.swing.JFormattedTextField();
         inscE = new javax.swing.JFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
         email = new javax.swing.JTextField();
@@ -87,36 +125,33 @@ public class CadastroForn extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setPreferredSize(new java.awt.Dimension(745, 582));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         try {
-            cnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
+            edtCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        cnpj.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cnpj.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                cnpjKeyReleased(evt);
-            }
-        });
+        edtCnpj.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        getContentPane().add(edtCnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 180, 220, 35));
 
         estado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         estado.setMaximumRowCount(4);
         estado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acre (AC)", "Alagoas (AL)", "Amapá (AP)", "Amazonas (AM)", "Bahia (BA)", "Ceará (CE)", "Distrito Federal (DF)", "Espírito Santo (ES)", "Goiás (GO)", "Maranhão (MA)", "Mato Grosso (MT)", "Mato Grosso do Sul (MS)", "Minas Gerais (MG)", "Pará (PA)", "Paraíba (PB)", "Paraná (PR)", "Pernambuco (PE)", "Piauí (PI)", "Rio de Janeiro (RJ)", "Rio Grande do Norte (RN)", "Rio Grande do Sul (RS)", "Rondônia (RO)", "Roraima (RR)", "Santa Catarina (SC)", "São Paulo (SP)", "Sergipe (SE)", "Tocantins (TO)" }));
         estado.setSelectedIndex(12);
+        getContentPane().add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 260, 220, 35));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel5.setText("Inscrição Estadual");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 150, -1, -1));
+        getContentPane().add(cbCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 220, 35));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel6.setText("Telefone:");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 87, -1));
 
-        nome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        nome.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                nomeKeyReleased(evt);
-            }
-        });
+        edtNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        getContentPane().add(edtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 220, 35));
 
         try {
             inscE.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###.###")));
@@ -125,30 +160,30 @@ public class CadastroForn extends javax.swing.JInternalFrame {
         }
         inscE.setText("   .   .   .");
         inscE.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        inscE.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                inscEKeyReleased(evt);
-            }
-        });
+        getContentPane().add(inscE, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 180, 220, 35));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel2.setText("Email:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
         email.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        getContentPane().add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 220, 35));
 
         Logo2.setText("jLabel1");
+        getContentPane().add(Logo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 0, 278, 112));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setText("Descrição");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, -1, -1));
 
         Cad.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Cad.setText("Cadastrar");
-        Cad.setEnabled(false);
         Cad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CadActionPerformed(evt);
             }
         });
+        getContentPane().add(Cad, new org.netbeans.lib.awtextra.AbsoluteConstraints(295, 458, 145, 41));
 
         descri.setColumns(20);
         descri.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -157,14 +192,19 @@ public class CadastroForn extends javax.swing.JInternalFrame {
         descri.setWrapStyleWord(true);
         jScrollPane1.setViewportView(descri);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 330, 460, 90));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel1.setText("Nome:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 67, -1));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel3.setText("CNPJ:");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 67, -1));
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel7.setText("Cidade:");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, -1, -1));
 
         try {
             telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
@@ -177,121 +217,25 @@ public class CadastroForn extends javax.swing.JInternalFrame {
                 telefoneActionPerformed(evt);
             }
         });
+        getContentPane().add(telefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 220, 35));
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel8.setText("Estado:");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(227, 227, 227)
-                        .addComponent(Logo2, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(173, 173, 173)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(173, 173, 173)
-                        .addComponent(jLabel5))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(inscE, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel2)
-                        .addGap(191, 191, 191)
-                        .addComponent(jLabel7)
-                        .addGap(178, 178, 178)
-                        .addComponent(jLabel8))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(cidade, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(153, 153, 153)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(295, 295, 295)
-                        .addComponent(Cad, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Logo2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel5))
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inscE, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8))
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cidade, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel4))
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                .addComponent(Cad, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
-        );
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cnpjKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cnpjKeyReleased
-        Cad.setEnabled(valida.HabilitaCadastro(nome.getText(), inscE, cnpj));// TODO add your handling code here:
-    }//GEN-LAST:event_cnpjKeyReleased
-
-    private void nomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomeKeyReleased
-        Cad.setEnabled(valida.HabilitaCadastro(nome.getText(), inscE, cnpj));  // TODO add your handling code here:
-    }//GEN-LAST:event_nomeKeyReleased
-
-    private void inscEKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inscEKeyReleased
-        Cad.setEnabled(valida.HabilitaCadastro(nome.getText(), inscE, cnpj));        // TODO add your handling code here:
-    }//GEN-LAST:event_inscEKeyReleased
-
     private void CadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadActionPerformed
-        if (valida.validaCNPJ(cnpj.getText().replaceAll("[^0-9]+", "")) == true) {
-            inserirFornecedor();
+        if (validacaoField()) {
+            if (valida.validaCNPJ(edtCnpj.getText().replaceAll("[^0-9]+", ""))) {
+                inserirFornecedor();
 
-        } else {
-            JOptionPane.showMessageDialog(null, "CNPJ invalido", "ERRO", 0);
+            } else {
+                JOptionPane.showMessageDialog(null, "CNPJ invalido", "ERRO", 0);
+            }
         }
+
 
     }//GEN-LAST:event_CadActionPerformed
 
@@ -303,9 +247,10 @@ public class CadastroForn extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cad;
     private javax.swing.JLabel Logo2;
-    private javax.swing.JTextField cidade;
-    private javax.swing.JFormattedTextField cnpj;
+    private javax.swing.JTextField cbCidade;
     private javax.swing.JTextArea descri;
+    private javax.swing.JFormattedTextField edtCnpj;
+    private javax.swing.JFormattedTextField edtNome;
     private javax.swing.JTextField email;
     private javax.swing.JComboBox<String> estado;
     private javax.swing.JFormattedTextField inscE;
@@ -318,7 +263,6 @@ public class CadastroForn extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JFormattedTextField nome;
     private javax.swing.JFormattedTextField telefone;
     // End of variables declaration//GEN-END:variables
 }

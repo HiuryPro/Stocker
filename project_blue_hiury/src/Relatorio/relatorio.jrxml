@@ -2,13 +2,13 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="79c704f8-97da-41f5-b883-b85b9aaae276">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="96"/>
 	<style name="Heading 2" fontSize="14" isBold="true" isItalic="true"/>
 	<subDataset name="teste" uuid="03931dd6-6ea0-43eb-8759-6bc0964ee464">
-		<parameter name="total1" class="java.sql.Date">
+		<parameter name="query" class="java.sql.Date">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
-		<parameter name="total2" class="java.sql.Date">
+		<parameter name="query2" class="java.sql.Date">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
 		<queryString>
@@ -28,7 +28,7 @@
 		</field>
 	</subDataset>
 	<subDataset name="teste2" uuid="e23b0777-cf05-413f-afc0-dd3b6f68cfa3">
-		<queryString>
+		<queryString language="SQL">
 			<![CDATA[Select * from relatoriototal]]>
 		</queryString>
 		<field name="id" class="java.lang.Integer">
@@ -45,9 +45,9 @@
 		</field>
 	</subDataset>
 	<subDataset name="dataset3" uuid="df51ec97-2b50-4826-83e6-19f7b4e05ff5"/>
-	<subDataset name="dataset1" uuid="66ef9c82-b1cc-4ef9-b8d7-1c7a78a8a3d7"/>
 	<parameter name="total1" class="java.lang.String"/>
 	<parameter name="total2" class="java.lang.String"/>
+	<parameter name="image" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[Select *  from produto_venda]]>
 	</queryString>
@@ -82,8 +82,8 @@
 	<title>
 		<band height="162" splitType="Stretch">
 			<image>
-				<reportElement x="39" y="0" width="484" height="157" uuid="80a3df00-b2da-4b62-b712-1ec3c75f17a2"/>
-				<imageExpression><![CDATA["C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\Stocker_blue_transp.png"]]></imageExpression>
+				<reportElement x="39" y="0" width="484" height="157" uuid="9e8e835d-922b-4485-938d-770cfef9bc47"/>
+				<imageExpression><![CDATA[$P{image}]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -155,23 +155,23 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="69">
-			<textField>
-				<reportElement x="177" y="11" width="100" height="20" uuid="d3c80731-933b-4cae-bdd0-d3ebf8d1d1a4"/>
-				<textFieldExpression><![CDATA[$P{total1}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="142" y="31" width="100" height="20" uuid="5013bf73-c402-4677-b67c-90d235addac6"/>
-				<textFieldExpression><![CDATA[$P{total2}]]></textFieldExpression>
-			</textField>
+		<band height="50">
 			<staticText>
-				<reportElement x="0" y="11" width="175" height="20" uuid="30498399-e251-429e-b1e0-2b829b6e44fe"/>
-				<text><![CDATA[Quantidade comprada no período:]]></text>
+				<reportElement x="0" y="10" width="184" height="20" uuid="a512a8d6-d180-494f-966e-f0edeb414faa"/>
+				<text><![CDATA[Quantidade total comprada no período:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="31" width="142" height="20" uuid="308d7f01-a388-403f-a676-73b57c37f408"/>
+				<reportElement x="0" y="30" width="156" height="20" uuid="a828eb62-52a0-4310-bd89-46eaba77ecd9"/>
 				<text><![CDATA[Quantidade gasta no período:]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="156" y="30" width="100" height="20" uuid="4260a2e5-1182-474f-88e4-b6bdf13ac80c"/>
+				<textFieldExpression><![CDATA[$P{total2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="10" width="100" height="20" uuid="fa497326-b889-4446-b89e-35e6ac8ac819"/>
+				<textFieldExpression><![CDATA[$P{total1}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnFooter>
 	<pageFooter>

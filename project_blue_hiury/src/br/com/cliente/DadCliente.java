@@ -74,6 +74,9 @@ public class DadCliente extends javax.swing.JInternalFrame {
                 estado.setText(rs.getString("estado"));
 
                 descricao.setText(rs.getString("descricao"));
+                tel.setText(rs.getString("telefone"));
+                email.setText(rs.getString("email"));
+                endereco.setText(rs.getString("endereco"));
 
             }
         } catch (SQLException ex) {
@@ -84,7 +87,7 @@ public class DadCliente extends javax.swing.JInternalFrame {
 
     public void atualizaClien() {
 
-        String sql = "UPDATE cliente SET nome = ?, cnpj = ?, categoria = ?, faixaR = ?, cidade = ?, estado = ?, descricao = ? WHERE nome = '" + String.valueOf(clien.getSelectedItem()) + "'";
+        String sql = "UPDATE cliente SET nome = ?, cnpj = ?, categoria = ?, faixaR = ?, cidade = ?, estado = ?, descricao = ?, telefone = ?, email = ?, endereco = ? WHERE nome = '" + String.valueOf(clien.getSelectedItem()) + "'";
         try {
             pst = conexao.prepareStatement(sql);
 
@@ -95,7 +98,10 @@ public class DadCliente extends javax.swing.JInternalFrame {
             pst.setString(5, cidade.getText());
             pst.setString(6, estado.getText());
             pst.setString(7, descricao.getText());
-
+            pst.setString(8, tel.getText().replaceAll("[^0-9]+", ""));
+            pst.setString(9, email.getText());
+            pst.setString(10, endereco.getText());
+            
             pst.executeUpdate();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -176,6 +182,12 @@ public class DadCliente extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         cidade = new javax.swing.JTextField();
         estado = new javax.swing.JTextField();
+        tel = new javax.swing.JFormattedTextField();
+        jLabel9 = new javax.swing.JLabel();
+        email = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        endereco = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
 
         setClosable(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -197,11 +209,11 @@ public class DadCliente extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setText("Descrição");
         telaC.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
-        telaC.add(edtCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 260, 35));
+        telaC.add(edtCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, 180, 35));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel5.setText("Categoria");
-        telaC.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+        telaC.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 0, -1, -1));
         telaC.add(edtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 256, 35));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -216,27 +228,27 @@ public class DadCliente extends javax.swing.JInternalFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel3.setText("Cnpj");
-        telaC.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, -1, -1));
+        telaC.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel6.setText("Cidade");
         telaC.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, -1, -1));
-        telaC.add(edtFaixa, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, 200, 35));
+        telaC.add(edtFaixa, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, 260, 35));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel7.setText("Estado");
         telaC.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel8.setText("Faixa De Renda");
-        telaC.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, -1, -1));
+        jLabel8.setText("Telefone");
+        telaC.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
 
         try {
             edtCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        telaC.add(edtCnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 200, 35));
+        telaC.add(edtCnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 200, 35));
 
         altera.setText("Alterar");
         altera.addActionListener(new java.awt.event.ActionListener() {
@@ -256,7 +268,28 @@ public class DadCliente extends javax.swing.JInternalFrame {
         telaC.add(cidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 180, 35));
         telaC.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 180, 35));
 
-        getContentPane().add(telaC, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 735, 460));
+        try {
+            tel.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        telaC.add(tel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 160, 35));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel9.setText("Faixa De Renda");
+        telaC.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, -1, -1));
+        telaC.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 200, 35));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel10.setText("Email");
+        telaC.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, -1));
+        telaC.add(endereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 190, 260, 35));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel11.setText("Endereço");
+        telaC.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 160, 80, -1));
+
+        getContentPane().add(telaC, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 735, 460));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -265,6 +298,9 @@ public class DadCliente extends javax.swing.JInternalFrame {
         if (!" ".equals(String.valueOf(clien.getSelectedItem()))) {
             pegaDados();
             telaC.setVisible(true);
+        }else
+        {
+            telaC.setVisible(false);
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_clienActionPerformed
@@ -287,9 +323,13 @@ public class DadCliente extends javax.swing.JInternalFrame {
     private javax.swing.JFormattedTextField edtCnpj;
     private javax.swing.JTextField edtFaixa;
     private javax.swing.JTextField edtNome;
+    private javax.swing.JTextField email;
+    private javax.swing.JTextField endereco;
     private javax.swing.JTextField estado;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -297,7 +337,9 @@ public class DadCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JFormattedTextField tel;
     private javax.swing.JPanel telaC;
     // End of variables declaration//GEN-END:variables
 }
