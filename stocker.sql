@@ -31,8 +31,11 @@ CREATE TABLE `cliente` (
   `faixaR` float NOT NULL,
   `categoria` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `descricao` varchar(120) CHARACTER SET utf8 DEFAULT NULL,
+  `email` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `telefone` varchar(11) CHARACTER SET utf8 NOT NULL,
+  `endereco` varchar(50) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,8 +44,41 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'Cleiton','123456789','Tiros','Minas',10000,'T.I','Cleiton é um cliente de Tiros.'),(2,'Julio','23145644','Tiros','Minas',40455,'Carros','Julio é um cliente de Tiros.');
+INSERT INTO `cliente` VALUES (1,'Cleiton','123456789','Tiros','Minas',10000,'T.I','Cleiton é um cliente de Tiros.','cleiton@gmail.com.br','34988589087','Avenida Carlos Albuquerque numero 20'),(2,'Julio','23145644','Tiros','Minas',40455,'Carros','Julio é um cliente de Tiros.','juliofo@gmail.com.br','34988987540','Avenida Carlos Albuquerque numero 12'),(4,'João Claudio','76844872054','Tiros','Minas Gerais',10000,'TI','João Claudio é um cara legal.','joaoclaudio@gmail.com','3498876514','Avenida Almirante Abreu nº 39');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `entregas_detalhado`
+--
+
+DROP TABLE IF EXISTS `entregas_detalhado`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `entregas_detalhado` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `entregador` varchar(40) CHARACTER SET utf8 DEFAULT NULL,
+  `produto` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `qtd` int(11) DEFAULT NULL,
+  `cliente` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `endereco` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `data_entrega` date DEFAULT NULL,
+  `NF` varchar(9) CHARACTER SET utf8 DEFAULT NULL,
+  `estado` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `cidade` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `telefone` varchar(11) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `entregas_detalhado`
+--
+
+LOCK TABLES `entregas_detalhado` WRITE;
+/*!40000 ALTER TABLE `entregas_detalhado` DISABLE KEYS */;
+INSERT INTO `entregas_detalhado` VALUES (1,'Gilmar','Maçã',5,'Cleiton','Avenida Carlos Albuquerque numero 20','2022-06-13','000000001','Minas','Tiros','34988987590');
+/*!40000 ALTER TABLE `entregas_detalhado` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -113,6 +149,7 @@ CREATE TABLE `fornecedor_produto` (
   `fornecedor` varchar(30) DEFAULT NULL,
   `produto` varchar(30) DEFAULT NULL,
   `preco` float DEFAULT NULL,
+  `frete` float DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -123,7 +160,7 @@ CREATE TABLE `fornecedor_produto` (
 
 LOCK TABLES `fornecedor_produto` WRITE;
 /*!40000 ALTER TABLE `fornecedor_produto` DISABLE KEYS */;
-INSERT INTO `fornecedor_produto` VALUES (2,'Jorge','Maçã',6),(7,'Valdemar','Coca-Cola',12);
+INSERT INTO `fornecedor_produto` VALUES (2,'Jorge','Maçã',6,20),(7,'Valdemar','Coca-Cola',12,15);
 /*!40000 ALTER TABLE `fornecedor_produto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -355,4 +392,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-07 15:04:36
+-- Dump completed on 2022-06-13 20:47:40

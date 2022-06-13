@@ -96,16 +96,16 @@
               <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="frete" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="edtValor" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="frete" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="edtValor" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cbfornecedo" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="cbfornecedo" min="-2" pref="35" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="qtd" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="combo" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="qtd" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                              <Component id="combo" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -123,17 +123,17 @@
                   </Group>
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="dataE" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="dataE" min="-2" pref="35" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                      <Component id="total" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="total" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="250" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
               <Component id="Cad" min="-2" pref="41" max="-2" attributes="0"/>
-              <EmptySpace pref="56" max="32767" attributes="0"/>
+              <EmptySpace pref="46" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -244,6 +244,7 @@
               </TableColumnModel>
             </Property>
             <Property name="columnSelectionAllowed" type="boolean" value="true"/>
+            <Property name="rowHeight" type="int" value="30"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="false" resizingAllowed="false"/>
             </Property>

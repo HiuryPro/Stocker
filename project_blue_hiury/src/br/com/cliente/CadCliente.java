@@ -195,11 +195,15 @@ public class CadCliente extends javax.swing.JInternalFrame {
         CPF.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         CPF.setText("CPF");
 
+        edtFaixa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel3.setText("Faixa De Renda");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setText("Descrição");
+
+        edtCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel5.setText("Categoria");
@@ -221,7 +225,10 @@ public class CadCliente extends javax.swing.JInternalFrame {
             }
         });
 
+        edtNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         descricao.setColumns(20);
+        descricao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         descricao.setRows(5);
         jScrollPane1.setViewportView(descricao);
 
@@ -236,6 +243,7 @@ public class CadCliente extends javax.swing.JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        edtCpf.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         Cad.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Cad.setText("Cadastrar");
@@ -245,6 +253,8 @@ public class CadCliente extends javax.swing.JInternalFrame {
                 CadActionPerformed(evt);
             }
         });
+
+        email.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel8.setText("Email");
@@ -257,6 +267,7 @@ public class CadCliente extends javax.swing.JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        telefone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         telefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 telefoneActionPerformed(evt);
@@ -266,6 +277,9 @@ public class CadCliente extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel10.setText("Endereço:");
 
+        cbCidade.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        endereco.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         endereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 enderecoActionPerformed(evt);
@@ -382,7 +396,7 @@ public class CadCliente extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addComponent(Cad, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
