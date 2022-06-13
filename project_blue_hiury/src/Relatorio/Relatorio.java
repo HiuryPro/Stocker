@@ -6,6 +6,8 @@
 package Relatorio;
 
 import br.com.dal_connexao.ModuloConexao;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -53,6 +55,13 @@ public class Relatorio {
         conexao = ModuloConexao.conector();
     }
 
+    public String caminho() {
+        Path path = Paths.get("");
+        String directoryName = path.toAbsolutePath().normalize().toString();
+        System.out.println("Current Working Directory is = " + directoryName);
+        return directoryName;
+    }
+
     public void criaRelatorio(JTextField deData, JTextField ateData) {
         try {
             data = deData.getText();
@@ -61,7 +70,7 @@ public class Relatorio {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stocker", "root", "");
 
-            JasperDesign jDesign = JRXmlLoader.load("C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\report1.jrxml");
+            JasperDesign jDesign = JRXmlLoader.load(caminho() + "\\src\\Relatorio\\report1.jrxml");
             String sql = "SELECT * FROM produto_compra where (data_entrada BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))"; // or  (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))";
             distinguiR(1);
 
@@ -72,9 +81,9 @@ public class Relatorio {
             JasperReport jReport = JasperCompileManager.compileReport(jDesign);
             HashMap<String, Object> hm = new HashMap<>();
 
-             hm.put("total1", String.valueOf(qtdTotal));
+            hm.put("total1", String.valueOf(qtdTotal));
             hm.put("total2", String.valueOf(valorTotal));
-
+            hm.put("image", caminho() + "\\src\\Relatorio\\Stocker_blue_transp.png");
             JasperPrint jPrint = JasperFillManager.fillReport(jReport, hm, con);
             JasperViewer.viewReport(jPrint, false);
 
@@ -96,7 +105,7 @@ public class Relatorio {
             Class.forName("com.mysql.jdbc.Driver");
             con1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/stocker", "root", "");
 
-            JasperDesign jDesign = JRXmlLoader.load("C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\relatorio.jrxml");
+            JasperDesign jDesign = JRXmlLoader.load(caminho() + "\\src\\Relatorio\\relatorio.jrxml");
             String sql = "SELECT * FROM produto_venda where (data_saida BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))"; // or  (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))";
             distinguiR(0);
 
@@ -109,6 +118,7 @@ public class Relatorio {
 
             hm.put("total1", String.valueOf(qtdTotal));
             hm.put("total2", String.valueOf(valorTotal));
+            hm.put("image", caminho() + "\\src\\Relatorio\\Stocker_blue_transp.png");
 
             JasperPrint jPrint = JasperFillManager.fillReport(jReport, hm, con1);
             JasperViewer.viewReport(jPrint, false);
@@ -131,7 +141,7 @@ public class Relatorio {
             Class.forName("com.mysql.jdbc.Driver");
             con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/stocker", "root", "");
 
-            JasperDesign jDesign = JRXmlLoader.load("C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\report2.jrxml");
+            JasperDesign jDesign = JRXmlLoader.load(caminho() + "\\src\\Relatorio\\report2.jrxml");
             String sql = "SELECT * FROM varia_estoque where (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))"; // or  (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))";
 
             JRDesignQuery updateQuery = new JRDesignQuery();
@@ -154,7 +164,7 @@ public class Relatorio {
 
                 hm.put("query", data);
                 hm.put("query2", data2);
-
+                hm.put("image", caminho() + "\\src\\Relatorio\\Stocker_blue_transp.png");
                 JasperPrint jPrint = JasperFillManager.fillReport(jReport, hm, con2);
                 JasperViewer.viewReport(jPrint, false);
 

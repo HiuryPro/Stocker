@@ -139,7 +139,9 @@ public class TelaEsotoquenew extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cadActionPerformed
 
     private void fornecedorDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fornecedorDActionPerformed
-     
+        Relatoriotela rel = new Relatoriotela();
+         telaF.add(rel);
+        rel.setVisible(true);
     }//GEN-LAST:event_fornecedorDActionPerformed
 
 

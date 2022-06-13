@@ -42,9 +42,7 @@ public class Estoque extends javax.swing.JInternalFrame {
         initComponents();
         conexao = ModuloConexao.conector();
 
-        rel1.setText("<html>Relatório de <br> compra<html>");
-        rel2.setText("<html>Relatório de <br> venda<html>");
-        rel3.setText("<html>Relatório de <br> variação de <br> estoque<html>");
+ 
         pr.setVisible(false);
         pegaP();
 
@@ -290,21 +288,6 @@ public class Estoque extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jDialog1 = new javax.swing.JDialog();
-        rel1 = new javax.swing.JButton();
-        deData = new javax.swing.JFormattedTextField();
-        ateData = new javax.swing.JFormattedTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        rel2 = new javax.swing.JButton();
-        deData1 = new javax.swing.JFormattedTextField();
-        ateData1 = new javax.swing.JFormattedTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        rel3 = new javax.swing.JButton();
-        deData2 = new javax.swing.JFormattedTextField();
-        ateData2 = new javax.swing.JFormattedTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         forn = new javax.swing.JComboBox<>();
         pr = new javax.swing.JPanel();
@@ -331,105 +314,15 @@ public class Estoque extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setPreferredSize(new java.awt.Dimension(745, 582));
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        rel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        rel1.setText("Relatorio");
-        rel1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rel1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(rel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(494, 86, 181, 67));
-
-        try {
-            deData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        getContentPane().add(deData, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 38, 126, 30));
-
-        try {
-            ateData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        getContentPane().add(ateData, new org.netbeans.lib.awtextra.AbsoluteConstraints(594, 38, 126, 30));
-
-        jLabel1.setText("De");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 20, 37, -1));
-
-        jLabel2.setText("Até");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(594, 20, 37, -1));
-
-        rel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        rel2.setText("Relatorio");
-        rel2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rel2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(rel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(494, 280, 181, 67));
-
-        try {
-            deData1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        getContentPane().add(deData1, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 232, 126, 30));
-
-        try {
-            ateData1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        getContentPane().add(ateData1, new org.netbeans.lib.awtextra.AbsoluteConstraints(594, 232, 126, 30));
-
-        jLabel3.setText("De");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 214, 37, -1));
-
-        jLabel4.setText("Até");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(594, 214, 37, -1));
-
-        rel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        rel3.setText("Relatorio");
-        rel3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rel3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(rel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(494, 451, 181, 67));
-
-        try {
-            deData2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        getContentPane().add(deData2, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 403, 126, 30));
-
-        try {
-            ateData2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        getContentPane().add(ateData2, new org.netbeans.lib.awtextra.AbsoluteConstraints(594, 403, 126, 30));
-
-        jLabel5.setText("De");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 389, 37, -1));
-
-        jLabel6.setText("Até");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(594, 389, 37, -1));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel12.setText("Produto");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         forn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fornActionPerformed(evt);
             }
         });
-        getContentPane().add(forn, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 160, 30));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel7.setText("Nome do Produto");
@@ -491,7 +384,7 @@ public class Estoque extends javax.swing.JInternalFrame {
                         .addComponent(alt, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
                         .addComponent(del, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         prLayout.setVerticalGroup(
             prLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -514,22 +407,37 @@ public class Estoque extends javax.swing.JInternalFrame {
                     .addComponent(del, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        getContentPane().add(pr, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 380, 440));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(178, 178, 178)
+                .addComponent(pr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(177, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(forn, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(288, 288, 288))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel12)
+                .addGap(335, 335, 335))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(forn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void rel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rel1ActionPerformed
-        rel.criaRelatorio(deData, ateData);
-    }//GEN-LAST:event_rel1ActionPerformed
-
-    private void rel2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rel2ActionPerformed
-        rel.criaRelatorio2(deData1, ateData1);
-    }//GEN-LAST:event_rel2ActionPerformed
-
-    private void rel3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rel3ActionPerformed
-        rel.criaRelatorio3(deData2, ateData2);
-    }//GEN-LAST:event_rel3ActionPerformed
 
     private void fornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fornActionPerformed
         if (!" ".equals(String.valueOf(forn.getSelectedItem()))) {
@@ -556,23 +464,11 @@ public class Estoque extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton alt;
-    private javax.swing.JFormattedTextField ateData;
-    private javax.swing.JFormattedTextField ateData1;
-    private javax.swing.JFormattedTextField ateData2;
-    private javax.swing.JFormattedTextField deData;
-    private javax.swing.JFormattedTextField deData1;
-    private javax.swing.JFormattedTextField deData2;
     private javax.swing.JButton del;
     private javax.swing.JTextArea descri;
     private javax.swing.JComboBox<String> forn;
     private javax.swing.JDialog jDialog1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -580,8 +476,5 @@ public class Estoque extends javax.swing.JInternalFrame {
     private javax.swing.JTextField nome;
     private javax.swing.JPanel pr;
     private javax.swing.JTextField quant;
-    private javax.swing.JButton rel1;
-    private javax.swing.JButton rel2;
-    private javax.swing.JButton rel3;
     // End of variables declaration//GEN-END:variables
 }

@@ -24,6 +24,7 @@
 	</subDataset>
 	<parameter name="query" class="java.lang.String"/>
 	<parameter name="query2" class="java.lang.String"/>
+	<parameter name="image" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[Select * from varia_estoque]]>
 	</queryString>
@@ -43,36 +44,25 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="167" splitType="Stretch">
+		<band height="176" splitType="Stretch">
 			<image>
-				<reportElement x="44" y="0" width="484" height="157" uuid="68006bb3-daa6-4d1e-8c0c-c5ff96c88582"/>
-				<imageExpression><![CDATA["C:\\Users\\Hiury\\Documents\\Git-Projeto\\Stocker\\project_blue_hiury\\src\\Relatorio\\Stocker_blue_transp.png"]]></imageExpression>
+				<reportElement x="42" y="0" width="484" height="157" uuid="0610b3ff-4101-4614-95f1-4a96a79923cb"/>
+				<imageExpression><![CDATA[$P{image}]]></imageExpression>
 			</image>
 		</band>
 	</title>
-	<pageHeader>
-		<band height="43">
-			<staticText>
-				<reportElement x="0" y="0" width="555" height="43" uuid="506b9cd1-1195-4779-b2c6-ee251993cb64"/>
-				<textElement textAlignment="Center">
-					<font size="28"/>
-				</textElement>
-				<text><![CDATA[Relatório de Variação de Estoque]]></text>
-			</staticText>
-		</band>
-	</pageHeader>
 	<columnHeader>
-		<band height="64">
+		<band height="50">
 			<staticText>
-				<reportElement x="0" y="44" width="185" height="20" uuid="611c3a08-83ba-4d7d-a5da-a18d822efe9f"/>
+				<reportElement x="0" y="30" width="185" height="20" uuid="611c3a08-83ba-4d7d-a5da-a18d822efe9f"/>
 				<text><![CDATA[Produto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="185" y="44" width="185" height="20" uuid="6333c38c-041b-4808-b65f-2fc4e154fee8"/>
+				<reportElement x="185" y="30" width="185" height="20" uuid="6333c38c-041b-4808-b65f-2fc4e154fee8"/>
 				<text><![CDATA[Quantidade no Estoque]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="370" y="44" width="185" height="20" uuid="5279c819-7544-4de9-a820-3c507924ef40"/>
+				<reportElement x="370" y="30" width="185" height="20" uuid="5279c819-7544-4de9-a820-3c507924ef40"/>
 				<text><![CDATA[Data de Variação]]></text>
 			</staticText>
 		</band>
