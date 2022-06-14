@@ -99,6 +99,16 @@ public class CadCliente extends javax.swing.JInternalFrame {
                 if (val.isCPF(edtCpf.getText().replaceAll("[^0-9]+", ""))) {
                     inserir();
                     JOptionPane.showMessageDialog(null, "Cadastro feito com sucesso.");
+                    cbCidade.setText(null);
+                    descricao.setText(null);
+                    edtCategoria.setText(null);
+                    edtCpf.setText(null);
+                    edtFaixa.setText(null);
+                    edtNome.setText(null);
+                    email.setText(null);
+                    endereco.setText(null);
+                    telefone.setText(null);
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "Cpf invalido");
                 }

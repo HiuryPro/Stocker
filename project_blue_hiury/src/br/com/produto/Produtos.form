@@ -23,9 +23,9 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
+              <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="277" pref="277" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
@@ -33,21 +33,14 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
-                      <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
                       <Component id="edtNome" min="-2" pref="260" max="-2" attributes="0"/>
                       <EmptySpace min="60" pref="60" max="-2" attributes="0"/>
                       <Component id="edtPreco" min="-2" pref="120" max="-2" attributes="0"/>
                       <EmptySpace min="70" pref="70" max="-2" attributes="0"/>
                       <Component id="qtdestoque" min="-2" pref="135" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
-                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="650" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="650" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="45" max="32767" attributes="0"/>
           </Group>

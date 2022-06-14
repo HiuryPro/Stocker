@@ -107,6 +107,18 @@ public class CadastroForn extends javax.swing.JInternalFrame {
             if (validacaoField()) {
             if (valida.validaCNPJ(edtCnpj.getText().replaceAll("[^0-9]+", ""))) {
                 inserirFornecedor();
+                JOptionPane.showMessageDialog(null, "Cadastro feito com sucesso.");
+                
+                dataNasc.setText(null);
+                cbCidade.setText(null);
+                email.setText(null);
+                descri.setText(null);
+                edtCnpj.setText(null);
+                edtNome.setText(null);
+                inscE.setText(null);
+                telefone.setText(null);
+                
+                
 
             } else {
                 JOptionPane.showMessageDialog(null, "CNPJ invalido", "ERRO", 0);

@@ -47,6 +47,8 @@ public class CadastroFP extends javax.swing.JInternalFrame {
 
             st = conexao.createStatement();
             rs = st.executeQuery(sql);
+            cbFornecedor.addItem(" ");
+            
             while (rs.next()) {
 
                 cbFornecedor.addItem(rs.getString("nome"));
@@ -64,6 +66,7 @@ public class CadastroFP extends javax.swing.JInternalFrame {
 
             st = conexao.createStatement();
             rs = st.executeQuery(sql);
+            cbProduto.addItem(" ");
             while (rs.next()) {
 
                 cbProduto.addItem(rs.getString("nome"));
@@ -86,10 +89,10 @@ public class CadastroFP extends javax.swing.JInternalFrame {
 
     }
 
-    public boolean confereBanco() {
+    public boolean confereBanco(int i) {
         String sql = "Select produto from fornecedor_produto";
-        boolean valida = false;
-        int i = 0;
+        boolean valida = true;
+  
         try {
             st = conexao.createStatement();
             rs = st.executeQuery(sql);
@@ -125,10 +128,10 @@ public class CadastroFP extends javax.swing.JInternalFrame {
         int qtd, i;
         try {
             qtd = ((DefaultTableModel) tabela.getModel()).getRowCount();
-            JOptionPane.showMessageDialog(null, qtd);
+           
             pst = conexao.prepareStatement(sql);
             for (i = 0; i < qtd; i++) {
-                if (confereBanco()) {
+                if (confereBanco(i)) {
                     pst.setString(1, String.valueOf(((DefaultTableModel) tabela.getModel()).getValueAt(i, 0)));
                     pst.setString(2, String.valueOf(((DefaultTableModel) tabela.getModel()).getValueAt(i, 1)));
                     pst.setFloat(3, Float.parseFloat(String.valueOf(((DefaultTableModel) tabela.getModel()).getValueAt(i, 2))));
@@ -152,6 +155,7 @@ public class CadastroFP extends javax.swing.JInternalFrame {
             tabela.removeAll();
             rowCount = 0;
             ((DefaultTableModel) tabela.getModel()).setRowCount(rowCount);
+            JOptionPane.showMessageDialog(null, "Cadastros feitos com sucesso.");
 
         } else {
 

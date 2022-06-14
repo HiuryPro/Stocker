@@ -29,12 +29,14 @@ public class CadEntrega extends javax.swing.JInternalFrame {
     Statement st;
     public int rowCount = 0;
     public int contador = 0;
+    public ArrayList<String> notasfs = new ArrayList<String>();
 
     public CadEntrega() {
         initComponents();
         conexao = ModuloConexao.conector();
         pegaE();
         pegaNNF();
+        colocaCbNF();
     }
 
     public void pegaE() {
@@ -60,11 +62,48 @@ public class CadEntrega extends javax.swing.JInternalFrame {
 
             st = conexao.createStatement();
             rs = st.executeQuery(sql);
-            cbNumeroNF.addItem(" ");
+
             while (rs.next()) {
 
-                cbNumeroNF.addItem(rs.getString("numero"));
+                notasfs.add(rs.getString("numero"));
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void colocaCbNF() {
+        String sql = "Select NF from entregas_detalhado";
+        ArrayList<String> nfE = new ArrayList<String>();
+
+        try {
+
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+
+            cbNumeroNF.removeAllItems();
+            cbNumeroNF.addItem(" ");
+
+            while (rs.next()) {
+                nfE.add(rs.getString("NF"));
+
+            }
+
+            for(int i = 0; i < nfE.size(); i++){
+                for(int j = 0; j < notasfs.size(); j++){
+                    if(nfE.get(i).equals(notasfs.get(j))){
+                        notasfs.remove(j);
+                    }
+                }
+                
+            }
+           
+            for (int i = 0; i < notasfs.size(); i ++){
+                cbNumeroNF.addItem(notasfs.get(i));
+            }
+            
+
         } catch (SQLException ex) {
             Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -89,88 +128,112 @@ public class CadEntrega extends javax.swing.JInternalFrame {
 
     }
 
+    public ArrayList<String> pegaNotaFiscal() {
+
+        String sql = "Select NF from entregas_detalhado";
+        ArrayList<String> notaF = new ArrayList<String>();
+
+        try {
+
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                notaF.add(rs.getString("NF"));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return notaF;
+    }
+
     public void pegaBD() {
         ArrayList<String> valores = new ArrayList<String>();
+        ArrayList<String> nfs = new ArrayList<String>();
 
         for (int i = 0; i < tabela.getRowCount(); i++) {
+            nfs = pegaNotaFiscal();
+            if (!String.valueOf(tabela.getValueAt(i, 1)).equals(nfs.get(i))) {
+                int id = 0;
+                String cliente = "";
+                String entregador = "";
 
-            int id = 0;
-            String cliente = "";
-            String entregador = "";
-            
-            valores.clear();
+                valores.clear();
 
-            String sql = "Select id from notafiscal_saida where numero = '" + String.valueOf(tabela.getValueAt(i, 1)) + "'";
-            try {
-                st = conexao.createStatement();
-                rs = st.executeQuery(sql);
+                String sql = "Select id from notafiscal_saida where numero = '" + String.valueOf(tabela.getValueAt(i, 1)) + "'";
+                try {
+                    st = conexao.createStatement();
+                    rs = st.executeQuery(sql);
 
-                while (rs.next()) {
-                    id = rs.getInt("id");
+                    while (rs.next()) {
+                        id = rs.getInt("id");
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-            } catch (SQLException ex) {
-                Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                valores.add(String.valueOf(tabela.getValueAt(i, 0)));
+                valores.add(String.valueOf(tabela.getValueAt(i, 1)));
+                valores.add(String.valueOf(tabela.getValueAt(i, 2)));
 
-            valores.add(String.valueOf(tabela.getValueAt(i, 0)));
-            valores.add(String.valueOf(tabela.getValueAt(i, 1)));
-            valores.add(String.valueOf(tabela.getValueAt(i, 2)));
-            
-            entregador = String.valueOf(tabela.getValueAt(i, 0));
-            
-            sql = "Select * from produto_venda where id = " + id;
+                entregador = String.valueOf(tabela.getValueAt(i, 0));
 
-            try {
-                st = conexao.createStatement();
-                rs = st.executeQuery(sql);
+                sql = "Select * from produto_venda where id = " + id;
 
-                while (rs.next()) {
-                    valores.add(rs.getString("nome_produto"));
-                    valores.add(rs.getString("quantidade"));
-                    valores.add(rs.getString("cliente"));
+                try {
+                    st = conexao.createStatement();
+                    rs = st.executeQuery(sql);
 
-                    cliente = rs.getString("cliente");
+                    while (rs.next()) {
+                        valores.add(rs.getString("nome_produto"));
+                        valores.add(rs.getString("quantidade"));
+                        valores.add(rs.getString("cliente"));
+
+                        cliente = rs.getString("cliente");
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-            } catch (SQLException ex) {
-                Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                sql = "Select * from cliente where nome = '" + cliente + "'";
 
-            sql = "Select * from cliente where nome = '" + cliente + "'";
+                try {
+                    st = conexao.createStatement();
+                    rs = st.executeQuery(sql);
 
-            try {
-                st = conexao.createStatement();
-                rs = st.executeQuery(sql);
+                    while (rs.next()) {
+                        valores.add(rs.getString("endereco"));
+                        valores.add(rs.getString("estado"));
+                        valores.add(rs.getString("cidade"));
 
-                while (rs.next()) {
-                    valores.add(rs.getString("endereco"));
-                    valores.add(rs.getString("estado"));
-                    valores.add(rs.getString("cidade"));
+                    }
 
+                } catch (SQLException ex) {
+                    Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-            } catch (SQLException ex) {
-                Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-             sql = "Select telefone from entregador where nome_entregador = '" + entregador + "'";
+                sql = "Select telefone from entregador where nome_entregador = '" + entregador + "'";
 
-            try {
-                st = conexao.createStatement();
-                rs = st.executeQuery(sql);
+                try {
+                    st = conexao.createStatement();
+                    rs = st.executeQuery(sql);
 
-                while (rs.next()) {
-                    valores.add(rs.getString("telefone"));
+                    while (rs.next()) {
+                        valores.add(rs.getString("telefone"));
 
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-            } catch (SQLException ex) {
-                Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
+                inserirBD(valores);
+
             }
-
-
-            inserirBD(valores);
 
         }
     }
@@ -210,6 +273,7 @@ public class CadEntrega extends javax.swing.JInternalFrame {
             tabela.removeAll();
             rowCount = 0;
             ((DefaultTableModel) tabela.getModel()).setRowCount(rowCount);
+            colocaCbNF();
 
         } else {
 
@@ -245,6 +309,11 @@ public class CadEntrega extends javax.swing.JInternalFrame {
         jLabel1.setText("Entregador");
 
         cbNumeroNF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cbNumeroNF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbNumeroNFActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel2.setText("Número Nota Fiscal");
@@ -400,6 +469,10 @@ public class CadEntrega extends javax.swing.JInternalFrame {
     private void delActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_delActionPerformed
+
+    private void cbNumeroNFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNumeroNFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbNumeroNFActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

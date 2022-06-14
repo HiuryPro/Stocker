@@ -251,12 +251,6 @@ public class Venda extends javax.swing.JInternalFrame {
         jLabel10.setText("Valor");
 
         qtd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        qtd.setText("0");
-        qtd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                qtdMouseClicked(evt);
-            }
-        });
         qtd.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 qtdKeyReleased(evt);
@@ -270,12 +264,6 @@ public class Venda extends javax.swing.JInternalFrame {
         jLabel4.setText("Data De Saida");
 
         edtValor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        edtValor.setText("0.00");
-        edtValor.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                edtValorMouseClicked(evt);
-            }
-        });
         edtValor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 edtValorKeyReleased(evt);
@@ -443,16 +431,6 @@ public class Venda extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void edtValorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edtValorMouseClicked
-        if (edtValor.getText().equals("0.00"))
-            edtValor.setText(null);  // TODO add your handling code here:
-    }//GEN-LAST:event_edtValorMouseClicked
-
-    private void qtdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_qtdMouseClicked
-        if (qtd.getText().equals("0"))
-            qtd.setText(null); // TODO add your handling code here:
-    }//GEN-LAST:event_qtdMouseClicked
 
     private void qtdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_qtdKeyReleased
         if (qtd.getText() != null && edtValor.getText() != null)
