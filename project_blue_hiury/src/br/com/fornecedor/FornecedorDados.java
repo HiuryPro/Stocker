@@ -7,6 +7,7 @@ package br.com.fornecedor;
 
 import br.com.dal_connexao.ModuloConexao;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -90,7 +91,7 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
 
     public void pegaDados() {
 
-        String sql = "SELECT * FROM fornecedor where nome = '" + String.valueOf(forn.getSelectedItem()) + "'";
+        String sql = "SELECT *, date_format(data_nascimento, '%d/%m/%Y') as teste FROM fornecedor where nome = '" + String.valueOf(forn.getSelectedItem()) + "'";
         try {
 
             st = conexao.createStatement();
@@ -105,6 +106,7 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
                 estado.setText(rs.getString("estado"));
                 telefone.setText(rs.getString("telefone"));
                 descri.setText(rs.getString("descricao"));
+                dataNasc.setText(rs.getString("teste"));
 
             }
 
@@ -155,9 +157,11 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
     }
 
     public void atualizaForn() {
-
-        String sql = "UPDATE fornecedor SET nome = ?, cnpj = ?, inscE = ?, email = ?, cidade = ?, estado = ?, telefone = ?, descricao = ? WHERE nome = '" + String.valueOf(forn.getSelectedItem()) + "'";
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String sql = "UPDATE fornecedor SET nome = ?, cnpj = ?, inscE = ?, email = ?, cidade = ?, estado = ?, telefone = ?, descricao = ?, data_nascimento = ? WHERE nome = '" + String.valueOf(forn.getSelectedItem()) + "'";
         try {
+            java.util.Date utilDate = format.parse(dataNasc.getText());
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
             pst = conexao.prepareStatement(sql);
 
             pst.setString(1, nome.getText());
@@ -168,6 +172,7 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
             pst.setString(6, estado.getText());
             pst.setString(7, telefone.getText().replaceAll("[^0-9]+", ""));
             pst.setString(8, descri.getText());
+            pst.setDate(9, sqlDate);
 
             pst.executeUpdate();
         } catch (Exception e) {
@@ -297,6 +302,8 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         delF = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         cidade = new javax.swing.JTextField();
+        dataNasc = new javax.swing.JFormattedTextField();
+        jLabel11 = new javax.swing.JLabel();
         pr = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
@@ -417,8 +424,21 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         ip.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 180, 40));
         ip.add(cidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 170, 35));
 
+        try {
+            dataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        dataNasc.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ip.add(dataNasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 150, 35));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel11.setText("Data de Nascimento");
+        ip.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, -1, -1));
+
         pr.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tabela.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -439,6 +459,7 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
             }
         });
         tabela.setPreferredSize(new java.awt.Dimension(210, 403));
+        tabela.setRowHeight(30);
         jScrollPane3.setViewportView(tabela);
 
         pr.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 42, 280, 203));
@@ -529,13 +550,13 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_deletaPActionPerformed
 
-    private void AtualizaFornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizaFornActionPerformed
-        ConfirmaAF();
-    }//GEN-LAST:event_AtualizaFornActionPerformed
-
     private void delFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delFActionPerformed
         ConfirmaDF();
     }//GEN-LAST:event_delFActionPerformed
+
+    private void AtualizaFornActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtualizaFornActionPerformed
+        ConfirmaAF();
+    }//GEN-LAST:event_AtualizaFornActionPerformed
 
     private void nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeActionPerformed
         // TODO add your handling code here:
@@ -547,6 +568,7 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
     private javax.swing.JButton AtualizaP;
     private javax.swing.JTextField cidade;
     private javax.swing.JFormattedTextField cnpj;
+    private javax.swing.JFormattedTextField dataNasc;
     private javax.swing.JButton delF;
     private javax.swing.JButton deletaP;
     private javax.swing.JTextArea descri;
@@ -557,6 +579,7 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
     private javax.swing.JPanel ip;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

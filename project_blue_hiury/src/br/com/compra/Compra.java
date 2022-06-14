@@ -200,6 +200,7 @@ public class Compra extends javax.swing.JInternalFrame {
             inseriprodutoC();
             AdicionaTabela();
             inserirVariaE();
+            JOptionPane.showMessageDialog(null, "Compra feita com sucesso.");
         } else {
 
         }

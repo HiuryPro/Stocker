@@ -49,6 +49,37 @@ INSERT INTO `cliente` VALUES (1,'Cleiton','123456789','Tiros','Minas',10000,'T.I
 UNLOCK TABLES;
 
 --
+-- Table structure for table `entregador`
+--
+
+DROP TABLE IF EXISTS `entregador`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `entregador` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome_entregador` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `cpf` varchar(11) CHARACTER SET utf8 DEFAULT NULL,
+  `data_nascimento` date DEFAULT NULL,
+  `telefone` varchar(11) CHARACTER SET utf8 DEFAULT NULL,
+  `email` varchar(40) CHARACTER SET utf8 DEFAULT NULL,
+  `estado` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `cidade` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `descricao` varchar(150) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `entregador`
+--
+
+LOCK TABLES `entregador` WRITE;
+/*!40000 ALTER TABLE `entregador` DISABLE KEYS */;
+INSERT INTO `entregador` VALUES (1,'João Claudio','09327202007','2000-05-13','34988419535','joaoclaudio@gmail.com','Minas Gerais (MG)','Tiros','João Claudio é um entregador de Tiros MG.');
+/*!40000 ALTER TABLE `entregador` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `entregas_detalhado`
 --
 
@@ -68,7 +99,7 @@ CREATE TABLE `entregas_detalhado` (
   `cidade` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   `telefone` varchar(11) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +108,7 @@ CREATE TABLE `entregas_detalhado` (
 
 LOCK TABLES `entregas_detalhado` WRITE;
 /*!40000 ALTER TABLE `entregas_detalhado` DISABLE KEYS */;
-INSERT INTO `entregas_detalhado` VALUES (1,'Gilmar','Maçã',5,'Cleiton','Avenida Carlos Albuquerque numero 20','2022-06-13','000000001','Minas','Tiros','34988987590');
+INSERT INTO `entregas_detalhado` VALUES (1,'João Claudio','Maçã',5,'Cleiton','Avenida Carlos Albuquerque numero 20','2022-06-20','000000001','Minas','Tiros','34988419535'),(2,'João Claudio','Coca-Cola',15,'Cleiton','Avenida Carlos Albuquerque numero 20','2022-07-22','000000002','Minas','Tiros','34988419535');
 /*!40000 ALTER TABLE `entregas_detalhado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,6 +154,7 @@ CREATE TABLE `fornecedor` (
   `descricao` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
   `telefone` varchar(11) DEFAULT NULL,
   `email` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `data_nascimento` date DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -133,7 +165,7 @@ CREATE TABLE `fornecedor` (
 
 LOCK TABLES `fornecedor` WRITE;
 /*!40000 ALTER TABLE `fornecedor` DISABLE KEYS */;
-INSERT INTO `fornecedor` VALUES (1,'Jorge','14572457000185','123456789012','Minas Gerais','Patos de Minas','Jorge é um fornecedor da cidade de Patos de Minas ele vende produtos diversos.','34988567329','jorgefo@gmail.com.br'),(5,'Valdemar','30088750000128','123456789012','São Paulo (SP)','São Paulo','Valdemar é um fornecedor de São Paulo','19988743095','valdemarc@gmail.com');
+INSERT INTO `fornecedor` VALUES (1,'Jorge','14572457000185','123456789012','Minas Gerais','Patos de Minas','Jorge é um fornecedor da cidade de Patos de Minas ele vende produtos diversos.','34988567329','jorgefo@gmail.com.br','1979-05-30'),(5,'Valdemar','30088750000128','123456789012','São Paulo (SP)','São Paulo','Valdemar é um fornecedor de São Paulo','19988743095','valdemarc@gmail.com','1975-07-25');
 /*!40000 ALTER TABLE `fornecedor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -392,4 +424,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-13 20:47:40
+-- Dump completed on 2022-06-14  0:24:15

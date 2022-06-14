@@ -59,7 +59,7 @@
     <Container class="javax.swing.JPanel" name="telaC">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="10" y="90" width="735" height="460"/>
+          <AbsoluteConstraints x="-10" y="80" width="735" height="460"/>
         </Constraint>
       </Constraints>
 
@@ -126,7 +126,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="270" width="680" height="130"/>
+              <AbsoluteConstraints x="10" y="270" width="700" height="130"/>
             </Constraint>
           </Constraints>
 
@@ -220,7 +220,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="530" y="420" width="-1" height="-1"/>
+              <AbsoluteConstraints x="530" y="420" width="-1" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -233,7 +233,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="630" y="420" width="-1" height="-1"/>
+              <AbsoluteConstraints x="630" y="420" width="-1" height="30"/>
             </Constraint>
           </Constraints>
         </Component>

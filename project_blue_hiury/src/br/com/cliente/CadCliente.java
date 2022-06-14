@@ -65,35 +65,28 @@ public class CadCliente extends javax.swing.JInternalFrame {
     }
 
     public void inserir() {
-        
-        if (validacaoField()) {
-            if (val.isCPF(edtCpf.getText().replaceAll("[^0-9]+", ""))) {
-                String sql = null;
-                sql = "insert into cliente(nome, cnpj, descricao, categoria, faixaR, estado, cidade, telefone, email, endereco) value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                try {
 
-                    pst = conexao.prepareStatement(sql);
-                    pst.setString(1, edtNome.getText());
-                    pst.setString(2, edtCpf.getText().replaceAll("[^0-9]+", ""));
-                    pst.setString(3, descricao.getText());
-                    pst.setString(4, edtCategoria.getText());
-                    pst.setFloat(5, Float.parseFloat(edtFaixa.getText()));
-                    pst.setString(6, String.valueOf(cbEstado.getSelectedItem()));
-                    pst.setString(7, cbCidade.getText());
-                    pst.setString(8, telefone.getText().replaceAll("[^0-9]+", ""));
-                    pst.setString(9, email.getText());
-                    pst.setString(10, endereco.getText());
+        String sql = null;
+        sql = "insert into cliente(nome, cnpj, descricao, categoria, faixaR, estado, cidade, telefone, email, endereco) value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
 
-                    pst.executeUpdate();
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, edtNome.getText());
+            pst.setString(2, edtCpf.getText().replaceAll("[^0-9]+", ""));
+            pst.setString(3, descricao.getText());
+            pst.setString(4, edtCategoria.getText());
+            pst.setFloat(5, Float.parseFloat(edtFaixa.getText()));
+            pst.setString(6, String.valueOf(cbEstado.getSelectedItem()));
+            pst.setString(7, cbCidade.getText());
+            pst.setString(8, telefone.getText().replaceAll("[^0-9]+", ""));
+            pst.setString(9, email.getText());
+            pst.setString(10, endereco.getText());
 
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e);
+            pst.executeUpdate();
 
-                }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
 
-            } else {
-                JOptionPane.showMessageDialog(null, "Cpf invalido");
-            }
         }
 
     }
@@ -102,8 +95,14 @@ public class CadCliente extends javax.swing.JInternalFrame {
         int resultado = JOptionPane.showConfirmDialog(null, "Deseja Cadastrar o Cliente", "Confirmação", JOptionPane.YES_NO_OPTION);
 
         if (resultado == JOptionPane.YES_OPTION) {
-            inserir();
-
+            if (validacaoField()) {
+                if (val.isCPF(edtCpf.getText().replaceAll("[^0-9]+", ""))) {
+                    inserir();
+                    JOptionPane.showMessageDialog(null, "Cadastro feito com sucesso.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cpf invalido");
+                }
+            }
         } else {
 
         }

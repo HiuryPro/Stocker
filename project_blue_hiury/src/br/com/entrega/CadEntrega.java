@@ -33,7 +33,25 @@ public class CadEntrega extends javax.swing.JInternalFrame {
     public CadEntrega() {
         initComponents();
         conexao = ModuloConexao.conector();
+        pegaE();
         pegaNNF();
+    }
+
+    public void pegaE() {
+        String sql = "SELECT nome_entregador  FROM entregador";
+        try {
+
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+            cbEntregador.addItem(" ");
+            while (rs.next()) {
+
+                cbEntregador.addItem(rs.getString("nome_entregador"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public void pegaNNF() {
@@ -57,7 +75,7 @@ public class CadEntrega extends javax.swing.JInternalFrame {
 
         rowCount++;
         ((DefaultTableModel) tabela.getModel()).setRowCount(rowCount);
-        tabela.setValueAt(String.valueOf(entregador.getText()), rowCount - 1, 0);
+        tabela.setValueAt(String.valueOf(cbEntregador.getSelectedItem()), rowCount - 1, 0);
         tabela.setValueAt(String.valueOf(cbNumeroNF.getSelectedItem()), rowCount - 1, 1);
         tabela.setValueAt(dataE.getText(), rowCount - 1, 2);
     }
@@ -78,7 +96,8 @@ public class CadEntrega extends javax.swing.JInternalFrame {
 
             int id = 0;
             String cliente = "";
-
+            String entregador = "";
+            
             valores.clear();
 
             String sql = "Select id from notafiscal_saida where numero = '" + String.valueOf(tabela.getValueAt(i, 1)) + "'";
@@ -97,7 +116,9 @@ public class CadEntrega extends javax.swing.JInternalFrame {
             valores.add(String.valueOf(tabela.getValueAt(i, 0)));
             valores.add(String.valueOf(tabela.getValueAt(i, 1)));
             valores.add(String.valueOf(tabela.getValueAt(i, 2)));
-
+            
+            entregador = String.valueOf(tabela.getValueAt(i, 0));
+            
             sql = "Select * from produto_venda where id = " + id;
 
             try {
@@ -132,6 +153,22 @@ public class CadEntrega extends javax.swing.JInternalFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+             sql = "Select telefone from entregador where nome_entregador = '" + entregador + "'";
+
+            try {
+                st = conexao.createStatement();
+                rs = st.executeQuery(sql);
+
+                while (rs.next()) {
+                    valores.add(rs.getString("telefone"));
+
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
 
             inserirBD(valores);
 
@@ -140,7 +177,7 @@ public class CadEntrega extends javax.swing.JInternalFrame {
 
     public void inserirBD(ArrayList<String> valores) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        String sql = "insert into entregas_detalhado(entregador, NF, data_entrega, produto, qtd, cliente, endereco, estado, cidade) values(?, ? ,?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into entregas_detalhado(entregador, NF, data_entrega, produto, qtd, cliente, endereco, estado, cidade, telefone) values(?, ? ,?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             java.util.Date utilDate = format.parse(valores.get(2));
             java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
@@ -156,6 +193,7 @@ public class CadEntrega extends javax.swing.JInternalFrame {
             pst.setString(7, valores.get(6));
             pst.setString(8, valores.get(7));
             pst.setString(9, valores.get(8));
+            pst.setString(10, valores.get(9));
 
             pst.executeUpdate();
         } catch (Exception e) {
@@ -188,7 +226,6 @@ public class CadEntrega extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        entregador = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         cbNumeroNF = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
@@ -200,10 +237,9 @@ public class CadEntrega extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         del = new javax.swing.JTextField();
         Cad = new javax.swing.JButton();
+        cbEntregador = new javax.swing.JComboBox<>();
 
         setClosable(true);
-
-        entregador.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel1.setText("Entregador");
@@ -280,6 +316,8 @@ public class CadEntrega extends javax.swing.JInternalFrame {
             }
         });
 
+        cbEntregador.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -295,16 +333,6 @@ public class CadEntrega extends javax.swing.JInternalFrame {
                         .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(entregador, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
-                        .addComponent(cbNumeroNF, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
-                        .addComponent(dataE, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
                         .addComponent(jButton1)
                         .addGap(13, 13, 13)
                         .addComponent(jButton2)
@@ -312,7 +340,17 @@ public class CadEntrega extends javax.swing.JInternalFrame {
                         .addComponent(del, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(295, 295, 295)
-                        .addComponent(Cad)))
+                        .addComponent(Cad))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cbEntregador, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(60, 60, 60)
+                                .addComponent(cbNumeroNF, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(60, 60, 60)
+                                .addComponent(dataE, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -325,8 +363,9 @@ public class CadEntrega extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3))
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(entregador, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbNumeroNF, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbNumeroNF, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbEntregador, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(dataE, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -365,10 +404,10 @@ public class CadEntrega extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cad;
+    private javax.swing.JComboBox<String> cbEntregador;
     private javax.swing.JComboBox<String> cbNumeroNF;
     private javax.swing.JFormattedTextField dataE;
     private javax.swing.JTextField del;
-    private javax.swing.JTextField entregador;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

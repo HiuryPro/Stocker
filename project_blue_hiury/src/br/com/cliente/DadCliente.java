@@ -224,7 +224,7 @@ public class DadCliente extends javax.swing.JInternalFrame {
         descricao.setRows(5);
         jScrollPane1.setViewportView(descricao);
 
-        telaC.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 680, 130));
+        telaC.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 700, 130));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel3.setText("Cnpj");
@@ -256,7 +256,7 @@ public class DadCliente extends javax.swing.JInternalFrame {
                 alteraActionPerformed(evt);
             }
         });
-        telaC.add(altera, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 420, -1, -1));
+        telaC.add(altera, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 420, -1, 30));
 
         jButton2.setText("Deletar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -264,7 +264,7 @@ public class DadCliente extends javax.swing.JInternalFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        telaC.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 420, -1, -1));
+        telaC.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 420, -1, 30));
         telaC.add(cidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 180, 35));
         telaC.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 180, 35));
 
@@ -289,7 +289,7 @@ public class DadCliente extends javax.swing.JInternalFrame {
         jLabel11.setText("Endereço");
         telaC.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 160, 80, -1));
 
-        getContentPane().add(telaC, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 735, 460));
+        getContentPane().add(telaC, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 80, 735, 460));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
