@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="79c704f8-97da-41f5-b883-b85b9aaae276">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="301"/>
+	<property name="ireport.y" value="96"/>
 	<style name="Heading 2" fontSize="14" isBold="true" isItalic="true"/>
 	<subDataset name="teste" uuid="03931dd6-6ea0-43eb-8759-6bc0964ee464">
 		<parameter name="query" class="java.sql.Date">
@@ -158,11 +158,11 @@
 		<band height="50">
 			<staticText>
 				<reportElement x="0" y="10" width="184" height="20" uuid="a512a8d6-d180-494f-966e-f0edeb414faa"/>
-				<text><![CDATA[Quantidade total comprada no período:]]></text>
+				<text><![CDATA[Quantidade total  vendida no período:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="30" width="156" height="20" uuid="a828eb62-52a0-4310-bd89-46eaba77ecd9"/>
-				<text><![CDATA[Quantidade gasta no período:]]></text>
+				<text><![CDATA[Quantidade ganha no período:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="156" y="30" width="100" height="20" uuid="4260a2e5-1182-474f-88e4-b6bdf13ac80c"/>

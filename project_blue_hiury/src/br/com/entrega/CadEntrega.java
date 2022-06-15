@@ -90,19 +90,18 @@ public class CadEntrega extends javax.swing.JInternalFrame {
 
             }
 
-            for(int i = 0; i < nfE.size(); i++){
-                for(int j = 0; j < notasfs.size(); j++){
-                    if(nfE.get(i).equals(notasfs.get(j))){
+            for (int i = 0; i < nfE.size(); i++) {
+                for (int j = 0; j < notasfs.size(); j++) {
+                    if (nfE.get(i).equals(notasfs.get(j))) {
                         notasfs.remove(j);
                     }
                 }
-                
+
             }
-           
-            for (int i = 0; i < notasfs.size(); i ++){
+
+            for (int i = 0; i < notasfs.size(); i++) {
                 cbNumeroNF.addItem(notasfs.get(i));
             }
-            
 
         } catch (SQLException ex) {
             Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
@@ -147,6 +146,32 @@ public class CadEntrega extends javax.swing.JInternalFrame {
         }
 
         return notaF;
+    }
+
+    public boolean confereBanco(int i, int qtd) {
+        String sql = "Select produto, fornecedor from fornecedor_produto where fornecedor = '" + String.valueOf(tabela.getValueAt(i, 0)) + "' and produto = '" + String.valueOf(tabela.getValueAt(i, 1)) + "'";
+        boolean valida = true;
+        try {
+
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                if (rs.getString("produto").equals(String.valueOf(tabela.getValueAt(i, 1))) && rs.getString("fornecedor").equals(String.valueOf(tabela.getValueAt(i, 0)))) {
+                    JOptionPane.showMessageDialog(null, "Produto" + String.valueOf(tabela.getValueAt(i, 1)) + " já está cadastrado no fornecedor " + String.valueOf(tabela.getValueAt(i, 0)));
+                    valida = false;
+                } else {
+                    valida = true;
+                }
+            }
+
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return valida;
+      
     }
 
     public void pegaBD() {

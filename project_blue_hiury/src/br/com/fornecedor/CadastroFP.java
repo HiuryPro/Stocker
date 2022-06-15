@@ -48,7 +48,7 @@ public class CadastroFP extends javax.swing.JInternalFrame {
             st = conexao.createStatement();
             rs = st.executeQuery(sql);
             cbFornecedor.addItem(" ");
-            
+
             while (rs.next()) {
 
                 cbFornecedor.addItem(rs.getString("nome"));
@@ -89,22 +89,21 @@ public class CadastroFP extends javax.swing.JInternalFrame {
 
     }
 
-    public boolean confereBanco(int i) {
-        String sql = "Select produto from fornecedor_produto";
+    public boolean confereBanco(int i, int qtd) {
+        String sql = "Select produto, fornecedor from fornecedor_produto where fornecedor = '" + String.valueOf(tabela.getValueAt(i, 0)) + "' and produto = '" + String.valueOf(tabela.getValueAt(i, 1)) + "'";
         boolean valida = true;
-  
+
         try {
             st = conexao.createStatement();
             rs = st.executeQuery(sql);
 
             while (rs.next()) {
-                if (rs.getString("produto").equals(tabela.getValueAt(i, 1))) {
-                    JOptionPane.showMessageDialog(null, "Produto já está cadastrado no fornecedor " + String.valueOf(cbFornecedor.getSelectedItem()));
+                if (rs.getString("produto").equals(String.valueOf(tabela.getValueAt(i, 1))) && rs.getString("fornecedor").equals(String.valueOf(tabela.getValueAt(i, 0)))) {
+                    JOptionPane.showMessageDialog(null, "Produto" + String.valueOf(tabela.getValueAt(i, 1)) + " já está cadastrado no fornecedor " + String.valueOf(tabela.getValueAt(i, 0)));
                     valida = false;
                 } else {
                     valida = true;
                 }
-                i++;
             }
 
         } catch (SQLException ex) {
@@ -115,10 +114,12 @@ public class CadastroFP extends javax.swing.JInternalFrame {
     }
 
     public void deletaLinha() {
-        if (rowCount > 0) {
-            rowCount--;
-            ((DefaultTableModel) tabela.getModel()).removeRow(Integer.parseInt(del.getText()) - 1);
-            ((DefaultTableModel) tabela.getModel()).setRowCount(rowCount);
+        if (del.getText() != null) {
+            if (rowCount > 0) {
+                rowCount--;
+                ((DefaultTableModel) tabela.getModel()).removeRow(Integer.parseInt(del.getText()) - 1);
+                ((DefaultTableModel) tabela.getModel()).setRowCount(rowCount);
+            }
         }
 
     }
@@ -128,10 +129,10 @@ public class CadastroFP extends javax.swing.JInternalFrame {
         int qtd, i;
         try {
             qtd = ((DefaultTableModel) tabela.getModel()).getRowCount();
-           
+
             pst = conexao.prepareStatement(sql);
             for (i = 0; i < qtd; i++) {
-                if (confereBanco(i)) {
+                if (confereBanco(i, qtd)) {
                     pst.setString(1, String.valueOf(((DefaultTableModel) tabela.getModel()).getValueAt(i, 0)));
                     pst.setString(2, String.valueOf(((DefaultTableModel) tabela.getModel()).getValueAt(i, 1)));
                     pst.setFloat(3, Float.parseFloat(String.valueOf(((DefaultTableModel) tabela.getModel()).getValueAt(i, 2))));
@@ -354,8 +355,10 @@ public class CadastroFP extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        int qtd;
         AdicionaTabela();
+        qtd = tabela.getRowCount();
+        JOptionPane.showMessageDialog(null, qtd);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
