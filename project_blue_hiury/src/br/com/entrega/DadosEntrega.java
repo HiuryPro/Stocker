@@ -37,20 +37,25 @@ public class DadosEntrega extends javax.swing.JInternalFrame {
     public DadosEntrega() {
         initComponents();
         conexao = ModuloConexao.conector();
-        pegaE();
+        pegaEA();
+        pegaEF();
+        pegaEC();
+
         telaC.setVisible(false);
     }
 
-    public void pegaE() {
+    public void pegaEA() {
+        String sql = "SELECT NF FROM entregas_detalhado where status = 0";
         try {
-            String sql = "SELECT id FROM entregas_detalhado";
 
             st = conexao.createStatement();
             rs = st.executeQuery(sql);
-            entregas.addItem(" ");
+
+            cbEntregaA.addItem(" ");
+
             while (rs.next()) {
 
-                entregas.addItem("Entrega nº " + rs.getInt("id"));
+                cbEntregaA.addItem(rs.getString("NF"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DadosEntrega.class.getName()).log(Level.SEVERE, null, ex);
@@ -58,10 +63,47 @@ public class DadosEntrega extends javax.swing.JInternalFrame {
 
     }
 
-    public void pegaDados() {
+    public void pegaEF() {
+        String sql = "SELECT NF FROM entregas_detalhado where status = 1";
+        try {
+
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+
+            cbEntregaF.addItem(" ");
+            while (rs.next()) {
+
+                cbEntregaF.addItem(rs.getString("NF"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DadosEntrega.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void pegaEC() {
+        String sql = "SELECT NF FROM entregas_detalhado where status = 2";
+        try {
+
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+
+            cbEntregaC.addItem(" ");
+
+            while (rs.next()) {
+
+                cbEntregaC.addItem(rs.getString("NF"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DadosEntrega.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void pegaDadosEA() {
 
         try {
-            String sql = "SELECT *,date_format(data_entrega, '%d/%m/%Y') as teste  FROM entregas_detalhado where id = " + entregas.getSelectedIndex();
+            String sql = "SELECT *,date_format(data_entrega, '%d/%m/%Y') as teste  FROM entregas_detalhado where NF = '" + String.valueOf(cbEntregaA.getSelectedItem()) + "' and status = 0";
 
             st = conexao.createStatement();
             rs = st.executeQuery(sql);
@@ -80,6 +122,10 @@ public class DadosEntrega extends javax.swing.JInternalFrame {
                 edtEstado.setText(rs.getString("estado"));
 
                 edtEndereco.setText(rs.getString("endereco"));
+                status.setText("Em andamento");
+
+                finalizaE.setVisible(true);
+                cancelaE.setVisible(true);
 
             }
         } catch (SQLException ex) {
@@ -87,23 +133,80 @@ public class DadosEntrega extends javax.swing.JInternalFrame {
         }
 
     }
-/*
-    public void atualizaClien() {
 
-        String sql = "UPDATE cliente SET nome = ?, cnpj = ?, categoria = ?, faixaR = ?, cidade = ?, estado = ?, descricao = ?, telefone = ?, email = ?, endereco = ? WHERE nome = '" + String.valueOf(entregas.getSelectedItem()) + "'";
+    public void pegaDadosEF() {
+
+        try {
+            String sql = "SELECT *,date_format(data_entrega, '%d/%m/%Y') as teste  FROM entregas_detalhado where NF = '" + String.valueOf(cbEntregaF.getSelectedItem()) + "' and status = 1";
+
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                edtEntregador.setText(rs.getString("entregador"));
+                telefoneE.setText(rs.getString("telefone"));
+                edtProduto.setText(rs.getString("produto"));
+                edtQtd.setText(String.valueOf(rs.getInt("qtd")));
+
+                edtNF.setText(rs.getString("NF"));
+                dataE.setText(rs.getString("teste"));
+                edtCliente.setText(rs.getString("cliente"));
+
+                edtCidade.setText(rs.getString("cidade"));
+                edtEstado.setText(rs.getString("estado"));
+
+                edtEndereco.setText(rs.getString("endereco"));
+                status.setText("Finalizada");
+
+                finalizaE.setVisible(false);
+                cancelaE.setVisible(false);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DadosEntrega.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void pegaDadosEC() {
+
+        try {
+            String sql = "SELECT *,date_format(data_entrega, '%d/%m/%Y') as teste  FROM entregas_detalhado where NF = '" + String.valueOf(cbEntregaC.getSelectedItem()) + "' and status = 2";
+
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                edtEntregador.setText(rs.getString("entregador"));
+                telefoneE.setText(rs.getString("telefone"));
+                edtProduto.setText(rs.getString("produto"));
+                edtQtd.setText(String.valueOf(rs.getInt("qtd")));
+
+                edtNF.setText(rs.getString("NF"));
+                dataE.setText(rs.getString("teste"));
+                edtCliente.setText(rs.getString("cliente"));
+
+                edtCidade.setText(rs.getString("cidade"));
+                edtEstado.setText(rs.getString("estado"));
+
+                edtEndereco.setText(rs.getString("endereco"));
+                status.setText("Cancelado");
+
+                finalizaE.setVisible(false);
+                cancelaE.setVisible(false);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DadosEntrega.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void atualizaStatusEntrega(int i) {
+
+        String sql = "UPDATE entregas_detalhado SET status = " + i + " WHERE status = 0 and NF = '" + edtNF.getText() + "'";
         try {
             pst = conexao.prepareStatement(sql);
-
-            pst.setString(1, edtEntregador.getText());
-            pst.setString(2, edtCnpj.getText().replaceAll("[^0-9]+", ""));
-            pst.setString(3, edtQtd.getText());
-            pst.setFloat(4, Float.parseFloat(edtFaixa.getText()));
-            pst.setString(5, edtNF.getText());
-            pst.setString(6, edtDEntrega.getText());
-            pst.setString(7, descricao.getText());
-            pst.setString(8, tel.getText().replaceAll("[^0-9]+", ""));
-            pst.setString(9, email.getText());
-            pst.setString(10, edtEndereco.getText());
 
             pst.executeUpdate();
         } catch (Exception e) {
@@ -112,49 +215,46 @@ public class DadosEntrega extends javax.swing.JInternalFrame {
 
     }
 
-    public void ConfirmaAC() {
-        int resultado = JOptionPane.showConfirmDialog(null, "Deseja Alterar os Dados do Cliente?", "Confirmação", JOptionPane.YES_NO_OPTION);
+    public void ConfirmaAC(int i) {
+        if (i == 1) {
+            int resultado = JOptionPane.showConfirmDialog(null, "Deseja Finalizar a entrega?", "Confirmação", JOptionPane.YES_NO_OPTION);
 
-        if (resultado == JOptionPane.YES_OPTION) {
-            atualizaClien();
-            entregas.removeAllItems();
-            pegaE();
-            entregas.setSelectedItem(edtEntregador.getText());
+            if (resultado == JOptionPane.YES_OPTION) {
+                atualizaStatusEntrega(i);
 
-        } else {
-            // tabela.setValueAt()
+                cbEntregaA.removeAllItems();
+                cbEntregaF.removeAllItems();
+
+                pegaEA();
+                pegaEF();
+
+                telaC.setVisible(false);
+
+            } else {
+                // tabela.setValueAt()
+            }
+
+        } else if (i == 2) {
+            int resultado = JOptionPane.showConfirmDialog(null, "Deseja Cancelar a Entrega?", "Confirmação", JOptionPane.YES_NO_OPTION);
+
+            if (resultado == JOptionPane.YES_OPTION) {
+                atualizaStatusEntrega(i);
+
+                cbEntregaA.removeAllItems();
+                cbEntregaC.removeAllItems();
+
+                pegaEA();
+                pegaEC();
+
+                telaC.setVisible(false);
+
+            } else {
+                // tabela.setValueAt()
+            }
         }
 
     }
 
-    public void deletaForn() {
-
-        String sql = "Delete from cliente where nome ='" + String.valueOf(entregas.getSelectedItem()) + "'";
-        try {
-            pst = conexao.prepareStatement(sql);
-
-            pst.executeUpdate();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-
-    }
-
-    public void ConfirmaDC() {
-        int resultado = JOptionPane.showConfirmDialog(null, "Deseja Deletar todos os Dados do Fornecedor?", "Confirmação", JOptionPane.YES_NO_OPTION);
-
-        if (resultado == JOptionPane.YES_OPTION) {
-            deletaForn();
-            entregas.removeAllItems();
-            pegaE();
-            telaC.setVisible(false);
-
-        } else {
-            // tabela.setValueAt()
-        }
-
-    }
-*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -164,8 +264,8 @@ public class DadosEntrega extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        entregas = new javax.swing.JComboBox<>();
+        entregaF = new javax.swing.JLabel();
+        cbEntregaF = new javax.swing.JComboBox<>();
         telaC = new javax.swing.JPanel();
         edtQtd = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -187,22 +287,30 @@ public class DadosEntrega extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         telefoneE = new javax.swing.JFormattedTextField();
         dataE = new javax.swing.JFormattedTextField();
+        status = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        finalizaE = new javax.swing.JButton();
+        cancelaE = new javax.swing.JButton();
+        entregaA = new javax.swing.JLabel();
+        cbEntregaA = new javax.swing.JComboBox<>();
+        entregaC = new javax.swing.JLabel();
+        cbEntregaC = new javax.swing.JComboBox<>();
 
         setClosable(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Entregas");
-        jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
+        entregaF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        entregaF.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        entregaF.setText("Entregas Finalizadas");
+        getContentPane().add(entregaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 210, 40));
 
-        entregas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        entregas.addActionListener(new java.awt.event.ActionListener() {
+        cbEntregaF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cbEntregaF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                entregasActionPerformed(evt);
+                cbEntregaFActionPerformed(evt);
             }
         });
-        getContentPane().add(entregas, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 160, 35));
+        getContentPane().add(cbEntregaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 210, 35));
 
         telaC.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -244,7 +352,7 @@ public class DadosEntrega extends javax.swing.JInternalFrame {
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel11.setText("Endereço");
-        telaC.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 80, -1));
+        telaC.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 80, -1));
 
         edtProduto.setEditable(false);
         edtProduto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -301,27 +409,111 @@ public class DadosEntrega extends javax.swing.JInternalFrame {
         dataE.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         telaC.add(dataE, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 200, 35));
 
+        status.setEditable(false);
+        status.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        status.setText("Em andamento");
+        telaC.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 330, 280, 35));
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel15.setText("Status");
+        telaC.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, 80, -1));
+
+        finalizaE.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        finalizaE.setText("Finalizar Entrega");
+        finalizaE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                finalizaEActionPerformed(evt);
+            }
+        });
+        telaC.add(finalizaE, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 410, -1, 35));
+
+        cancelaE.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cancelaE.setText("Cancelar Entrega");
+        cancelaE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelaEActionPerformed(evt);
+            }
+        });
+        telaC.add(cancelaE, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 410, -1, 35));
+
         getContentPane().add(telaC, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 735, 460));
+
+        entregaA.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        entregaA.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        entregaA.setText("Entregas em Andamento");
+        getContentPane().add(entregaA, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 210, 40));
+
+        cbEntregaA.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cbEntregaA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEntregaAActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cbEntregaA, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 210, 35));
+
+        entregaC.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        entregaC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        entregaC.setText("Entregas Canceladas");
+        getContentPane().add(entregaC, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 0, 210, 40));
+
+        cbEntregaC.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cbEntregaC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbEntregaCActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cbEntregaC, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 40, 210, 35));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void entregasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entregasActionPerformed
-        if (!" ".equals(String.valueOf(entregas.getSelectedItem()))) {
-            pegaDados();
+    private void cbEntregaFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEntregaFActionPerformed
+
+        if (!" ".equals(String.valueOf(cbEntregaF.getSelectedItem()))) {
+            pegaDadosEF();
             telaC.setVisible(true);
         } else {
             telaC.setVisible(false);
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_entregasActionPerformed
+    }//GEN-LAST:event_cbEntregaFActionPerformed
 
     private void edtEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtEstadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_edtEstadoActionPerformed
 
+    private void cbEntregaAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEntregaAActionPerformed
+        if (!" ".equals(String.valueOf(cbEntregaA.getSelectedItem()))) {
+            pegaDadosEA();
+            telaC.setVisible(true);
+        } else {
+            telaC.setVisible(false);
+        }
+    }//GEN-LAST:event_cbEntregaAActionPerformed
+
+    private void cbEntregaCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbEntregaCActionPerformed
+        if (!" ".equals(String.valueOf(cbEntregaC.getSelectedItem()))) {
+            pegaDadosEC();
+            telaC.setVisible(true);
+        } else {
+            telaC.setVisible(false);
+        } // TODO add your handling code here:
+    }//GEN-LAST:event_cbEntregaCActionPerformed
+
+    private void finalizaEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizaEActionPerformed
+        ConfirmaAC(1);   // TODO add your handling code here:
+    }//GEN-LAST:event_finalizaEActionPerformed
+
+    private void cancelaEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelaEActionPerformed
+        ConfirmaAC(2);      // TODO add your handling code here:
+    }//GEN-LAST:event_cancelaEActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancelaE;
+    private javax.swing.JComboBox<String> cbEntregaA;
+    private javax.swing.JComboBox<String> cbEntregaC;
+    private javax.swing.JComboBox<String> cbEntregaF;
     private javax.swing.JFormattedTextField dataE;
     private javax.swing.JTextField edtCidade;
     private javax.swing.JTextField edtCliente;
@@ -331,18 +523,22 @@ public class DadosEntrega extends javax.swing.JInternalFrame {
     private javax.swing.JTextField edtNF;
     private javax.swing.JTextField edtProduto;
     private javax.swing.JTextField edtQtd;
-    private javax.swing.JComboBox<String> entregas;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel entregaA;
+    private javax.swing.JLabel entregaC;
+    private javax.swing.JLabel entregaF;
+    private javax.swing.JButton finalizaE;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JTextField status;
     private javax.swing.JPanel telaC;
     private javax.swing.JFormattedTextField telefoneE;
     // End of variables declaration//GEN-END:variables

@@ -52,7 +52,7 @@ public class EntregadorTela extends javax.swing.JInternalFrame {
         DadosEntregador.setBackground(new java.awt.Color(0, 102, 204));
         DadosEntregador.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         DadosEntregador.setForeground(new java.awt.Color(255, 255, 255));
-        DadosEntregador.setText("Dados Entrgador");
+        DadosEntregador.setText("Dados Entregador");
         DadosEntregador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DadosEntregadorActionPerformed(evt);

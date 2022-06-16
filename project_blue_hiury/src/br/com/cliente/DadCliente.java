@@ -224,7 +224,7 @@ public class DadCliente extends javax.swing.JInternalFrame {
         telaC.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 700, 130));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel3.setText("Cnpj");
+        jLabel3.setText("CPF");
         telaC.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -241,7 +241,7 @@ public class DadCliente extends javax.swing.JInternalFrame {
         telaC.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
 
         try {
-            edtCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
+            edtCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }

@@ -74,7 +74,7 @@ public class CadEntrega extends javax.swing.JInternalFrame {
     }
 
     public void colocaCbNF() {
-        String sql = "Select NF from entregas_detalhado";
+        String sql = "Select NF from entregas_detalhado where status = 0 or status = 1 order by NF";
         ArrayList<String> nfE = new ArrayList<String>();
 
         try {
@@ -148,8 +148,8 @@ public class CadEntrega extends javax.swing.JInternalFrame {
         return notaF;
     }
 
-    public boolean confereBanco(int i, int qtd) {
-        String sql = "Select produto, fornecedor from fornecedor_produto where fornecedor = '" + String.valueOf(tabela.getValueAt(i, 0)) + "' and produto = '" + String.valueOf(tabela.getValueAt(i, 1)) + "'";
+    public boolean confereBanco(int i) {
+        String sql = "Select NF from entregas_detalhado where NF ='" + String.valueOf(tabela.getValueAt(i, 1)) + "' and (status = 0 or stsaus = 1)";
         boolean valida = true;
         try {
 
@@ -157,21 +157,20 @@ public class CadEntrega extends javax.swing.JInternalFrame {
             rs = st.executeQuery(sql);
 
             while (rs.next()) {
-                if (rs.getString("produto").equals(String.valueOf(tabela.getValueAt(i, 1))) && rs.getString("fornecedor").equals(String.valueOf(tabela.getValueAt(i, 0)))) {
-                    JOptionPane.showMessageDialog(null, "Produto" + String.valueOf(tabela.getValueAt(i, 1)) + " já está cadastrado no fornecedor " + String.valueOf(tabela.getValueAt(i, 0)));
+                if (rs.getString("NF").equals(String.valueOf(tabela.getValueAt(i, 1)))) {
+                    JOptionPane.showMessageDialog(null, "Entrega " + String.valueOf(tabela.getValueAt(i, 0)) + " já está cadastrado");
                     valida = false;
                 } else {
                     valida = true;
                 }
             }
 
-           
         } catch (SQLException ex) {
             Logger.getLogger(CadEntrega.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return valida;
-      
+
     }
 
     public void pegaBD() {
@@ -179,8 +178,9 @@ public class CadEntrega extends javax.swing.JInternalFrame {
         ArrayList<String> nfs = new ArrayList<String>();
 
         for (int i = 0; i < tabela.getRowCount(); i++) {
-            nfs = pegaNotaFiscal();
-            if (!String.valueOf(tabela.getValueAt(i, 1)).equals(nfs.get(i))) {
+            // nfs = pegaNotaFiscal();
+            //  if (!String.valueOf(tabela.getValueAt(i, 1)).equals(nfs.get(i))) {
+            if (confereBanco(i)) {
                 int id = 0;
                 String cliente = "";
                 String entregador = "";
@@ -257,10 +257,11 @@ public class CadEntrega extends javax.swing.JInternalFrame {
                 }
 
                 inserirBD(valores);
-
             }
 
         }
+
+        // }
     }
 
     public void inserirBD(ArrayList<String> valores) {
