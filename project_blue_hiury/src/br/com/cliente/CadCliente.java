@@ -65,35 +65,28 @@ public class CadCliente extends javax.swing.JInternalFrame {
     }
 
     public void inserir() {
-        
-        if (validacaoField()) {
-            if (val.isCPF(edtCpf.getText().replaceAll("[^0-9]+", ""))) {
-                String sql = null;
-                sql = "insert into cliente(nome, cnpj, descricao, categoria, faixaR, estado, cidade, telefone, email, endereco) value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                try {
 
-                    pst = conexao.prepareStatement(sql);
-                    pst.setString(1, edtNome.getText());
-                    pst.setString(2, edtCpf.getText().replaceAll("[^0-9]+", ""));
-                    pst.setString(3, descricao.getText());
-                    pst.setString(4, edtCategoria.getText());
-                    pst.setFloat(5, Float.parseFloat(edtFaixa.getText()));
-                    pst.setString(6, String.valueOf(cbEstado.getSelectedItem()));
-                    pst.setString(7, cbCidade.getText());
-                    pst.setString(8, telefone.getText().replaceAll("[^0-9]+", ""));
-                    pst.setString(9, email.getText());
-                    pst.setString(10, endereco.getText());
+        String sql = null;
+        sql = "insert into cliente(nome, cnpj, descricao, categoria, faixaR, estado, cidade, telefone, email, endereco) value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
 
-                    pst.executeUpdate();
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, edtNome.getText());
+            pst.setString(2, edtCpf.getText().replaceAll("[^0-9]+", ""));
+            pst.setString(3, descricao.getText());
+            pst.setString(4, edtCategoria.getText());
+            pst.setFloat(5, Float.parseFloat(edtFaixa.getText()));
+            pst.setString(6, String.valueOf(cbEstado.getSelectedItem()));
+            pst.setString(7, cbCidade.getText());
+            pst.setString(8, telefone.getText().replaceAll("[^0-9]+", ""));
+            pst.setString(9, email.getText());
+            pst.setString(10, endereco.getText());
 
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e);
+            pst.executeUpdate();
 
-                }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
 
-            } else {
-                JOptionPane.showMessageDialog(null, "Cpf invalido");
-            }
         }
 
     }
@@ -102,8 +95,24 @@ public class CadCliente extends javax.swing.JInternalFrame {
         int resultado = JOptionPane.showConfirmDialog(null, "Deseja Cadastrar o Cliente", "Confirmação", JOptionPane.YES_NO_OPTION);
 
         if (resultado == JOptionPane.YES_OPTION) {
-            inserir();
-
+            if (validacaoField()) {
+                if (val.isCPF(edtCpf.getText().replaceAll("[^0-9]+", ""))) {
+                    inserir();
+                    JOptionPane.showMessageDialog(null, "Cadastro feito com sucesso.");
+                    cbCidade.setText(null);
+                    descricao.setText(null);
+                    edtCategoria.setText(null);
+                    edtCpf.setText(null);
+                    edtFaixa.setText(null);
+                    edtNome.setText(null);
+                    email.setText(null);
+                    endereco.setText(null);
+                    telefone.setText(null);
+                    
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cpf invalido");
+                }
+            }
         } else {
 
         }
@@ -195,11 +204,15 @@ public class CadCliente extends javax.swing.JInternalFrame {
         CPF.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         CPF.setText("CPF");
 
+        edtFaixa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel3.setText("Faixa De Renda");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setText("Descrição");
+
+        edtCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel5.setText("Categoria");
@@ -221,7 +234,10 @@ public class CadCliente extends javax.swing.JInternalFrame {
             }
         });
 
+        edtNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         descricao.setColumns(20);
+        descricao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         descricao.setRows(5);
         jScrollPane1.setViewportView(descricao);
 
@@ -236,6 +252,7 @@ public class CadCliente extends javax.swing.JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        edtCpf.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         Cad.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         Cad.setText("Cadastrar");
@@ -245,6 +262,8 @@ public class CadCliente extends javax.swing.JInternalFrame {
                 CadActionPerformed(evt);
             }
         });
+
+        email.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel8.setText("Email");
@@ -257,6 +276,7 @@ public class CadCliente extends javax.swing.JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        telefone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         telefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 telefoneActionPerformed(evt);
@@ -266,6 +286,9 @@ public class CadCliente extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel10.setText("Endereço:");
 
+        cbCidade.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        endereco.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         endereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 enderecoActionPerformed(evt);
@@ -382,7 +405,7 @@ public class CadCliente extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addComponent(Cad, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();

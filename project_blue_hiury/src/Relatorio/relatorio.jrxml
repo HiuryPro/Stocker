@@ -158,11 +158,11 @@
 		<band height="50">
 			<staticText>
 				<reportElement x="0" y="10" width="184" height="20" uuid="a512a8d6-d180-494f-966e-f0edeb414faa"/>
-				<text><![CDATA[Quantidade total comprada no período:]]></text>
+				<text><![CDATA[Quantidade total  vendida no período:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="30" width="156" height="20" uuid="a828eb62-52a0-4310-bd89-46eaba77ecd9"/>
-				<text><![CDATA[Quantidade gasta no período:]]></text>
+				<text><![CDATA[Quantidade ganha no período:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="156" y="30" width="100" height="20" uuid="4260a2e5-1182-474f-88e4-b6bdf13ac80c"/>
@@ -188,7 +188,7 @@
 				<chart>
 					<reportElement x="0" y="0" width="555" height="237" uuid="4a0eddd0-661b-4426-b8d4-1907006f841f"/>
 					<chartTitle>
-						<titleExpression><![CDATA["quantidade total vendida no periodo (por produto)"]]></titleExpression>
+						<titleExpression><![CDATA["Total vendido no período (por produto)"]]></titleExpression>
 					</chartTitle>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -219,7 +219,7 @@
 				<chart>
 					<reportElement x="0" y="248" width="555" height="237" uuid="3471820e-9056-4e77-9007-3ed1244dd428"/>
 					<chartTitle>
-						<titleExpression><![CDATA["Quantidade total ganho no periodo (por produto)"]]></titleExpression>
+						<titleExpression><![CDATA["Total ganho no período (por produto)"]]></titleExpression>
 					</chartTitle>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -248,14 +248,16 @@
 			</barChart>
 			<pieChart>
 				<chart>
-					<reportElement x="0" y="496" width="277" height="306" uuid="6717e980-5780-41a1-9c14-64c1432acccf"/>
-					<chartTitle/>
+					<reportElement x="0" y="500" width="278" height="302" uuid="25f1d481-b3fb-4dbb-8ba7-873adcbe38cb"/>
+					<chartTitle>
+						<titleExpression><![CDATA["Total vendido no período (por produto)"]]></titleExpression>
+					</chartTitle>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<pieDataset>
 					<dataset>
-						<datasetRun subDataset="teste" uuid="16e4f253-63e9-44f4-96c4-15d808a2a611"/>
+						<datasetRun subDataset="teste" uuid="9c2332d9-4c8b-4434-842a-049a1a9330d4"/>
 					</dataset>
 					<keyExpression><![CDATA[$F{nome_produto}]]></keyExpression>
 					<valueExpression><![CDATA[$F{qtd_total}]]></valueExpression>
@@ -268,14 +270,16 @@
 			</pieChart>
 			<pieChart>
 				<chart>
-					<reportElement x="277" y="496" width="278" height="306" uuid="79861449-9626-420b-a338-eec82b49e3c4"/>
-					<chartTitle/>
+					<reportElement x="278" y="500" width="277" height="302" uuid="c793a5cc-048d-4d4e-8f69-0bfc62f19140"/>
+					<chartTitle>
+						<titleExpression><![CDATA["Total ganho no período (por produto)"]]></titleExpression>
+					</chartTitle>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<pieDataset>
 					<dataset>
-						<datasetRun subDataset="teste" uuid="16093be3-cc37-4aa9-8c21-17f596d2a45f"/>
+						<datasetRun subDataset="teste" uuid="70fc13ba-cf80-46aa-ba17-f4ceb0fe4ba8"/>
 					</dataset>
 					<keyExpression><![CDATA[$F{nome_produto}]]></keyExpression>
 					<valueExpression><![CDATA[$F{preco_total}]]></valueExpression>

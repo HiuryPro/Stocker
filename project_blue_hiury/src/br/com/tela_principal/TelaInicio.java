@@ -11,6 +11,8 @@ import javax.swing.ImageIcon;
 import br.com.fornecedor.Fornecedores;
 import br.com.estoque.TelaEstoque;
 import br.com.compra.telaVenda;
+import br.com.entrega.telaEntregas;
+import br.com.entregador.EntregadorTela;
 import br.com.estoque.TelaEsotoquenew;
 
 /**
@@ -189,7 +191,9 @@ public class TelaInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_FornecedoresActionPerformed
 
     private void entregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entregaActionPerformed
-
+        telaEntregas entrega = new telaEntregas();
+        Teste23.add(entrega);
+        entrega.setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_entregaActionPerformed
 
@@ -200,7 +204,9 @@ public class TelaInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_vendaActionPerformed
 
     private void entregadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entregadorActionPerformed
-        // TODO add your handling code here:
+        EntregadorTela entre = new EntregadorTela();
+        Teste23.add(entre);
+        entre.setVisible(true);
     }//GEN-LAST:event_entregadorActionPerformed
 
     /**

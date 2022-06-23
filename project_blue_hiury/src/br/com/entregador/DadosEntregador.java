@@ -1,0 +1,432 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.entregador;
+
+import br.com.dal_connexao.ModuloConexao;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author Hiury
+ */
+public class DadosEntregador extends javax.swing.JInternalFrame {
+
+    /**
+     * Creates new form DadosEntregador
+     */
+    Connection conexao = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    Statement st;
+
+    public DadosEntregador() {
+        initComponents();
+        conexao = ModuloConexao.conector();
+        pegaE();
+        telaE.setVisible(false);
+    }
+
+    public void pegaE() {
+        String sql = "SELECT nome_entregador FROM entregador";
+        try {
+
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+            entregador.addItem(" ");
+            while (rs.next()) {
+
+                entregador.addItem(rs.getString("nome_entregador"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DadosEntregador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void pegaDados() {
+
+        String sql = "SELECT *, date_format(data_nascimento, '%d/%m/%Y') as teste FROM entregador where nome_entregador = '" + String.valueOf(entregador.getSelectedItem()) + "'";
+        try {
+
+            st = conexao.createStatement();
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                edtNome.setText(rs.getString("nome_entregador"));
+                edtCpf.setText(rs.getString("cpf"));
+
+                edtDN.setText(rs.getString("teste"));
+                edtCidade.setText(rs.getString("cidade"));
+                estado.setText(rs.getString("estado"));
+
+                descri.setText(rs.getString("descricao"));
+                edtTelefone.setText(rs.getString("telefone"));
+                edtEmail.setText(rs.getString("email"));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DadosEntregador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void atualizaClien() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String sql = "UPDATE entregador SET nome_entregador = ?, cpf = ? , data_nascimento = ?, cidade = ?, estado = ?, descricao = ?, telefone = ?, email = ? WHERE nome_entregador = '" + String.valueOf(entregador.getSelectedItem()) + "'";
+        try {
+            java.util.Date utilDate = format.parse(edtDN.getText());
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            pst = conexao.prepareStatement(sql);
+
+            pst.setString(1, edtNome.getText());
+            pst.setString(2, edtCpf.getText().replaceAll("[^0-9]+", ""));
+            pst.setDate(3, sqlDate);
+            pst.setString(4, edtCidade.getText());
+            pst.setString(5, estado.getText());
+            pst.setString(6, descri.getText());
+            pst.setString(7, edtTelefone.getText().replaceAll("[^0-9]+", ""));
+            pst.setString(8, edtEmail.getText() );
+           
+
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+    }
+
+    public void ConfirmaAC() {
+        int resultado = JOptionPane.showConfirmDialog(null, "Deseja Alterar os Dados do Entregador?", "Confirmação", JOptionPane.YES_NO_OPTION);
+
+        if (resultado == JOptionPane.YES_OPTION) {
+            atualizaClien();
+            entregador.removeAllItems();
+            pegaE();
+            entregador.setSelectedItem(edtNome.getText());
+
+        } else {
+            // tabela.setValueAt()
+        }
+
+    }
+
+    public void deletaForn() {
+
+        String sql = "Delete from entregador where nome_entregador ='" + String.valueOf(entregador.getSelectedItem()) + "'";
+        try {
+            pst = conexao.prepareStatement(sql);
+
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+    }
+
+    public void ConfirmaDC() {
+        int resultado = JOptionPane.showConfirmDialog(null, "Deseja Deletar todos os Dados do Fornecedor?", "Confirmação", JOptionPane.YES_NO_OPTION);
+
+        if (resultado == JOptionPane.YES_OPTION) {
+            deletaForn();
+            entregador.removeAllItems();
+            pegaE();
+            telaE.setVisible(false);
+
+        } else {
+            // tabela.setValueAt()
+        }
+
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel1 = new javax.swing.JLabel();
+        entregador = new javax.swing.JComboBox<>();
+        telaE = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        edtNome = new javax.swing.JTextField();
+        edtCidade = new javax.swing.JTextField();
+        edtTelefone = new javax.swing.JFormattedTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        edtEmail = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        descri = new javax.swing.JTextArea();
+        edtCpf = new javax.swing.JFormattedTextField();
+        edtDN = new javax.swing.JFormattedTextField();
+        altera = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        estado = new javax.swing.JTextField();
+
+        setClosable(true);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("Entregador");
+        jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+
+        entregador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                entregadorActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel5.setText("Data de Nascimento");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel2.setText("Nome:");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel6.setText("Telefone:");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel3.setText("CPF:");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel7.setText("Cidade:");
+
+        edtNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        edtCidade.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        try {
+            edtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        edtTelefone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel10.setText("Estado:");
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel8.setText("Email");
+
+        edtEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel4.setText("Descrição");
+
+        descri.setColumns(20);
+        descri.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        descri.setLineWrap(true);
+        descri.setRows(5);
+        descri.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(descri);
+
+        try {
+            edtCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        edtCpf.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        try {
+            edtDN.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        edtDN.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        altera.setText("Alterar");
+        altera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                alteraActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Deletar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        estado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        javax.swing.GroupLayout telaELayout = new javax.swing.GroupLayout(telaE);
+        telaE.setLayout(telaELayout);
+        telaELayout.setHorizontalGroup(
+            telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(telaELayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, telaELayout.createSequentialGroup()
+                        .addGroup(telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(telaELayout.createSequentialGroup()
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(188, 188, 188)
+                                .addComponent(jLabel4))
+                            .addGroup(telaELayout.createSequentialGroup()
+                                .addGroup(telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(telaELayout.createSequentialGroup()
+                                        .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(27, 27, 27)
+                                        .addComponent(edtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(telaELayout.createSequentialGroup()
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(173, 173, 173)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(30, 30, 30)
+                                .addGroup(telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(edtDN)))
+                            .addGroup(telaELayout.createSequentialGroup()
+                                .addComponent(edtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(jScrollPane1))
+                            .addGroup(telaELayout.createSequentialGroup()
+                                .addGroup(telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(telaELayout.createSequentialGroup()
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(153, 153, 153)
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(telaELayout.createSequentialGroup()
+                                        .addComponent(edtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(30, 30, 30)
+                                        .addComponent(edtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(27, 27, 27)
+                                .addGroup(telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, telaELayout.createSequentialGroup()
+                        .addComponent(altera)
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18))))
+        );
+        telaELayout.setVerticalGroup(
+            telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(telaELayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel5)))
+                .addGap(8, 8, 8)
+                .addGroup(telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtDN, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addGroup(telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel10))
+                .addGap(8, 8, 8)
+                .addGroup(telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(edtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(edtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(estado, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(15, 15, 15)
+                .addGroup(telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel4))
+                .addGap(8, 8, 8)
+                .addGroup(telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(edtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
+                .addGroup(telaELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(altera, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(330, 330, 330)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(310, 310, 310)
+                        .addComponent(entregador, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(telaE, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(5, 5, 5)
+                .addComponent(entregador, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(telaE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void entregadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entregadorActionPerformed
+        if (!" ".equals(String.valueOf(entregador.getSelectedItem()))) {
+            pegaDados();
+            telaE.setVisible(true);
+        } else {
+            telaE.setVisible(false);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_entregadorActionPerformed
+
+    private void alteraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alteraActionPerformed
+        ConfirmaAC();
+    }//GEN-LAST:event_alteraActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        ConfirmaDC();// TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton altera;
+    private javax.swing.JTextArea descri;
+    private javax.swing.JTextField edtCidade;
+    private javax.swing.JFormattedTextField edtCpf;
+    private javax.swing.JFormattedTextField edtDN;
+    private javax.swing.JTextField edtEmail;
+    private javax.swing.JTextField edtNome;
+    private javax.swing.JFormattedTextField edtTelefone;
+    private javax.swing.JComboBox<String> entregador;
+    private javax.swing.JTextField estado;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel telaE;
+    // End of variables declaration//GEN-END:variables
+}

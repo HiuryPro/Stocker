@@ -53,6 +53,7 @@ public class Relatorio {
     public Relatorio() {
 
         conexao = ModuloConexao.conector();
+        resetaRelatorio();
     }
 
     public String caminho() {
@@ -71,7 +72,8 @@ public class Relatorio {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stocker", "root", "");
 
             JasperDesign jDesign = JRXmlLoader.load(caminho() + "\\src\\Relatorio\\report1.jrxml");
-            String sql = "SELECT * FROM produto_compra where (data_entrada BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))"; // or  (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))";
+            String sql = "SELECT * FROM produto_compra where (data_entrada BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))ORDER BY data_entrada"; // or  (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))";
+            resetaRelatorio();
             distinguiR(1);
 
             JRDesignQuery updateQuery = new JRDesignQuery();
@@ -106,7 +108,8 @@ public class Relatorio {
             con1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/stocker", "root", "");
 
             JasperDesign jDesign = JRXmlLoader.load(caminho() + "\\src\\Relatorio\\relatorio.jrxml");
-            String sql = "SELECT * FROM produto_venda where (data_saida BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))"; // or  (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))";
+            String sql = "SELECT * FROM produto_venda where (data_saida BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\")) ORDER BY data_saida"; // or  (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))";
+            resetaRelatorio();
             distinguiR(0);
 
             JRDesignQuery updateQuery = new JRDesignQuery();
@@ -142,7 +145,7 @@ public class Relatorio {
             con2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/stocker", "root", "");
 
             JasperDesign jDesign = JRXmlLoader.load(caminho() + "\\src\\Relatorio\\report2.jrxml");
-            String sql = "SELECT * FROM varia_estoque where (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))"; // or  (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))";
+            String sql = "SELECT *,date_format(data, '%d') as teste FROM varia_estoque where (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\")) ORDER BY data"; // or  (data BETWEEN STR_TO_DATE('" + deData.getText() + " ', \"%d/%m/%Y\") AND STR_TO_DATE('" + ateData.getText() + " ', \"%d/%m/%Y\"))";
 
             JRDesignQuery updateQuery = new JRDesignQuery();
             updateQuery.setText(sql);
@@ -260,6 +263,20 @@ public class Relatorio {
             }
         }
 
+    }
+
+    public void resetaRelatorio() {
+        String sql = "UPDATE relatoriototal SET qtd_total = ? , preco_total = ?";
+        
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setInt(1, 0);
+            pst.setFloat(2, 0);
+
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
 
     public void relatoriototal(String nomeP, int qtdTotal, float valorTotal) {

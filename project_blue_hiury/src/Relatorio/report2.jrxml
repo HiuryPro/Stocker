@@ -2,22 +2,13 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5070ed31-b94e-4b0a-8805-bdefe175d9dd">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="303"/>
 	<subDataset name="chart" uuid="e1cc5006-dfb5-4317-9067-1a0a5cca6fd5">
 		<parameter name="query" class="java.lang.String"/>
 		<parameter name="query2" class="java.lang.String"/>
-		<queryString language="SQL">
-			<![CDATA[Select * from varia_estoque where data BETWEEN '$P!{query}' AND '$P!{query2}']]>
+		<queryString>
+			<![CDATA[Select data from varia_estoque where data BETWEEN '$P!{query}' AND '$P!{query2}']]>
 		</queryString>
-		<field name="id" class="java.lang.Integer">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="produto" class="java.lang.String">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="quantidadeE" class="java.lang.Integer">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
 		<field name="data" class="java.sql.Date">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
@@ -25,10 +16,10 @@
 	<parameter name="query" class="java.lang.String"/>
 	<parameter name="query2" class="java.lang.String"/>
 	<parameter name="image" class="java.lang.String"/>
-	<queryString language="SQL">
-		<![CDATA[Select * from varia_estoque]]>
+	<queryString>
+		<![CDATA[Select DISTINCT data, produto,quantidadeE, date_format(data, '%d') as teste from varia_estoque]]>
 	</queryString>
-	<field name="id" class="java.lang.Integer">
+	<field name="data" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="produto" class="java.lang.String">
@@ -37,9 +28,7 @@
 	<field name="quantidadeE" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="data" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="teste" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -93,33 +82,30 @@
 	</pageFooter>
 	<summary>
 		<band height="383" splitType="Stretch">
-			<timeSeriesChart>
+			<lineChart>
 				<chart>
-					<reportElement isPrintRepeatedValues="false" x="0" y="19" width="555" height="290" uuid="e5c80e56-a67f-44bd-b9fd-53568ca8a245"/>
-					<chartTitle>
-						<titleExpression><![CDATA["Variação de estoque entre "+ $P{query} + " e " + $P{query2}]]></titleExpression>
-					</chartTitle>
+					<reportElement x="0" y="0" width="555" height="289" uuid="1fa7638e-0366-43ab-ac56-064699487b0b"/>
+					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
-				<timeSeriesDataset>
-					<timeSeries>
+				<categoryDataset>
+					<categorySeries>
 						<seriesExpression><![CDATA[$F{produto}]]></seriesExpression>
-						<timePeriodExpression><![CDATA[$F{data}]]></timePeriodExpression>
+						<categoryExpression><![CDATA[$F{teste}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{quantidadeE}]]></valueExpression>
-						<labelExpression><![CDATA[$F{produto}]]></labelExpression>
-					</timeSeries>
-				</timeSeriesDataset>
-				<timeSeriesPlot>
-					<plot labelRotation="45.0"/>
-					<timeAxisFormat>
-						<axisFormat tickLabelMask="dd"/>
-					</timeAxisFormat>
-					<valueAxisFormat>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot/>
+					<categoryAxisFormat>
 						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat tickLabelMask=""/>
 					</valueAxisFormat>
-				</timeSeriesPlot>
-			</timeSeriesChart>
+				</linePlot>
+			</lineChart>
 		</band>
 	</summary>
 </jasperReport>

@@ -190,19 +190,16 @@ public class DadCliente extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
 
         setClosable(true);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Cliente");
         jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
 
         clien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clienActionPerformed(evt);
             }
         });
-        getContentPane().add(clien, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, 130, 30));
 
         telaC.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -224,10 +221,10 @@ public class DadCliente extends javax.swing.JInternalFrame {
         descricao.setRows(5);
         jScrollPane1.setViewportView(descricao);
 
-        telaC.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 680, 130));
+        telaC.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 700, 130));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel3.setText("Cnpj");
+        jLabel3.setText("CPF");
         telaC.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -244,7 +241,7 @@ public class DadCliente extends javax.swing.JInternalFrame {
         telaC.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
 
         try {
-            edtCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
+            edtCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -256,7 +253,7 @@ public class DadCliente extends javax.swing.JInternalFrame {
                 alteraActionPerformed(evt);
             }
         });
-        telaC.add(altera, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 420, -1, -1));
+        telaC.add(altera, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 420, -1, 30));
 
         jButton2.setText("Deletar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -264,7 +261,7 @@ public class DadCliente extends javax.swing.JInternalFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        telaC.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 420, -1, -1));
+        telaC.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 420, -1, 30));
         telaC.add(cidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 180, 35));
         telaC.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 180, 35));
 
@@ -289,7 +286,32 @@ public class DadCliente extends javax.swing.JInternalFrame {
         jLabel11.setText("Endereço");
         telaC.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 160, 80, -1));
 
-        getContentPane().add(telaC, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 735, 460));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(340, 340, 340)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(310, 310, 310)
+                        .addComponent(clien, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(telaC, javax.swing.GroupLayout.PREFERRED_SIZE, 735, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1)
+                .addGap(5, 5, 5)
+                .addComponent(clien, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(telaC, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(10, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

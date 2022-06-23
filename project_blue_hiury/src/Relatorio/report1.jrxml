@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c2b1796-d0db-4046-af84-1e455c488060">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="111"/>
+	<property name="ireport.y" value="518"/>
 	<subDataset name="teste2" uuid="20db0f79-b84a-4eff-a28c-15018f7181d1">
 		<queryString language="SQL">
 			<![CDATA[Select * from relatoriototal]]>
@@ -194,7 +194,7 @@
 				<chart>
 					<reportElement x="0" y="0" width="555" height="237" uuid="35abf0d9-6687-491c-b55c-e01d82164d26"/>
 					<chartTitle>
-						<titleExpression><![CDATA["Quantidade total comprado no periodo (por produto)"]]></titleExpression>
+						<titleExpression><![CDATA["Total comprado no período (por produto)"]]></titleExpression>
 					</chartTitle>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -225,7 +225,7 @@
 				<chart>
 					<reportElement x="0" y="252" width="555" height="237" uuid="769381c3-2185-4c74-bcd4-8a06463c9b89"/>
 					<chartTitle>
-						<titleExpression><![CDATA["Quantidade total gasto no periodo (por produto)"]]></titleExpression>
+						<titleExpression><![CDATA["Total gasto no período (por produto)"]]></titleExpression>
 					</chartTitle>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -255,7 +255,9 @@
 			<pieChart>
 				<chart>
 					<reportElement x="0" y="496" width="277" height="306" uuid="81ffcde0-2f17-447c-a446-24fae3ccf797"/>
-					<chartTitle/>
+					<chartTitle>
+						<titleExpression><![CDATA["Total comprado no período (por produuto)"]]></titleExpression>
+					</chartTitle>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
@@ -275,7 +277,9 @@
 			<pieChart>
 				<chart>
 					<reportElement x="277" y="496" width="278" height="306" uuid="c601df20-c1d4-4961-a116-51d5f1bf8024"/>
-					<chartTitle/>
+					<chartTitle>
+						<titleExpression><![CDATA["Total gasto no período (por produto)"]]></titleExpression>
+					</chartTitle>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>

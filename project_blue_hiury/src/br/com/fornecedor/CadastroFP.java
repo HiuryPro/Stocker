@@ -24,11 +24,7 @@ public class CadastroFP extends javax.swing.JInternalFrame {
      */
     Connection conexao = null;
     PreparedStatement pst = null;
-    ResultSet rs2 = null;
     ResultSet rs = null;
-    ResultSet rs3 = null;
-    Statement st2;
-    Statement st3;
     Statement st;
     public int estoque;
     public String nomes;
@@ -51,6 +47,8 @@ public class CadastroFP extends javax.swing.JInternalFrame {
 
             st = conexao.createStatement();
             rs = st.executeQuery(sql);
+            cbFornecedor.addItem(" ");
+
             while (rs.next()) {
 
                 cbFornecedor.addItem(rs.getString("nome"));
@@ -68,6 +66,7 @@ public class CadastroFP extends javax.swing.JInternalFrame {
 
             st = conexao.createStatement();
             rs = st.executeQuery(sql);
+            cbProduto.addItem(" ");
             while (rs.next()) {
 
                 cbProduto.addItem(rs.getString("nome"));
@@ -86,25 +85,25 @@ public class CadastroFP extends javax.swing.JInternalFrame {
         tabela.setValueAt(String.valueOf(cbFornecedor.getSelectedItem()), rowCount - 1, 0);
         tabela.setValueAt(String.valueOf(cbProduto.getSelectedItem()), rowCount - 1, 1);
         tabela.setValueAt(Float.parseFloat(preco.getText()), rowCount - 1, 2);
+        tabela.setValueAt(Float.parseFloat(frete.getText()), rowCount - 1, 3);
 
     }
 
-    public boolean confereBanco() {
-        String sql = "Select produto from fornecedor_produto";
-        boolean valida = false;
-        int i = 0;
+    public boolean confereBanco(int i, int qtd) {
+        String sql = "Select produto, fornecedor from fornecedor_produto where fornecedor = '" + String.valueOf(tabela.getValueAt(i, 0)) + "' and produto = '" + String.valueOf(tabela.getValueAt(i, 1)) + "'";
+        boolean valida = true;
+
         try {
             st = conexao.createStatement();
             rs = st.executeQuery(sql);
 
             while (rs.next()) {
-                if (rs.getString("produto").equals(tabela.getValueAt(i, 1))) {
-                    JOptionPane.showMessageDialog(null, "Produto já está cadastrado no fornecedor " + String.valueOf(cbFornecedor.getSelectedItem()));
+                if (rs.getString("produto").equals(String.valueOf(tabela.getValueAt(i, 1))) && rs.getString("fornecedor").equals(String.valueOf(tabela.getValueAt(i, 0)))) {
+                    JOptionPane.showMessageDialog(null, "Produto" + String.valueOf(tabela.getValueAt(i, 1)) + " já está cadastrado no fornecedor " + String.valueOf(tabela.getValueAt(i, 0)));
                     valida = false;
                 } else {
                     valida = true;
                 }
-                i++;
             }
 
         } catch (SQLException ex) {
@@ -115,26 +114,29 @@ public class CadastroFP extends javax.swing.JInternalFrame {
     }
 
     public void deletaLinha() {
-        if (rowCount > 0) {
-            rowCount--;
-            ((DefaultTableModel) tabela.getModel()).removeRow(Integer.parseInt(del.getText()) - 1);
-            ((DefaultTableModel) tabela.getModel()).setRowCount(rowCount);
+        if (del.getText() != null) {
+            if (rowCount > 0) {
+                rowCount--;
+                ((DefaultTableModel) tabela.getModel()).removeRow(Integer.parseInt(del.getText()) - 1);
+                ((DefaultTableModel) tabela.getModel()).setRowCount(rowCount);
+            }
         }
 
     }
 
     private void inserir() {
-        String sql = "insert into fornecedor_produto(fornecedor, produto, preco) values(?, ? ,?)";
+        String sql = "insert into fornecedor_produto(fornecedor, produto, preco, frete) values(?, ? ,?, ?)";
         int qtd, i;
         try {
             qtd = ((DefaultTableModel) tabela.getModel()).getRowCount();
-            JOptionPane.showMessageDialog(null, qtd);
+
             pst = conexao.prepareStatement(sql);
             for (i = 0; i < qtd; i++) {
-                if (confereBanco()) {
+                if (confereBanco(i, qtd)) {
                     pst.setString(1, String.valueOf(((DefaultTableModel) tabela.getModel()).getValueAt(i, 0)));
                     pst.setString(2, String.valueOf(((DefaultTableModel) tabela.getModel()).getValueAt(i, 1)));
                     pst.setFloat(3, Float.parseFloat(String.valueOf(((DefaultTableModel) tabela.getModel()).getValueAt(i, 2))));
+                    pst.setFloat(4, Float.parseFloat(String.valueOf(((DefaultTableModel) tabela.getModel()).getValueAt(i, 3))));
                     pst.executeUpdate();
                 }
 
@@ -151,6 +153,10 @@ public class CadastroFP extends javax.swing.JInternalFrame {
 
         if (resultado == JOptionPane.YES_OPTION) {
             inserir();
+            tabela.removeAll();
+            rowCount = 0;
+            ((DefaultTableModel) tabela.getModel()).setRowCount(rowCount);
+            JOptionPane.showMessageDialog(null, "Cadastros feitos com sucesso.");
 
         } else {
 
@@ -179,20 +185,23 @@ public class CadastroFP extends javax.swing.JInternalFrame {
         del = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         Cad = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        frete = new javax.swing.JTextField();
 
         setClosable(true);
         setPreferredSize(new java.awt.Dimension(745, 582));
 
+        tabela.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Fornecedor", "Produto", "Preço"
+                "Fornecedor", "Produto", "Preço", "Frete"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Float.class
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -200,11 +209,15 @@ public class CadastroFP extends javax.swing.JInternalFrame {
             }
         });
         tabela.setEnabled(false);
+        tabela.setRowHeight(30);
         jScrollPane1.setViewportView(tabela);
+
+        cbFornecedor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel1.setText("Fornecedor");
 
+        cbProduto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cbProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbProdutoActionPerformed(evt);
@@ -214,6 +227,7 @@ public class CadastroFP extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel2.setText("Preço");
 
+        preco.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         preco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 precoActionPerformed(evt);
@@ -238,6 +252,8 @@ public class CadastroFP extends javax.swing.JInternalFrame {
             }
         });
 
+        del.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel3.setText("Produto");
 
@@ -247,6 +263,16 @@ public class CadastroFP extends javax.swing.JInternalFrame {
         Cad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CadActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel4.setText("Frete");
+
+        frete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        frete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                freteActionPerformed(evt);
             }
         });
 
@@ -260,48 +286,59 @@ public class CadastroFP extends javax.swing.JInternalFrame {
                 .addGap(295, 295, 295))
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(del, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton2)
+                                .addGap(18, 18, 18)
+                                .addComponent(del, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(39, 39, 39)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(preco, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(preco, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(frete, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(cbProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(preco, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cbFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(preco, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(frete, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(39, 39, 39)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -309,7 +346,7 @@ public class CadastroFP extends javax.swing.JInternalFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(del, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(Cad, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
         );
@@ -318,8 +355,10 @@ public class CadastroFP extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        int qtd;
         AdicionaTabela();
+        qtd = tabela.getRowCount();
+        JOptionPane.showMessageDialog(null, qtd);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -340,17 +379,23 @@ public class CadastroFP extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbProdutoActionPerformed
 
+    private void freteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_freteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_freteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cad;
     private javax.swing.JComboBox<String> cbFornecedor;
     private javax.swing.JComboBox<String> cbProduto;
     private javax.swing.JTextField del;
+    private javax.swing.JTextField frete;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField preco;
     private javax.swing.JTable tabela;
