@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.compra;
+package br.com.compra_venda;
 
 import br.com.dal_connexao.ModuloConexao;
 import br.com.estoque.TelaEstoque;
@@ -211,6 +211,7 @@ public class Venda extends javax.swing.JInternalFrame {
         if (resultado == JOptionPane.YES_OPTION) {
             inserir();
             inserirVariaE();
+            JOptionPane.showMessageDialog(null, "Venda feita com sucesso");
         } else {
 
         }

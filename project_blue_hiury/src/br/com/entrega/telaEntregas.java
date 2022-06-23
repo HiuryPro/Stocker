@@ -5,7 +5,6 @@
  */
 package br.com.entrega;
 
-import br.com.compra.*;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

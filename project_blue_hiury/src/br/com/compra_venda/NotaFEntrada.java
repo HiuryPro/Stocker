@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.compra;
+package br.com.compra_venda;
 
 import br.com.dal_connexao.ModuloConexao;
 import br.com.fornecedor.Validacao;
@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author Hiury
  */
-public class NotaFSaida {
+public class NotaFEntrada {
 
     Connection conexao = null;
     PreparedStatement pst = null;
@@ -30,7 +30,7 @@ public class NotaFSaida {
     public int clienteID;
     public String numeroNF;
 
-    public NotaFSaida() {
+    public NotaFEntrada() {
         conexao = ModuloConexao.conector();
         numeroNF = "000000000";
     }
@@ -38,7 +38,7 @@ public class NotaFSaida {
     public void pegaNF() {
 
         try {
-            String CodigoDeConsulta = "SELECT COUNT(id) from notafiscal_saida";
+            String CodigoDeConsulta = "SELECT COUNT(id) from notafiscal_entrada";
 
             pst = conexao.prepareStatement(CodigoDeConsulta);
             ResultSet Resultado = pst.executeQuery(CodigoDeConsulta);
@@ -50,7 +50,7 @@ public class NotaFSaida {
             } else {
                 int tamanho, incremento;
 
-                CodigoDeConsulta = "SELECT MAX(ID) FROM notafiscal_saida";
+                CodigoDeConsulta = "SELECT MAX(ID) FROM notafiscal_entrada";
                 pst = conexao.prepareStatement(CodigoDeConsulta);
                 Resultado = pst.executeQuery(CodigoDeConsulta);
                 Resultado.next();
@@ -60,7 +60,7 @@ public class NotaFSaida {
 
             }
         } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(NotaFSaida.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NotaFEntrada.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -68,7 +68,7 @@ public class NotaFSaida {
     public void inseriNotaFiscal() {
 
         try {
-            String CodigoConsulta = "insert into notafiscal_saida(numero, serie) values(?, ?)";
+            String CodigoConsulta = "insert into notafiscal_entrada(numero, serie) values(?, ?)";
 
             pst = conexao.prepareStatement(CodigoConsulta);
             pst.setString(1, numeroNF);
@@ -76,15 +76,15 @@ public class NotaFSaida {
 
             pst.executeUpdate();
         } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(NotaFSaida.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NotaFEntrada.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-    public void clienteID(JComboBox<String> clientC) {
+    public void fornecedorID(JComboBox<String> forn) {
         try {
             String sql;
-            sql = "Select * from cliente where nome = '" + String.valueOf(clientC.getSelectedItem()) + "'";
+            sql = "Select * from fornecedor where nome = '" + String.valueOf(forn.getSelectedItem()) + "'";
 
             st2 = conexao.createStatement();
             rs3 = st2.executeQuery(sql);
@@ -94,7 +94,7 @@ public class NotaFSaida {
 
             }
         } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(NotaFSaida.class.getName()).log(Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NotaFEntrada.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

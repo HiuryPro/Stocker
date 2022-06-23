@@ -47,10 +47,10 @@ public class CadastroEntregadores extends javax.swing.JInternalFrame {
             pst.setString(2, edtCpf.getText().replaceAll("[^0-9]+", ""));
             pst.setDate(3, sqlDate);
             pst.setString(4, edtEmail.getText());
-            pst.setString(5, edtCidade.getText());
+            pst.setString(5, cbCidade.getText());
             pst.setString(6, String.valueOf(estado.getSelectedItem()));
             pst.setString(7, edtTelefone.getText().replaceAll("[^0-9]+", ""));
-            pst.setString(8, descri.getText());
+            pst.setString(8, descricao.getText());
 
             pst.executeUpdate();
             pst.close();
@@ -75,7 +75,7 @@ public class CadastroEntregadores extends javax.swing.JInternalFrame {
             confirma = false;
             JOptionPane.showMessageDialog(null, "Campo email está vazio.");
 
-        } else if (edtCidade.getText().isEmpty()) {
+        } else if (cbCidade.getText().isEmpty()) {
             confirma = false;
             JOptionPane.showMessageDialog(null, "Campo cidade está vazio");
 
@@ -83,7 +83,7 @@ public class CadastroEntregadores extends javax.swing.JInternalFrame {
             confirma = false;
             JOptionPane.showMessageDialog(null, "Campo telefone está vazio.");
 
-        } else if (descri.getText().isEmpty()) {
+        } else if (descricao.getText().isEmpty()) {
             confirma = false;
             JOptionPane.showMessageDialog(null, "Campo descrição está vazio.");
 
@@ -106,6 +106,13 @@ public class CadastroEntregadores extends javax.swing.JInternalFrame {
                 if (val.isCPF(edtCpf.getText().replaceAll("[^0-9]+", ""))) {
                     inserir();
                     JOptionPane.showMessageDialog(null, "Cadastro feito com sucesso.");
+                    cbCidade.setText(null);
+                    descricao.setText(null);
+                    edtCpf.setText(null);
+                    edtNome.setText(null);
+                    edtEmail.setText(null);
+                    edtDN.setText(null);
+                    edtTelefone.setText(null);
 
                 } else {
                     JOptionPane.showMessageDialog(null, "CPF invalido", "ERRO", 0);
@@ -133,7 +140,7 @@ public class CadastroEntregadores extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         edtNome = new javax.swing.JTextField();
-        edtCidade = new javax.swing.JTextField();
+        cbCidade = new javax.swing.JTextField();
         edtTelefone = new javax.swing.JFormattedTextField();
         Cad = new javax.swing.JButton();
         estado = new javax.swing.JComboBox<>();
@@ -142,7 +149,7 @@ public class CadastroEntregadores extends javax.swing.JInternalFrame {
         edtEmail = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        descri = new javax.swing.JTextArea();
+        descricao = new javax.swing.JTextArea();
         edtCpf = new javax.swing.JFormattedTextField();
         edtDN = new javax.swing.JFormattedTextField();
 
@@ -165,7 +172,7 @@ public class CadastroEntregadores extends javax.swing.JInternalFrame {
 
         edtNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        edtCidade.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cbCidade.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         try {
             edtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
@@ -198,12 +205,12 @@ public class CadastroEntregadores extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setText("Descrição");
 
-        descri.setColumns(20);
-        descri.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        descri.setLineWrap(true);
-        descri.setRows(5);
-        descri.setWrapStyleWord(true);
-        jScrollPane1.setViewportView(descri);
+        descricao.setColumns(20);
+        descricao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        descricao.setLineWrap(true);
+        descricao.setRows(5);
+        descricao.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(descricao);
 
         try {
             edtCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -255,7 +262,7 @@ public class CadastroEntregadores extends javax.swing.JInternalFrame {
                         .addGap(188, 188, 188)
                         .addComponent(jLabel4))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(edtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(13, Short.MAX_VALUE))
@@ -295,7 +302,7 @@ public class CadastroEntregadores extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4))
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(edtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addComponent(Cad, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -313,8 +320,8 @@ public class CadastroEntregadores extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Cad;
-    private javax.swing.JTextArea descri;
-    private javax.swing.JTextField edtCidade;
+    private javax.swing.JTextField cbCidade;
+    private javax.swing.JTextArea descricao;
     private javax.swing.JFormattedTextField edtCpf;
     private javax.swing.JFormattedTextField edtDN;
     private javax.swing.JTextField edtEmail;

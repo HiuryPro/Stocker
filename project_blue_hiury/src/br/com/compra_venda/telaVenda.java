@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.compra;
+package br.com.compra_venda;
 
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
