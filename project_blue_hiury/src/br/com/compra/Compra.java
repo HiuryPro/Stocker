@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.compra_venda;
+package br.com.compra;
 
 import br.com.dal_connexao.ModuloConexao;
 import br.com.estoque.TelaEstoque;

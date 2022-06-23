@@ -10,7 +10,7 @@ import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import br.com.fornecedor.Fornecedores;
 import br.com.estoque.TelaEstoque;
-import br.com.compra_venda.telaVenda;
+import br.com.compra.telaVenda;
 import br.com.entrega.telaEntregas;
 import br.com.entregador.EntregadorTela;
 import br.com.estoque.TelaEsotoquenew;
