@@ -66,7 +66,7 @@ CREATE TABLE `entregador` (
   `cidade` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   `descricao` varchar(150) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +75,7 @@ CREATE TABLE `entregador` (
 
 LOCK TABLES `entregador` WRITE;
 /*!40000 ALTER TABLE `entregador` DISABLE KEYS */;
-INSERT INTO `entregador` VALUES (1,'João Claudio','09327202007','2000-05-13','34988419535','joaoclaudio@gmail.com','Minas Gerais (MG)','Tiros','João Claudio é um entregador de Tiros MG.');
+INSERT INTO `entregador` VALUES (1,'João Claudio','09327202007','2000-05-13','34988419535','joaoclaudio@gmail.com','Minas Gerais (MG)','Tiros','João Claudio é um entregador de Tiros MG.'),(2,'Roberto','23407666055','1999-05-22','34988754013','robertoentrega@gmail.com','Minas Gerais (MG)','Patos de Minas','Roberto é um entregador de Patos de Minas.');
 /*!40000 ALTER TABLE `entregador` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,8 +98,9 @@ CREATE TABLE `entregas_detalhado` (
   `estado` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   `cidade` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   `telefone` varchar(11) CHARACTER SET utf8 DEFAULT NULL,
+  `status` int(2) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,6 +109,7 @@ CREATE TABLE `entregas_detalhado` (
 
 LOCK TABLES `entregas_detalhado` WRITE;
 /*!40000 ALTER TABLE `entregas_detalhado` DISABLE KEYS */;
+INSERT INTO `entregas_detalhado` VALUES (1,'João Claudio','Coca-Cola',5,'Claudio José','Avenida Alguma Coisa nº 13','2022-06-20','000000001','Minas Gerais','Patos de Minas','34988419535',1),(2,'João Claudio','Maçã',10,'Claudio José','Avenida Alguma Coisa nº 13','2022-06-21','000000002','Minas Gerais','Patos de Minas','34988419535',2),(3,'João Claudio','Laranja',5,'Claudio José','Avenida Alguma Coisa nº 13','2022-06-22','000000003','Minas Gerais','Patos de Minas','34988419535',2),(4,'João Claudio','Laranja',5,'Claudio José','Avenida Alguma Coisa nº 13','2022-06-21','000000003','Minas Gerais','Patos de Minas','34988419535',1),(5,'Roberto','Maçã',10,'Claudio José','Avenida Alguma Coisa nº 13','2022-06-21','000000002','Minas Gerais','Patos de Minas','34988754013',1);
 /*!40000 ALTER TABLE `entregas_detalhado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -448,4 +450,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-15 15:11:05
+-- Dump completed on 2022-06-23 15:06:31
