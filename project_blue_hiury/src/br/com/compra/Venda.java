@@ -159,7 +159,7 @@ public class Venda extends javax.swing.JInternalFrame {
 
     public void AdicionaTabela() {
 
-        String sql = "SELECT *, date_format(data_saida, '%d/%m/%Y') as teste FROM produto_venda";
+        String sql = "SELECT *, date_format(data_saida, '%d/%m/%Y') as teste FROM produto_venda order by data_saida";
         try {
 
             st = conexao.createStatement();

@@ -190,27 +190,35 @@ public class DadCliente extends javax.swing.JInternalFrame {
         jLabel11 = new javax.swing.JLabel();
 
         setClosable(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Cliente");
         jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, -1, -1));
 
+        clien.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         clien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clienActionPerformed(evt);
             }
         });
+        getContentPane().add(clien, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 180, 35));
 
         telaC.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setText("Descrição");
         telaC.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
+
+        edtCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         telaC.add(edtCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, 180, 35));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel5.setText("Categoria");
         telaC.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 0, -1, -1));
+
+        edtNome.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         telaC.add(edtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 256, 35));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -218,6 +226,7 @@ public class DadCliente extends javax.swing.JInternalFrame {
         telaC.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
 
         descricao.setColumns(20);
+        descricao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         descricao.setRows(5);
         jScrollPane1.setViewportView(descricao);
 
@@ -230,6 +239,8 @@ public class DadCliente extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel6.setText("Cidade");
         telaC.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, -1, -1));
+
+        edtFaixa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         telaC.add(edtFaixa, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, 260, 35));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -245,6 +256,7 @@ public class DadCliente extends javax.swing.JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        edtCnpj.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         telaC.add(edtCnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 200, 35));
 
         altera.setText("Alterar");
@@ -262,7 +274,11 @@ public class DadCliente extends javax.swing.JInternalFrame {
             }
         });
         telaC.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 420, -1, 30));
+
+        cidade.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         telaC.add(cidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 180, 35));
+
+        estado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         telaC.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 180, 35));
 
         try {
@@ -270,48 +286,28 @@ public class DadCliente extends javax.swing.JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        tel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         telaC.add(tel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 160, 35));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel9.setText("Faixa De Renda");
         telaC.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, -1, -1));
+
+        email.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         telaC.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, 200, 35));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel10.setText("Email");
         telaC.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, -1));
+
+        endereco.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         telaC.add(endereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 190, 260, 35));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel11.setText("Endereço");
         telaC.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 160, 80, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(340, 340, 340)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(310, 310, 310)
-                        .addComponent(clien, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(telaC, javax.swing.GroupLayout.PREFERRED_SIZE, 735, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel1)
-                .addGap(5, 5, 5)
-                .addComponent(clien, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(telaC, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
-        );
+        getContentPane().add(telaC, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 735, 460));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

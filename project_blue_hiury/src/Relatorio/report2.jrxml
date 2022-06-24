@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5070ed31-b94e-4b0a-8805-bdefe175d9dd">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="303"/>
+	<property name="ireport.y" value="171"/>
 	<subDataset name="chart" uuid="e1cc5006-dfb5-4317-9067-1a0a5cca6fd5">
 		<parameter name="query" class="java.lang.String"/>
 		<parameter name="query2" class="java.lang.String"/>
@@ -84,8 +84,10 @@
 		<band height="383" splitType="Stretch">
 			<lineChart>
 				<chart>
-					<reportElement x="0" y="0" width="555" height="289" uuid="1fa7638e-0366-43ab-ac56-064699487b0b"/>
-					<chartTitle/>
+					<reportElement x="0" y="28" width="555" height="289" uuid="1fa7638e-0366-43ab-ac56-064699487b0b"/>
+					<chartTitle>
+						<titleExpression><![CDATA["Variação de estoque entre " + $P{query} + " e " + $P{query2}]]></titleExpression>
+					</chartTitle>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
@@ -102,7 +104,7 @@
 						<axisFormat/>
 					</categoryAxisFormat>
 					<valueAxisFormat>
-						<axisFormat tickLabelMask=""/>
+						<axisFormat/>
 					</valueAxisFormat>
 				</linePlot>
 			</lineChart>

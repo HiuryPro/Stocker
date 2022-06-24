@@ -24,18 +24,18 @@ DROP TABLE IF EXISTS `cliente`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cliente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `nome` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `cnpj` varchar(14) CHARACTER SET utf8 DEFAULT NULL,
   `cidade` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   `estado` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   `faixaR` float NOT NULL,
   `categoria` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `descricao` varchar(120) CHARACTER SET utf8 DEFAULT NULL,
-  `email` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `telefone` varchar(11) CHARACTER SET utf8 NOT NULL,
   `endereco` varchar(50) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'Claudio José','43608631011','Patos de Minas','Minas Gerais',30000,'T.I','Claudio José e um cliente de Patos de Minas.','claudioJ@gmail.com','34988567904','Avenida Alguma Coisa nº 13');
+INSERT INTO `cliente` VALUES (1,'Claudio José','43608631011','Patos de Minas','Minas Gerais',30000,'T.I','Claudio José e um cliente de Patos de Minas.','claudioJ@gmail.com','34988567904','Avenida Alguma Coisa nº 13'),(2,'Roberto Nunis','12929508035','Patos de Minas','Minas Gerais',20000,'Cliente eventual','Roberto Nunis é um cliente eventual, ele mora na cidade de Patos de Minas.','roberton@gmail.com','34976340987','Av Carlos Alburquerque nº 312');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,11 +57,11 @@ DROP TABLE IF EXISTS `entregador`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `entregador` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome_entregador` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `nome_entregador` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `cpf` varchar(11) CHARACTER SET utf8 DEFAULT NULL,
   `data_nascimento` date DEFAULT NULL,
   `telefone` varchar(11) CHARACTER SET utf8 DEFAULT NULL,
-  `email` varchar(40) CHARACTER SET utf8 DEFAULT NULL,
+  `email` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `estado` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   `cidade` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   `descricao` varchar(150) CHARACTER SET utf8 DEFAULT NULL,
@@ -88,10 +88,10 @@ DROP TABLE IF EXISTS `entregas_detalhado`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `entregas_detalhado` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `entregador` varchar(40) CHARACTER SET utf8 DEFAULT NULL,
+  `entregador` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `produto` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   `qtd` int(11) DEFAULT NULL,
-  `cliente` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `cliente` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `endereco` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `data_entrega` date DEFAULT NULL,
   `NF` varchar(9) CHARACTER SET utf8 DEFAULT NULL,
@@ -122,10 +122,10 @@ DROP TABLE IF EXISTS `estoque`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `estoque` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome_produto` varchar(20) NOT NULL,
+  `nome_produto` varchar(30) NOT NULL,
   `qtdestoque` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,7 +134,7 @@ CREATE TABLE `estoque` (
 
 LOCK TABLES `estoque` WRITE;
 /*!40000 ALTER TABLE `estoque` DISABLE KEYS */;
-INSERT INTO `estoque` VALUES (1,'Maçã',90),(2,'Coca-Cola',115),(3,'Laranja',20);
+INSERT INTO `estoque` VALUES (1,'Maçã',96),(2,'Coca-Cola',115),(3,'Laranja',28),(4,'Abacate',20);
 /*!40000 ALTER TABLE `estoque` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,17 +147,17 @@ DROP TABLE IF EXISTS `fornecedor`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fornecedor` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(20) DEFAULT NULL,
+  `nome` varchar(50) DEFAULT NULL,
   `cnpj` varchar(14) DEFAULT NULL,
   `inscE` varchar(12) CHARACTER SET utf8 DEFAULT NULL,
-  `estado` varchar(20) CHARACTER SET utf8 DEFAULT NULL,
-  `cidade` varchar(20) CHARACTER SET utf8 DEFAULT NULL,
-  `descricao` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `estado` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `cidade` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `descricao` varchar(150) CHARACTER SET utf8 DEFAULT NULL,
   `telefone` varchar(11) DEFAULT NULL,
-  `email` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `email` varchar(40) CHARACTER SET utf8 DEFAULT NULL,
   `data_nascimento` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,7 +166,7 @@ CREATE TABLE `fornecedor` (
 
 LOCK TABLES `fornecedor` WRITE;
 /*!40000 ALTER TABLE `fornecedor` DISABLE KEYS */;
-INSERT INTO `fornecedor` VALUES (1,'Gilmar','15274233000150','123456789011','Minas Gerais (MG)','Patos de Minas','Gilmar é um fornecedor de Patos de Minas. Ele vende Coca-Cola','34988754301','gilmarforn@gmail.com','1988-03-12'),(2,'Valdenmar','40449751000104','341256790845','Minas Gerais (MG)','Patos de Minas','Valdenmar é um fornecedor de Patos de Minas. Ele vende maçã e laranja.','34988650196','valdnmarforn@gmail.com','1976-09-21');
+INSERT INTO `fornecedor` VALUES (1,'Gilmar','15274233000150','123456789011','Minas Gerais (MG)','Patos de Minas','Gilmar é um fornecedor de Patos de Minas. Ele vende Coca-Cola','34988754301','gilmarforn@gmail.com','1988-03-12'),(2,'Valdenmar','40449751000104','341256790845','Minas Gerais (MG)','Patos de Minas','Valdenmar é um fornecedor de Patos de Minas. Ele vende maçã e laranja.','34988650196','valdnmarforn@gmail.com','1976-09-21'),(3,'Joaquin','54775018000194','345689125309','Minas Gerais (MG)','Patos de Minas','Joaquin é um fornecedor de Patos de Minas.','34988564312','joaquinforn@gmail.com','1986-07-23');
 /*!40000 ALTER TABLE `fornecedor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -179,12 +179,12 @@ DROP TABLE IF EXISTS `fornecedor_produto`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fornecedor_produto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fornecedor` varchar(30) DEFAULT NULL,
+  `fornecedor` varchar(50) DEFAULT NULL,
   `produto` varchar(30) DEFAULT NULL,
   `preco` float DEFAULT NULL,
   `frete` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -193,7 +193,7 @@ CREATE TABLE `fornecedor_produto` (
 
 LOCK TABLES `fornecedor_produto` WRITE;
 /*!40000 ALTER TABLE `fornecedor_produto` DISABLE KEYS */;
-INSERT INTO `fornecedor_produto` VALUES (1,'Gilmar','Coca-Cola',12,5),(2,'Valdenmar','Maçã',3,5),(3,'Valdenmar','Laranja',5,6),(4,'Gilmar','Maçã',3,3);
+INSERT INTO `fornecedor_produto` VALUES (1,'Gilmar','Coca-Cola',12,5),(2,'Valdenmar','Maçã',3,5),(3,'Valdenmar','Laranja',5,6),(4,'Gilmar','Maçã',3,3),(5,'Joaquin','Abacate',9,5);
 /*!40000 ALTER TABLE `fornecedor_produto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,7 +209,7 @@ CREATE TABLE `notafiscal_entrada` (
   `numero` varchar(11) CHARACTER SET utf8 DEFAULT NULL,
   `serie` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -218,7 +218,7 @@ CREATE TABLE `notafiscal_entrada` (
 
 LOCK TABLES `notafiscal_entrada` WRITE;
 /*!40000 ALTER TABLE `notafiscal_entrada` DISABLE KEYS */;
-INSERT INTO `notafiscal_entrada` VALUES (1,'000000001',1);
+INSERT INTO `notafiscal_entrada` VALUES (1,'000000001',1),(2,'000000002',3),(3,'000000003',2),(4,'000000004',2);
 /*!40000 ALTER TABLE `notafiscal_entrada` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -234,7 +234,7 @@ CREATE TABLE `notafiscal_saida` (
   `numero` varchar(11) NOT NULL,
   `serie` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,7 +243,7 @@ CREATE TABLE `notafiscal_saida` (
 
 LOCK TABLES `notafiscal_saida` WRITE;
 /*!40000 ALTER TABLE `notafiscal_saida` DISABLE KEYS */;
-INSERT INTO `notafiscal_saida` VALUES (1,'000000001',1),(2,'000000002',1),(3,'000000003',1),(4,'000000004',1),(5,'000000005',1);
+INSERT INTO `notafiscal_saida` VALUES (1,'000000001',1),(2,'000000002',1),(3,'000000003',1),(4,'000000004',1),(5,'000000005',1),(6,'000000006',2);
 /*!40000 ALTER TABLE `notafiscal_saida` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,11 +256,11 @@ DROP TABLE IF EXISTS `produto`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `produto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(20) CHARACTER SET utf8 NOT NULL,
+  `nome` varchar(30) CHARACTER SET utf8 NOT NULL,
   `preco` float NOT NULL,
-  `descricao` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `descricao` varchar(150) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,7 +269,7 @@ CREATE TABLE `produto` (
 
 LOCK TABLES `produto` WRITE;
 /*!40000 ALTER TABLE `produto` DISABLE KEYS */;
-INSERT INTO `produto` VALUES (1,'Maçã',10,'Maçã de boa qualidade e bem gostosa.'),(2,'Coca-Cola',12,'Coca-Cola muito boa.'),(3,'Laranja',3,'Laranja bem doce.');
+INSERT INTO `produto` VALUES (1,'Maçã',10,'Maçã de boa qualidade e bem gostosa.'),(2,'Coca-Cola',12,'Coca-Cola muito boa.'),(3,'Laranja',3,'Laranja bem doce.'),(4,'Abacate',8,'Abacate gostoso.');
 /*!40000 ALTER TABLE `produto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -282,15 +282,15 @@ DROP TABLE IF EXISTS `produto_compra`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `produto_compra` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `produtoC` varchar(20) CHARACTER SET utf8 DEFAULT NULL,
+  `produtoC` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
   `precoC` float DEFAULT NULL,
   `quantidadeC` int(11) DEFAULT NULL,
   `totalC` float DEFAULT NULL,
   `data_entrada` date DEFAULT NULL,
-  `fornecedor` varchar(30) CHARACTER SET utf8 DEFAULT NULL,
+  `fornecedor` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `frete` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -299,7 +299,7 @@ CREATE TABLE `produto_compra` (
 
 LOCK TABLES `produto_compra` WRITE;
 /*!40000 ALTER TABLE `produto_compra` DISABLE KEYS */;
-INSERT INTO `produto_compra` VALUES (1,'Coca-Cola',12,10,125,'2022-06-14','Gilmar',5);
+INSERT INTO `produto_compra` VALUES (1,'Coca-Cola',12,10,125,'2022-06-14','Gilmar',5),(2,'Abacate',9,5,50,'2022-06-24','Joaquin',5),(3,'Maçã',3,6,23,'2022-06-23','Valdenmar',5),(4,'Laranja',5,8,46,'2022-06-22','Valdenmar',6);
 /*!40000 ALTER TABLE `produto_compra` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,14 +312,14 @@ DROP TABLE IF EXISTS `produto_venda`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `produto_venda` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome_produto` varchar(20) NOT NULL,
-  `quantidade` int(10) NOT NULL,
+  `nome_produto` varchar(30) NOT NULL,
+  `quantidade` int(11) NOT NULL,
   `preco_unitario` float NOT NULL,
   `total` float DEFAULT NULL,
   `data_saida` date DEFAULT NULL,
-  `cliente` varchar(20) CHARACTER SET utf8 DEFAULT NULL,
+  `cliente` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -328,7 +328,7 @@ CREATE TABLE `produto_venda` (
 
 LOCK TABLES `produto_venda` WRITE;
 /*!40000 ALTER TABLE `produto_venda` DISABLE KEYS */;
-INSERT INTO `produto_venda` VALUES (1,'Coca-Cola',5,10,50,'2022-06-14','Claudio José'),(2,'Maçã',10,3,30,'2022-06-15','Claudio José'),(3,'Laranja',5,6,30,'2022-06-15','Claudio José'),(4,'Laranja',5,8,40,'2022-06-16','Claudio José'),(5,'Coca-Cola',10,12,120,'2022-06-14','Claudio José');
+INSERT INTO `produto_venda` VALUES (1,'Coca-Cola',5,10,50,'2022-06-14','Claudio José'),(2,'Maçã',10,3,30,'2022-06-15','Claudio José'),(3,'Laranja',5,6,30,'2022-06-15','Claudio José'),(4,'Laranja',5,8,40,'2022-06-16','Claudio José'),(5,'Coca-Cola',10,12,120,'2022-06-14','Claudio José'),(6,'Abacate',3,10,30,'2022-06-25','Roberto Nunis');
 /*!40000 ALTER TABLE `produto_venda` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -345,7 +345,7 @@ CREATE TABLE `relatoriototal` (
   `qtd_total` int(11) DEFAULT 0,
   `preco_total` float DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -354,7 +354,7 @@ CREATE TABLE `relatoriototal` (
 
 LOCK TABLES `relatoriototal` WRITE;
 /*!40000 ALTER TABLE `relatoriototal` DISABLE KEYS */;
-INSERT INTO `relatoriototal` VALUES (1,'Maçã',0,0),(2,'Coca-Cola',0,0),(3,'Laranja',0,0);
+INSERT INTO `relatoriototal` VALUES (1,'Maçã',6,23),(2,'Coca-Cola',10,125),(3,'Laranja',8,46),(4,'Abacate',5,50);
 /*!40000 ALTER TABLE `relatoriototal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -368,12 +368,12 @@ DROP TABLE IF EXISTS `usuario_dados`;
 CREATE TABLE `usuario_dados` (
   `nome_empresa` varchar(30) CHARACTER SET utf8 NOT NULL,
   `cnpj` varchar(14) CHARACTER SET utf8 NOT NULL,
-  `email` varchar(30) CHARACTER SET utf8 NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8 NOT NULL,
   `telefone` varchar(11) CHARACTER SET utf8 NOT NULL,
-  `cidade` varchar(20) NOT NULL,
+  `cidade` varchar(30) NOT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `estado` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `endereco` varchar(40) CHARACTER SET utf8 NOT NULL,
+  `endereco` varchar(50) CHARACTER SET utf8 NOT NULL,
   `ganho_mensal` float NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
@@ -424,11 +424,11 @@ DROP TABLE IF EXISTS `varia_estoque`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `varia_estoque` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `produto` varchar(20) DEFAULT NULL,
+  `produto` varchar(30) DEFAULT NULL,
   `quantidadeE` int(11) DEFAULT NULL,
   `data` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -437,7 +437,7 @@ CREATE TABLE `varia_estoque` (
 
 LOCK TABLES `varia_estoque` WRITE;
 /*!40000 ALTER TABLE `varia_estoque` DISABLE KEYS */;
-INSERT INTO `varia_estoque` VALUES (1,'Maçã',100,'2022-06-14'),(2,'Coca-Cola',120,'2022-06-14'),(3,'Coca-Cola',130,'2022-06-14'),(4,'Coca-Cola',125,'2022-06-14'),(5,'Maçã',90,'2022-06-15'),(6,'Laranja',30,'2022-06-15'),(7,'Laranja',25,'2022-06-15'),(8,'Laranja',20,'2022-06-16'),(9,'Coca-Cola',115,'2022-06-14');
+INSERT INTO `varia_estoque` VALUES (1,'Maçã',100,'2022-06-14'),(2,'Coca-Cola',120,'2022-06-14'),(3,'Coca-Cola',130,'2022-06-14'),(4,'Coca-Cola',125,'2022-06-14'),(5,'Maçã',90,'2022-06-15'),(6,'Laranja',30,'2022-06-15'),(7,'Laranja',25,'2022-06-15'),(8,'Laranja',20,'2022-06-16'),(9,'Coca-Cola',115,'2022-06-14'),(10,'Abacate',18,'2022-06-24'),(11,'Abacate',15,'2022-06-25'),(12,'Abacate',20,'2022-06-24'),(13,'Maçã',96,'2022-06-23'),(14,'Laranja',28,'2022-06-22');
 /*!40000 ALTER TABLE `varia_estoque` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -450,4 +450,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-23 15:13:16
+-- Dump completed on 2022-06-24 15:24:26

@@ -314,12 +314,15 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         jLabel12 = new javax.swing.JLabel();
 
         setClosable(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        forn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         forn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fornActionPerformed(evt);
             }
         });
+        getContentPane().add(forn, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 62, 180, 35));
 
         ip.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -436,6 +439,8 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         jLabel11.setText("Data de Nascimento");
         ip.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, -1, -1));
 
+        getContentPane().add(ip, new org.netbeans.lib.awtextra.AbsoluteConstraints(308, 10, -1, 533));
+
         pr.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tabela.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -460,7 +465,13 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         });
         tabela.setPreferredSize(new java.awt.Dimension(210, 403));
         tabela.setRowHeight(30);
+        tabela.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(tabela);
+        if (tabela.getColumnModel().getColumnCount() > 0) {
+            tabela.getColumnModel().getColumn(0).setResizable(false);
+            tabela.getColumnModel().getColumn(0).setPreferredWidth(200);
+            tabela.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         pr.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 42, 280, 203));
 
@@ -487,43 +498,11 @@ public class FornecedorDados extends javax.swing.JInternalFrame {
         });
         pr.add(AtualizaP, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, -1, 30));
 
+        getContentPane().add(pr, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, 430));
+
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel12.setText("Fornecedores");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jLabel12))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addComponent(forn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(pr, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(8, 8, 8)
-                .addComponent(ip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(7, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel12)
-                .addGap(7, 7, 7)
-                .addComponent(forn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(pr, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ip, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
