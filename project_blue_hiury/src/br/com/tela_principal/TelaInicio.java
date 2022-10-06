@@ -28,7 +28,7 @@ public class TelaInicio extends javax.swing.JFrame {
      */
     public TelaInicio(int i) {
         initComponents();
-        setIcon();
+        this.setIconImage(new ImageIcon("src/img/boxtramp.png").getImage());
         id = i;
 
     }
@@ -65,14 +65,14 @@ public class TelaInicio extends javax.swing.JFrame {
         Teste23.setLayout(Teste23Layout);
         Teste23Layout.setHorizontalGroup(
             Teste23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 758, Short.MAX_VALUE)
+            .addGap(0, 760, Short.MAX_VALUE)
         );
         Teste23Layout.setVerticalGroup(
             Teste23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 730, Short.MAX_VALUE)
         );
 
-        getContentPane().add(Teste23, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 758, 730));
+        getContentPane().add(Teste23, new org.netbeans.lib.awtextra.AbsoluteConstraints(268, 0, 760, 730));
 
         estoque.setBackground(new java.awt.Color(0, 102, 204));
         estoque.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -254,7 +254,5 @@ public class TelaInicio extends javax.swing.JFrame {
     private javax.swing.JButton estoque;
     private javax.swing.JButton venda;
     // End of variables declaration//GEN-END:variables
- private void setIcon() {
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("boxtramp.png"))); //To change body of generated methods, choose Tools | Templates.
-    }
+
 }

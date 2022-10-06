@@ -41,7 +41,7 @@ public class NewInterface extends javax.swing.JFrame {
     public NewInterface() {
         initComponents();
         conexao = ModuloConexao.conector();
-        setIcon();
+        this.setIconImage(new ImageIcon("src/img/Stocker_blue_transp.png").getImage());
     }
     
     public int conta() {

@@ -101,8 +101,7 @@ public class CadastroFP extends javax.swing.JInternalFrame {
                 if (rs.getString("produto").equals(String.valueOf(tabela.getValueAt(i, 1))) && rs.getString("fornecedor").equals(String.valueOf(tabela.getValueAt(i, 0)))) {
                     JOptionPane.showMessageDialog(null, "Produto" + String.valueOf(tabela.getValueAt(i, 1)) + " já está cadastrado no fornecedor " + String.valueOf(tabela.getValueAt(i, 0)));
                     valida = false;
-                } else {
-                    valida = true;
+                    break;
                 }
             }
 

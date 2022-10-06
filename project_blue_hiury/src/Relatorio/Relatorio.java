@@ -187,14 +187,14 @@ public class Relatorio {
 
     public void distinguiR(int id) {
 
-        String sql = "SELECT nome_produto FROM produto_venda";
+        String sql = "SELECT produto FROM produto";
         try {
 
             st = conexao.createStatement();
             rs = st.executeQuery(sql);
 
             while (rs.next()) {
-                pegaRel(id, rs.getString("nome_produto"));
+                pegaRel(id, rs.getString("produto"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
